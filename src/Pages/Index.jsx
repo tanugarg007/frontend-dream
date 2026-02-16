@@ -41,10 +41,7 @@ const [hoverIndex, setHoverIndex] = useState(false);
     }
   }
 }, []);
-// Empty dependency array ensures this runs only once when component mounts
 
-  
-   
         const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
     };
