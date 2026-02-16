@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo13 from '../Images/faq1.jpg';
 import { FaPlus } from "react-icons/fa";
@@ -15,9 +15,7 @@ const About = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openCourses, setOpenCourses] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [errors, setErrors] = useState({});
-  
+ 
   const toggleAnswer = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };

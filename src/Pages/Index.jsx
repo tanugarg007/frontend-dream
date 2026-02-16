@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo1 from '../Images/dream-anim-logo.png'
-import logo2 from '../Images/images.jpg'
+
 import logo7 from '../Images/graphic des.jpg'
 import logo11 from '../Images/about1.jpg'
 import logo3 from '../Images/video edt.jpg'
@@ -60,7 +60,7 @@ const closeMenu = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
 
   return (
