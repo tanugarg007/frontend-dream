@@ -1,5 +1,6 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+
+
 import { Link } from 'react-router-dom';
 import logo1 from '../Images/dream-anim-logo.png'
 
@@ -45,6 +46,7 @@ const [hoverIndex, setHoverIndex] = useState(false);
   const toggleAnswer = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+   
         const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
     };
