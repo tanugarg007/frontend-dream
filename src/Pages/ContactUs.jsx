@@ -68,11 +68,15 @@ const closeMenu = () => {
        {/* Logo - Visible on both mobile and desktop */}
        <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center">
         
-           <img 
-             src={logo1} 
-             alt="logo" 
-             className="w-[70px] h-[90px] md:w-[90px] md:h-[110px] drop-shadow-[10px_70px_45px_rgba(255,255,255,0.9)] md:drop-shadow-[10px_50px_50px_rgba(255,255,255,0.95)] " 
-           />
+         <img
+           src={logo1}
+           alt="logo"
+           className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+           style={{
+             filter:
+               "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+           }}
+         />
         
        </div>
      
@@ -376,11 +380,15 @@ const closeMenu = () => {
                     {/* Logo + Social */}
                     <div className="w-full md:w-[280px] mb-0 md:mb-0 mt-4">
                       <div className="flex justify-start md:justify-center">
-                        <img
-                          src={logo1}
-                          alt="Dream Animex Logo"
-                          className="w-[90px] h-[110px] md:w-[100px] md:h-[120px] drop-shadow-[10px_70px_50px_rgba(255,255,255,0.9)] md:drop-shadow-[15px_80px_50px_rgba(255,255,255,0.95)]"
-                        />
+                       <img
+                         src={logo1}
+                         alt="logo"
+                         className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+                         style={{
+                           filter:
+                             "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+                         }}
+                       />
                       </div>
                       <div className="flex mt-6">
                         <div className="w-full h-[50px] flex gap-3 items-center justify-start md:justify-center">
@@ -398,12 +406,14 @@ const closeMenu = () => {
                           >
                             <i className="fa-brands fa-instagram text-xl text-white"></i>
                           </Link>
-                          <Link
-                            to="info.dreamanimex@gmail.com"
-                            className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
-                          >
-                            <i className="fa-regular fa-envelope text-white text-xl"></i>
-                          </Link>
+                        <a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
+>
+  <i className="fa-regular fa-envelope text-white text-xl"></i>
+</a>
                         </div>
                       </div>
                     </div>
@@ -437,21 +447,42 @@ const closeMenu = () => {
                       <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Contact Us</h3>
                       <div className="flex items-start mb-3">
                         <i className="fa-solid fa-envelope text-2xl text-white mt-1"></i>
-                        <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                          info.dreamanimex@gmail.com
-                        </p>
+                         <p className="text-white ml-5 break-all">
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+    info.dreamanimex@gmail.com
+  </a>
+</p>
                       </div>
                       <div className="flex items-start mb-3">
                         <i className="fa-brands fa-instagram text-2xl text-white mt-1"></i>
-                        <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                          instagram.com/dreamanimex
-                        </p>
+                       <p className="text-white ml-5 break-all mt-2">
+  <a
+    href="https://www.instagram.com/dreamanimex/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+   instagram.com/dreamanimex
+  </a>
+</p>
                       </div>
                       <div className="flex items-start mb-3">
                         <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
-                        <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                          linkedin.com/company/dreamanimex
-                        </p>
+                        <p className="text-white ml-5 break-all mt-2">
+  <a
+    href=" https://www.linkedin.com/company/dreamanimex/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline "
+  >
+    linkedin.com/company/dreamanimex
+  </a>
+</p>
                       </div>
                       <div className="flex items-start mb-3">
                         <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
@@ -465,7 +496,7 @@ const closeMenu = () => {
                   {/* Copyright */}
                   <div className="w-full mt-10">
                     <hr className="border-slate-700 w-full md:w-[88%] md:ml-24" />
-                    <p className="text-white text-center text-lg mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+                    <p className="text-white text-center text-base mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
                       © Dream Animex Academy 2026 All rights reserved.
                     </p>
                   </div>

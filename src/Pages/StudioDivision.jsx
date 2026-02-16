@@ -19,90 +19,165 @@ const StudioDivision = () => {
       >
 
         {/* ================= HEADER ================= */}
-        <header className="fixed top-0 left-0 w-full z-50">
+       <header className="fixed top-0 left-0 w-full z-50">
+  {/* Logo - Visible on both mobile and desktop */}
+  <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center">
+   
+<img
+  src={logo1}
+  alt="logo"
+  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+  style={{
+    filter:
+      "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+  }}
+/>
 
-          {/* LOGO */}
-          <div className="fixed top-0 left-0 w-[100px] z-[9999] pointer-events-none flex justify-center">
-            <img
-              src={logo1}
-              alt="logo"
-              className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]
-              drop-shadow-[10px_70px_45px_rgba(255,255,255,0.9)]
-              md:drop-shadow-[10px_50px_50px_rgba(255,255,255,0.95)]"
-            />
-          </div>
 
-          {/* NAVBAR */}
-          <nav className="h-[70px] w-full bg-white flex items-center">
 
-            <div className="w-[30%] md:w-[25%]"></div>
 
-            {/* DESKTOP MENU */}
-            <div className="hidden md:block w-[55%]">
-              <ul
-                className="text-lg text-cyan-900 flex justify-evenly items-center font-bold"
-                style={{ fontFamily: "Playwrite NZ Basic, cursive" }}
-              >
-                <li><Link to="/" className="hover:text-red-600">Home</Link></li>
-                <li><Link to="/about" className="hover:text-red-600">About Us</Link></li>
-                <li><Link to="/courses" className="hover:text-red-600">Our Courses</Link></li>
-                <li><Link to="/student-corner" className="hover:text-red-600">Student Corner</Link></li>
-                <li><Link to="/studio-division" className="hover:text-red-600">Studio Division</Link></li>
-                <li><Link to="/contact" className="hover:text-red-600">Contact Us</Link></li>
-              </ul>
-            </div>
+  </div>
 
-            {/* ENQUIRY BUTTON */}
-            <div className="hidden md:flex w-[15%] justify-center">
-               <button 
-                onClick={() => setShowPopup(true)}
-                className='bg-red-600 text-white text-lg px-5 py-2 rounded hover:bg-red-700 transition-all duration-300 transform hover:scale-105'
-              >
-                Enquiry
-              </button>
-            </div>
+  {/* Navigation */}
+  <nav className="fixed top-0 h-[70px] w-full bg-white flex items-center z-[40]">
+    {/* Left spacer - Different sizes for mobile vs desktop */}
+    <div className='w-[30%] md:w-[25%] h-full'></div>
+    
+    {/* Navigation Menu - Hidden on mobile, visible on desktop */}
+    <div className='hidden md:block w-[55%] h-full'>
+      <ul className='text-lg text-cyan-900 flex justify-evenly items-center mt-5 font-bold' style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+        <li>
+          <Link to='/' className="hover:text-red-600 transition-colors">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link to='/about' className="hover:text-red-600 transition-colors">
+            About Us
+          </Link>
+        </li>
+          <li>
+            <Link to='/courses' className="hover:text-red-600 transition-colors">
+            Our Courses
+          </Link>
+          </li>
+        <li>
+          <Link to='/student-corner' className="hover:text-red-600 transition-colors">
+            Student Corner
+          </Link>
+        </li>
+        <li>
+          <Link to='/studio-division' className="hover:text-red-600 transition-colors">
+            Studio Division
+          </Link>
+        </li>
+        <li>
+          <Link to='/contact' className="hover:text-red-600 transition-colors">
+            Contact Us
+          </Link>
+        </li>
+      </ul>
+    </div> 
+    
+    {/* Enquire Button - Hidden on mobile, visible on desktop */}
+    <div className='hidden md:flex w-[15%] h-full justify-center items-center'>
+      <button 
+        onClick={() => setShowPopup(true)}
+        className='bg-red-600 text-white text-lg px-5 py-2 rounded hover:bg-red-700 transition-colors'
+      >
+        Enquiry
+      </button>
+    </div>
+    
+    {/* Menu Icon - ONLY on mobile */}
+   {/* Mobile Bars Icon */}
+<div className="md:hidden w-[70%] h-full flex justify-end items-center pr-4">
+  <button onClick={toggleMenu}>
+    <i className="fa-solid fa-bars text-cyan-900 text-2xl font-bold cursor-pointer"></i>
+  </button>
+</div>
 
-            {/* MOBILE MENU ICON */}
-            <div className="md:hidden w-[70%] flex justify-end pr-4">
-              <button onClick={toggleMenu}>
-                <i className="fa-solid fa-bars text-cyan-900 text-2xl"></i>
-              </button>
-            </div>
-          </nav>
+{/* Desktop spacer */}
+<div className="hidden md:block w-[5%] h-full"></div>
 
-          {/* MOBILE MENU */}
-          {isMenuOpen && (
-            <>
-              <div className="md:hidden fixed top-[70px] left-0 w-full bg-white z-[9999] shadow-lg">
-                <ul className="flex flex-col">
-                  {[
-                    ['/', 'Home'],
-                    ['/about', 'About Us'],
-                    ['/courses', 'Our Courses'],
-                    ['/student-corner', 'Student Corner'],
-                    ['/studio-division', 'Studio Division'],
-                    ['/contact', 'Contact Us'],
-                  ].map(([path, label]) => (
-                    <li key={label} className="border-b">
-                      <Link
-                        to={path}
-                        onClick={closeMenu}
-                        className="block px-6 py-3 font-bold text-cyan-900 hover:text-red-500"
-                      >
-                        {label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+{/* Mobile Dropdown Menu */}
+{isMenuOpen && (
+  <div className="md:hidden fixed top-[70px] left-0 w-full bg-white z-[9999] shadow-lg">
+    <ul className="flex flex-col py-4">
 
-              <div
-                className="md:hidden fixed inset-0 bg-black/50 z-[9998] top-[70px]"
-                onClick={closeMenu}
-              ></div>
-            </>
-          )}
-        </header>
+      <li className="border-b border-gray-100">
+        <Link
+          to="/"
+          onClick={closeMenu}
+          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
+        >
+          Home
+        </Link>
+      </li>
+
+      <li className="border-b border-gray-100">
+        <Link
+          to="/about"
+          onClick={closeMenu}
+          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
+        >
+          About Us
+        </Link>
+      </li>
+
+      <li className="border-b border-gray-100">
+        <Link
+          to="/courses"
+          onClick={closeMenu}
+          className="flex justify-between items-center px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
+        >
+          Our Courses
+        </Link>
+      </li>
+
+      <li className="border-b border-gray-100">
+        <Link
+          to="/student-corner"
+          onClick={closeMenu}
+          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
+        >
+          Student Corner
+        </Link>
+      </li>
+
+      <li className="border-b border-gray-100">
+        <Link
+          to="/studio-division"
+          onClick={closeMenu}
+          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
+        >
+          Studio Division
+        </Link>
+      </li>
+
+      <li className="border-b border-gray-100">
+        <Link
+          to="/contact"
+          onClick={closeMenu}
+          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
+        >
+          Contact Us
+        </Link>
+      </li>
+
+    </ul>
+  </div>
+)}
+
+{/* Overlay */}
+{isMenuOpen && (
+  <div
+    className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-[9998] top-[70px]"
+    onClick={closeMenu}
+  ></div>
+)}
+</nav>
+</header>
 
         {/* ================= STUDIO DIVISION BOX ================= */}
         <div className="w-full flex justify-center relative z-40">
@@ -152,12 +227,18 @@ opportunities.
               <p className="font-semibold text-gray-800">
                For Studio Work • Collaborations • Job Related Inquiries
               </p>
-              <a
-                href="mailto:info.dreamanimex@gmail.com"
-                className="px-6 py-3 rounded-full bg-yellow-500 text-white font-bold hover:bg-yellow-600"
-              >
-                info.dreamanimex@gmail.com
-              </a>
+           <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-full bg-yellow-500 text-white font-bold hover:bg-yellow-600"
+            >
+               info.dreamanimex@gmail.com
+            </a>
+
+
+
+
             </div>
 
           </div>
@@ -171,11 +252,15 @@ opportunities.
                         {/* Logo + Social */}
                         <div className="w-full md:w-[280px] mb-0 md:mb-0 mt-4">
                           <div className="flex justify-start md:justify-center">
-                            <img
-                              src={logo1}
-                              alt="Dream Animex Logo"
-                              className="w-[90px] h-[110px] md:w-[100px] md:h-[120px] drop-shadow-[10px_70px_50px_rgba(255,255,255,0.9)] md:drop-shadow-[15px_80px_50px_rgba(255,255,255,0.95)]"
-                            />
+                           <img
+                             src={logo1}
+                             alt="logo"
+                              className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+                              style={{
+                                  filter:
+                            "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+                       }}
+                        />
                           </div>
                           <div className="flex mt-6">
                             <div className="w-full h-[50px] flex gap-3 items-center justify-start md:justify-center">
@@ -193,12 +278,15 @@ opportunities.
                               >
                                 <i className="fa-brands fa-instagram text-xl text-white"></i>
                               </Link>
-                              <Link
-                                to="info.dreamanimex@gmail.com"
-                                className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
-                              >
-                                <i className="fa-regular fa-envelope text-white text-xl"></i>
-                              </Link>
+                              <a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
+>
+  <i className="fa-regular fa-envelope text-white text-xl"></i>
+</a>
+
                             </div>
                           </div>
                         </div>
@@ -232,21 +320,43 @@ opportunities.
                           <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Contact Us</h3>
                           <div className="flex items-start mb-3">
                             <i className="fa-solid fa-envelope text-2xl text-white mt-1"></i>
-                            <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                              info.dreamanimex@gmail.com
-                            </p>
+                       <p className="text-white ml-5 break-all">
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+    info.dreamanimex@gmail.com
+  </a>
+</p>
+                         
                           </div>
                           <div className="flex items-start mb-3">
                             <i className="fa-brands fa-instagram text-2xl text-white mt-1"></i>
-                            <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                              instagram.com/dreamanimex
-                            </p>
+                            <p className="text-white ml-5 break-all mt-2">
+  <a
+    href="https://www.instagram.com/dreamanimex/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+   instagram.com/dreamanimex
+  </a>
+</p>
                           </div>
                           <div className="flex items-start mb-3">
                             <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
-                            <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                              linkedin.com/company/dreamanimex
-                            </p>
+                            <p className="text-white ml-5 break-all mt-2">
+  <a
+    href="https://www.linkedin.com/dreamanimex/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+    linkedin.com/company/dreamanimex
+  </a>
+</p>
                           </div>
                           <div className="flex items-start mb-3">
                             <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
@@ -260,7 +370,7 @@ opportunities.
                       {/* Copyright */}
                       <div className="w-full mt-10">
                         <hr className="border-slate-700 w-full md:w-[88%] md:ml-24" />
-                        <p className="text-white text-center text-lg mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+                        <p className="text-white text-center text-base mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
                           © Dream Animex Academy 2026 All rights reserved.
                         </p>
                       </div>
@@ -286,7 +396,8 @@ opportunities.
                               </>
                             )}
                           </div>
-                        </div>
+                         </div>
+                        
                       );
                     };
                     

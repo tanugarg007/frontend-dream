@@ -21,18 +21,22 @@ const UIUXDesign = () => {
         <header className="fixed top-0 left-0 w-full z-50">
           {/* Logo */}
           <div className="fixed top-0 left-0 w-[80px] h-auto md:w-[100px] z-[9999] pointer-events-none flex items-center justify-center">
-            <img
-              src={logo1}
-              alt="logo"
-              className="w-[60px] h-[80px] md:w-[90px] md:h-[110px] drop-shadow-[10px_70px_45px_rgba(255,255,255,0.9)] md:drop-shadow-[10px_50px_50px_rgba(255,255,255,0.95)]"
-            />
+           <img
+             src={logo1}
+             alt="logo"
+             className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+             style={{
+               filter:
+                 "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+             }}
+           />
           </div>
 
           {/* Navigation */}
           <nav className="fixed top-0 h-[70px] w-full bg-white flex items-center z-[40]">
             <div className="w-[30%] md:w-[25%] h-full"></div>
             <div className="hidden md:block w-[55%] h-full">
-              <ul className='text-lg text-cyan-900 flex justify-evenly items-center mt-5 font-bold'>
+              <ul className='text-lg text-cyan-900 flex justify-evenly items-center mt-5 font-bold' style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
                      <li>
                        <Link to='/' className="hover:text-red-600 transition-colors">
                          Home
@@ -306,7 +310,15 @@ const UIUXDesign = () => {
             {/* Logo + Social */}
             <div className="w-full md:w-[280px] mb-4 md:mb-0 mt-4">
               <div className="flex justify-start md:justify-center">
-                <img src={logo1} alt="" className="w-[90px] h-[110px] md:w-[100px] md:h-[120px] drop-shadow-[10px_70px_50px_rgba(255,255,255,0.9)] md:drop-shadow-[15px_80px_50px_rgba(255,255,255,0.95)]" />
+               <img
+                 src={logo1}
+                 alt="logo"
+                 className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+                 style={{
+                   filter:
+                     "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+                 }}
+               />
               </div>
               <div className="flex mt-6 gap-3 justify-start md:justify-center">
                 <Link to="https://www.linkedin.com/company/dreamanimex">
@@ -319,11 +331,14 @@ const UIUXDesign = () => {
                     <i className="fa-brands fa-instagram text-white text-xl"></i>
                   </div>
                 </Link>
-                <Link to="mailto:info.dreamanimex@gmail.com">
-                  <div className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center">
-                    <i className="fa-regular fa-envelope text-white text-xl"></i>
-                  </div>
-                </Link>
+                <a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
+>
+  <i className="fa-regular fa-envelope text-white text-xl"></i>
+</a>
               </div>
             </div>
 
@@ -354,9 +369,36 @@ const UIUXDesign = () => {
             {/* Contact */}
             <div className="w-full md:w-[405px] mt-4 p-2">
               <h3 className="text-white text-2xl md:text-3xl mt-0">Contact Us</h3>
-              <div className='flex flex-row mt-2 items-center'><i className="fa-solid fa-envelope text-2xl text-white"></i><p className='text-white ml-4'>info.dreamanimex@gmail.com</p></div>
-              <div className='flex flex-row mt-2 items-center'><i className="fa-brands fa-instagram text-2xl text-white"></i><p className='text-white ml-4'>https://www.instagram.com/dreamanimex/</p></div>
-              <div className='flex flex-row mt-2 items-center'><i className="fa-brands fa-linkedin-in text-2xl text-white"></i><p className='text-white ml-4'>https://www.linkedin.com/company/dreamanimex</p></div>
+              <div className='flex flex-row mt-2 items-center'><i className="fa-solid fa-envelope text-2xl text-white"></i><p className="text-white ml-5 break-all">
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+    info.dreamanimex@gmail.com
+  </a>
+</p></div>
+              <div className='flex flex-row mt-2 items-center'><i className="fa-brands fa-instagram text-2xl text-white"></i><p className="text-white ml-5 break-all mt-2">
+  <a
+    href="https://www.instagram.com/dreamanimex/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+   instagram.com/dreamanimex
+  </a>
+</p></div>
+              <div className='flex flex-row mt-2 items-center'><i className="fa-brands fa-linkedin-in text-2xl text-white"></i><p className="text-white ml-5 break-all mt-2">
+  <a
+    href=" https://www.linkedin.com/company/dreamanimex/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline "
+  >
+    linkedin.com/company/dreamanimex
+  </a>
+</p></div>
               <div className='flex flex-row mt-2 items-center'><i className="fa-solid fa-phone text-2xl text-white"></i><p className='text-white ml-4'>9888695595</p></div>
             </div>
           </div>

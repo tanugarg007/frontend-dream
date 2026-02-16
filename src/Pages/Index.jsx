@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo1 from '../Images/dream-anim-logo.png'
 import logo2 from '../Images/images.jpg'
-import logo7 from '../Images/image.jpg'
+import logo7 from '../Images/graphic des.jpg'
 import logo11 from '../Images/about1.jpg'
-import logo3 from '../Images/animations.jpg'
-import logo4 from '../Images/Bsc-degree.jpg'
-import logo5 from '../Images/animation1.jpg'
-import logo6 from '../Images/animation3.jpg'
+import logo3 from '../Images/video edt.jpg'
+import logo4 from '../Images/uiux.jpg'
+import logo5 from '../Images/digitalmark1.jpg'
+import logo6 from '../Images/uiandgraphic.jpg'
 import logo9 from '../Images/page-background.JPG'
 import logo13 from '../Images/faq1.jpg'
-import { FaBars, FaFacebookF, FaInstagram, FaYoutube, } from 'react-icons/fa';
+
 import {FaPlus} from "react-icons/fa";
 import {FaMinus} from "react-icons/fa";
 import img1 from "../Images/img1.png";
@@ -22,7 +22,7 @@ import img4 from '../Images/img4.png';
 const Index = () => {
    const [openIndex, setOpenIndex] = useState(null);
 const [hoverIndex, setHoverIndex] = useState(false);
-const [openCourses, setOpenCourses] = useState(false);
+
  const [isMenuOpen, setIsMenuOpen] = useState(false);
  const [current, setCurrent] = useState(0);
 
@@ -72,12 +72,15 @@ const closeMenu = () => {
 <header className="fixed top-0 left-0 w-full z-50">
   {/* Logo - Visible on both mobile and desktop */}
   <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center">
-   
-      <img 
-        src={logo1} 
-        alt="logo" 
-        className="w-[70px] h-[90px] md:w-[90px] md:h-[110px] drop-shadow-[10px_70px_45px_rgba(255,255,255,0.9)] md:drop-shadow-[10px_50px_50px_rgba(255,255,255,0.95)] " 
-      />
+   <img
+  src={logo1}
+  alt="logo"
+  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+  style={{
+    filter:
+      "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+  }}
+/>
    
   </div>
 
@@ -104,11 +107,9 @@ const closeMenu = () => {
             Our Courses
           </Link>
           </li>
-        <li>
-          <Link to='/student-corner' className="hover:text-red-600 transition-colors">
+        <li className="hover:text-red-600 transition-colors">
             Student Corner
-          </Link>
-        </li>
+                 </li>
         <li>
           <Link to='/studio-division' className="hover:text-red-600 transition-colors">
             Studio Division
@@ -256,19 +257,26 @@ const closeMenu = () => {
  <div className='w-full h-auto  top-[664px] left-0 '>
   <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-3'>
     {/* First row */}
-     <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0'>
-      <div className='w-full h-48 md:h-[36%] rounded-2xl'>
+     <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0 '>
+      <div className='w-full h-[200px] md:h-[36%] rounded-2xl'>
         <img src={logo7} alt='' className='w-full h-full rounded-2xl object-cover'/>
       </div>
-      <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-xl font-bold text-center'>MASTER PROG IN ANIMATION</h3>
+      <div className='w-full h-auto min-h-[50px] md:h-[12%] border-[1px] border-solid border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
+        <h3 className='text-white text-lg md:text-3xl font-bold text-center'>Graphic Design</h3>
       </div>
       <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-8 md:pt-3 text-lg md:text-lg'>Welcome to the Master Program in Animation at Reliance Animation Academy. The Master Program is a comprehensive 30-months journey</p>
+        <p className='text-white text-center p-4 md:p-8 md:pt-3 text-lg md:text-lg'>Graphic design is the visual communication of ideas through typography, imagery, and color, focusing on balancing aesthetics with functionality.</p>
       </div>
-      <div className='w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0'>
-        <button className='text-white border-[1px] border-solid border-white px-8 md:px-14 py-2 md:py-1 rounded-full text-sm md:text-lg font-bold bg-yellow-500'>Read More</button>
-      </div>
+      <div className="w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0">
+  <Link to="/graphic-design">
+    <button
+      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-yellow-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
+    >
+      Read More
+    </button>
+  </Link>
+</div>
+
     </div>
     
      <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0 '>
@@ -276,14 +284,20 @@ const closeMenu = () => {
         <img src={logo3} alt='' className='w-full h-full rounded-2xl object-cover'/>
       </div>
       <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-red-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-xl font-bold text-center'>B.VOC DEGREE IN ANIMATION</h3>
+        <h3 className='text-white text-lg md:text-3xl font-bold text-center'>Video Editing</h3>
       </div>
       <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>Welcome to the B.Voc. Degree in Animation program at Reliance Animation Academy, in affiliation with Savitribai Phule Pune University, Pune.</p>
+        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>Video editing involves manipulating video and audio to create a compelling narrative, utilizing techniques like B-roll for context, color correction for consistency, and cutting to pacing.</p>
       </div>
-      <div className='w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0'>
-        <button className='text-white border-[1px] border-solid border-white px-8 md:px-14 py-2 md:py-1 rounded-full text-sm md:text-lg font-bold bg-red-500'>Read More</button>
-      </div>
+     <div className="w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0">
+  <Link to="/video-editing">
+    <button
+      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-red-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
+    >
+      Read More
+    </button>
+  </Link>
+</div>
     </div> 
     
      <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0'>
@@ -291,13 +305,19 @@ const closeMenu = () => {
         <img src={logo4} alt='' className='w-full h-full rounded-2xl object-cover'/>
       </div>
       <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-xl font-bold text-center'>B.SC. DEGREE IN ANIMATION</h3>
+        <h3 className='text-white text-lg md:text-3xl font-bold text-center'>UI & UX Design</h3>
       </div>
       <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>Welcome to the B.Sc. Degree in Animation program at Reliance Animation Academy, affiliated with Savitribai Phule Pune University.</p>
+        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>UI/UX design focuses on creating intuitive, user-centered digital experiences where functionality meets aesthetics. </p>
       </div>
       <div className='w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0'>
-        <button className='text-white border-[1px] border-solid border-white px-8 md:px-14 py-2 md:py-1 rounded-full text-sm md:text-lg font-bold bg-yellow-500'>Read More</button>
+         <Link to="/ui&ux-design">
+    <button
+      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-yellow-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
+    >
+      Read More
+      </button>
+      </Link>
       </div>
     </div>
   </div> 
@@ -309,14 +329,20 @@ const closeMenu = () => {
         <img src={logo5} alt='' className='w-full h-full rounded-2xl object-cover'/>
       </div>
       <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-red-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-xl font-bold text-center'>ADV PROG IN 2D ANIMATION</h3>
+        <h3 className='text-white text-lg md:text-2xl font-bold text-center'>Digital Marketing</h3>
       </div>
       <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>Welcome to Reliance Animation Academy's, Advanced Program in 2D Animation.This is a comprehensive 12 months journey into the world of 2D</p>
+        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>Digital marketing combines creativity with technology, using data-driven strategies—SEO, social media, and content—to connect directly with audiences. </p>
       </div>
-      <div className='w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0'>
-        <button className='text-white border-[1px] border-solid border-white px-8 md:px-14 py-2 md:py-1 rounded-full text-sm md:text-lg font-bold bg-red-500'>Read More</button>
-      </div>
+      <div className="w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0">
+  <Link to="/digital-marketing">
+    <button
+      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-red-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
+    >
+      Read More
+    </button>
+  </Link>
+</div>
     </div>
      
      <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0'>
@@ -324,13 +350,19 @@ const closeMenu = () => {
         <img src={logo6} alt='' className='w-full h-full rounded-2xl object-cover'/>
       </div>
       <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-xl font-bold text-center'>ADV PROG IN 3D ANIMATION</h3>
+        <h3 className='text-white text-lg md:text-xl font-bold text-center'>Graphic Design and UI/UX Design</h3>
       </div>
       <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-6 md:pt-1 text-lg md:text-lg'>Welcome to Reliance Animation Academy's, Advanced Program in 3D Animation. Unlock the full potential of Autodesk Maya and become a 3D animation and modelling expert.</p>
+        <p className='text-white text-center p-4 md:p-6 md:pt-1 text-lg md:text-lg'>Graphic and UI/UX design focuses on merging aesthetics with functionality, aiming to create intuitive, user-centered experiences.</p>
       </div>
       <div className='w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0'>
-        <button className='text-white border-[1px] border-solid border-white px-8 md:px-14 py-2 md:py-1 rounded-full text-sm md:text-lg font-bold bg-yellow-500 '>Read More</button>
+         <Link to="/graphic&uiux">
+    <button
+      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-yellow-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
+    >
+      Read More
+      </button>
+      </Link>
       </div>
     </div>
   </div>
@@ -344,13 +376,13 @@ const closeMenu = () => {
   </div>
 
   <h2 className="text-white text-2xl md:text-4xl mt-6 md:mt-6 ml-4 md:ml-16 font-bold">
-    The Choice Of Future Animators & VFX Artists
+    The Choice Of Future Professionals
   </h2>
 
   <p className="text-white text-xl md:text-base mt-6 md:mt-6 ml-4 md:ml-16">
-    Reliance Academy enables you to learn from industry experts with hands-on training,
+    Dream Academy enables you to learn from industry experts with hands-on training,
     cutting-edge tools, and real-world projects. We offer career-focused programs in
-    Animation, VFX, Motion Graphics, Game Design, and Graphic Design for a successful
+    Graphic Design, Video Editing, UI/UX Design, and Digital Marketing for a successful
     creative future.
   </p>
 
@@ -377,7 +409,7 @@ const closeMenu = () => {
     <img 
       src={logo11} 
       alt="Animation Visual" 
-      className="w-[90%] md:w-[80%] h-auto md:h-[80%]"
+      className="w-[90%] md:w-[80%] h-auto md:h-[80%] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700"
     />
   </div>
 
@@ -385,7 +417,7 @@ const closeMenu = () => {
           
           <div className='w-full h-auto  md:h-[500px]  flex flex-col md:flex-row'>
              <div className='w-full md:w-[30%] h-auto md:h-full flex justify-center items-center py-6 md:py-0'>
-                  <img src={logo13} alt='' className='w-[260px] h-[300px] md:w-[340px] md:h-[380px] '/>
+                  <img src={logo13} alt='' className='w-[260px] h-[300px] md:w-[340px] md:h-[380px] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700'/>
              </div>
              <div className='w-full md:w-[70%] h-auto md:h-full '>
                  <div className='w-full h-auto md:h-[24%] '>
@@ -617,11 +649,15 @@ const closeMenu = () => {
                {/* Logo + Social */}
                <div className="w-full md:w-[280px] mb-0 md:mb-0 mt-4">
                  <div className="flex justify-start md:justify-center">
-                   <img
-                     src={logo1}
-                     alt="Dream Animex Logo"
-                     className="w-[90px] h-[110px] md:w-[100px] md:h-[120px] drop-shadow-[10px_70px_50px_rgba(255,255,255,0.9)] md:drop-shadow-[15px_80px_50px_rgba(255,255,255,0.95)]"
-                   />
+                <img
+  src={logo1}
+  alt="logo"
+  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+  style={{
+    filter:
+      "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+  }}
+/>
                  </div>
                  <div className="flex mt-6">
                    <div className="w-full h-[50px] flex gap-3 items-center justify-start md:justify-center">
@@ -639,12 +675,14 @@ const closeMenu = () => {
                      >
                        <i className="fa-brands fa-instagram text-xl text-white"></i>
                      </Link>
-                     <Link
-                       to="info.dreamanimex@gmail.com"
-                       className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
-                     >
-                       <i className="fa-regular fa-envelope text-white text-xl"></i>
-                     </Link>
+                     <a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
+>
+  <i className="fa-regular fa-envelope text-white text-xl"></i>
+</a>
                    </div>
                  </div>
                </div>
@@ -678,21 +716,42 @@ const closeMenu = () => {
                  <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Contact Us</h3>
                  <div className="flex items-start mb-3">
                    <i className="fa-solid fa-envelope text-2xl text-white mt-1"></i>
-                   <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                     info.dreamanimex@gmail.com
-                   </p>
+                    <p className="text-white ml-5 break-all">
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+    info.dreamanimex@gmail.com
+  </a>
+</p>
                  </div>
                  <div className="flex items-start mb-3">
                    <i className="fa-brands fa-instagram text-2xl text-white mt-1"></i>
-                   <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                     instagram.com/dreamanimex
-                   </p>
+                   <p className="text-white ml-5 break-all mt-2">
+  <a
+    href="https://www.instagram.com/dreamanimex/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline"
+  >
+   instagram.com/dreamanimex
+  </a>
+</p>
                  </div>
                  <div className="flex items-start mb-3">
                    <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
-                   <p className="text-white ml-5 hover:text-red-400 transition-colors break-all">
-                     linkedin.com/company/dreamanimex
-                   </p>
+                   <p className="text-white ml-5 break-all mt-2">
+  <a
+    href=" https://www.linkedin.com/company/dreamanimex/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-red-400 transition-colors underline "
+  >
+    linkedin.com/company/dreamanimex
+  </a>
+</p>
                  </div>
                  <div className="flex items-start mb-3">
                    <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
@@ -706,7 +765,7 @@ const closeMenu = () => {
              {/* Copyright */}
              <div className="w-full mt-10">
                <hr className="border-slate-700 w-full md:w-[88%] md:ml-24" />
-               <p className="text-white text-center text-lg mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+               <p className="text-white text-center text-base mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
                  © Dream Animex Academy 2026 All rights reserved.
                </p>
              </div>
