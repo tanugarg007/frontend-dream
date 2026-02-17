@@ -15,7 +15,7 @@ const About = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openCourses, setOpenCourses] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
- 
+  const [hoverIndex,setHoverIndex]= useState(null);
   const toggleAnswer = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -49,13 +49,13 @@ const About = () => {
              className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
              style={{
                filter:
-                 "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+                 "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
              }}
            />
           </div>
 
           {/* Navigation */}
-          <nav className="fixed top-0 h-[70px] w-full bg-white flex items-center z-[40] shadow-md">
+          <nav className="fixed top-0 h-[70px] w-full bg-white flex items-center z-[40] ">
             <div className="w-[30%] md:w-[25%] h-full"></div>
 
             {/* Desktop Navigation */}
@@ -104,10 +104,10 @@ const About = () => {
                     </li>
                   </ul> 
                 </li>
-                <li>
-                  <Link to='/student-corner' className="hover:text-red-600 transition-colors duration-300">
+                <li
+                  className="hover:text-red-600 transition-colors duration-300">
                     Student Corner
-                  </Link>
+                  
                 </li>
                 <li>
                   <Link to='/studio-division' className="hover:text-red-600 transition-colors duration-300">
@@ -183,7 +183,7 @@ const About = () => {
                           <Link to="/graphic-design" onClick={closeMenu}>Graphic Design</Link>
                         </li>
                         <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
-                          <Link to="/ui-ux-design" onClick={closeMenu}>UI / UX Design</Link>
+                          <Link to="/ui&ux-design" onClick={closeMenu}>UI / UX Design</Link>
                         </li>
                         <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
                           <Link to="/video-editing" onClick={closeMenu}>Video Editing</Link>
@@ -192,20 +192,14 @@ const About = () => {
                           <Link to="/digital-marketing" onClick={closeMenu}>Digital Marketing</Link>
                         </li>
                         <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
-                          <Link to="/video-graphic-design" onClick={closeMenu}>Graphic Design & Video Editing</Link>
+                          <Link to="/graphic&uiux" onClick={closeMenu}>Graphic Design & UI/UX Design</Link>
                         </li>
                       </ul>
                     )}
                   </li>
-                  <li className="border-b border-gray-100">
-                    <Link
-                      to='/student-corner'
-                      onClick={closeMenu}
-                      className="px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 block hover:text-red-500 transition-colors"
-                    >
-                      Student Corner
-                    </Link>
-                  </li>
+                  <li className="border-b border-gray-100 text-cyan-900 font-bold text-lg  hover:text-red-500 px-6 py-3">
+                             Student Corner
+                          </li>
                   <li className="border-b border-gray-100">
                     <Link
                       to='/studio-division'
@@ -303,57 +297,221 @@ const About = () => {
                 </div>
               </div>
               <h2
-                className="text-white text-3xl md:text-4xl ml-5 mt-4 font-bold"
+                className="text-white text-2xl md:text-4xl ml-5 mt-4 font-bold"
                 style={{ fontFamily: "Playwrite NZ Basic, cursive" }}
               >
                 Frequently Asked Questions
               </h2>
             </div>
 
-            <div className="w-full mt-6">
-              {[
-                {
-                  q: "01. What programs are available at Dream Animex?",
-                  a: "We offer professional programs in Animation, VFX, Motion Graphics, Graphic Design, UI/UX, Game Design, and Digital Media, designed for both beginners and advanced learners."
-                },
-                {
-                  q: "02. Are the courses beginner-friendly?",
-                  a: "Yes, our courses are designed for beginners as well as aspiring professionals, with step-by-step training and hands-on projects."
-                },
-                {
-                  q: "03. Will I get practical and project-based training?",
-                  a: "Absolutely. Students work on real-world projects, studio workflows, and portfolio development throughout the course."
-                },
-                {
-                  q: "04. What software and tools will I learn?",
-                  a: "You will train on industry-standard tools like Autodesk Maya, Adobe Creative Suite, Unreal Engine, and other professional software."
-                },
-                {
-                  q: "05. Do you offer flexible or part-time learning options?",
-                  a: "Yes, we offer flexible learning modes including full-time, part-time, and blended learning options to suit different needs."
-                }
-              ].map((item, index) => (
+               <div className='w-full h-auto md:h-[75%] mt-4 md:mt-0 '>
+                                 <div className={`w-full relative py-2 cursor-pointer transition-colors duration-300 mt-1
+               ${
+                 hoverIndex === 0 && openIndex !== 0
+                   ? "text-blue-400"
+                   : openIndex === 0 && hoverIndex === 0
+                   ? "text-blue-400"
+                   : "text-white"
+               }`}
+             onMouseEnter={() => setHoverIndex(0)}
+             onMouseLeave={() => setHoverIndex(null)}
+             onClick={() => setOpenIndex(openIndex === 0 ? null : 0)}
+           >
+             {/* Question */}
+             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
+               01. What programs are available at Reliance Animation Academy?
+             </p>
+           
+             {/* Icon */}
+             <span
+               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
+                 ${
+                   hoverIndex === 0 && openIndex !== 0
+                     ? "text-blue-400"
+                     : openIndex === 0 && hoverIndex === 0
+                     ? "text-blue-400"
+                     : "text-white"
+                 }`}
+             >
+               {openIndex === 0 ? <FaMinus /> : <FaPlus />}
+             </span>
+           
+             {/* Answer */}
+             {openIndex === 0 && (
+               <p
+                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
+                 onMouseEnter={() => setHoverIndex(null)} // 👈 answer par hover → question white
+               >
+                 We offer degree, diploma, and certificate programs in Animation, VFX,
+                 Motion Graphics, Game Design, Web/UI-UX, Graphic Design, and Digital Editing.
+               </p>
+             )}
+           
+             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
+           </div>
                 <div
-                  key={index}
-                  className={`relative py-3 cursor-pointer transition-all duration-300 hover:bg-black hover:bg-opacity-20 rounded-lg
-                    ${openIndex === index ? "text-blue-400" : "text-white"}`}
-                  onClick={() => toggleAnswer(index)}
-                >
-                  <p className="text-xl ml-5 pr-10 font-medium">
-                    {item.q}
-                  </p>
-                  <span className="absolute right-5 top-4 text-2xl transition-transform duration-300 hover:scale-110">
-                    {openIndex === index ? <FaMinus /> : <FaPlus />}
-                  </span>
-                  {openIndex === index && (
-                    <p className="text-lg ml-5 mt-2 leading-relaxed text-white pr-10">
-                      {item.a}
-                    </p>
-                  )}
-                  <hr className="border-stone-400 w-[95%] ml-5 mt-3" />
-                </div>
-              ))}
-            </div>
+             className={`w-full relative py-2 cursor-pointer transition-colors duration-300
+               ${
+                 hoverIndex === 1
+                   ? "text-blue-400"
+                   : "text-white"
+               }`}
+             onMouseEnter={() => setHoverIndex(1)}
+             onMouseLeave={() => setHoverIndex(null)}
+             onClick={() => setOpenIndex(openIndex === 1 ? null : 1)}
+           >
+             {/* Question */}
+             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
+               02. What is the eligibility for these programs?
+             </p>
+           
+             {/* Icon */}
+             <span
+               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
+                 ${
+                   hoverIndex === 1
+                     ? "text-blue-400"
+                     : "text-white"
+                 }`}
+             >
+               {openIndex === 1 ? <FaMinus /> : <FaPlus />}
+             </span>
+           
+             {/* Answer */}
+             {openIndex === 1 && (
+               <p
+                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
+                 onMouseEnter={() => setHoverIndex(null)}
+               >
+                 The programs are open to students who have completed their 10+2 or equivalent.
+                 At the point when a student is promoted to an advanced or master’s program,
+                 basic computer knowledge and an interest in being creative are recommended.
+               </p>
+             )}
+           
+             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
+           </div>
+                 <div
+             className={`w-full relative py-2 cursor-pointer transition-colors duration-300
+               ${
+                 hoverIndex === 2
+                   ? "text-blue-400"
+                   : "text-white"
+               }`}
+             onMouseEnter={() => setHoverIndex(2)}
+             onMouseLeave={() => setHoverIndex(null)}
+             onClick={() => setOpenIndex(openIndex === 2 ? null : 2)}
+           >
+             {/* Question */}
+             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
+              03. Are the courses beginner-friendly?
+             </p>
+           
+             {/* Icon */}
+             <span
+               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
+                 ${
+                   hoverIndex === 2
+                     ? "text-blue-400"
+                     : "text-white"
+                 }`}
+             >
+               {openIndex === 2 ? <FaMinus /> : <FaPlus />}
+             </span>
+           
+             {/* Answer */}
+             {openIndex === 2 && (
+               <p
+                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
+                 onMouseEnter={() => setHoverIndex(null)}
+               >
+                 Yes, our programs are designed for beginners as well as advanced learners, and students are guided through steps, receive practical training, and work in real-world projects.
+               </p>
+             )}
+           
+             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
+           </div>
+                     <div
+             className={`w-full relative py-2 cursor-pointer transition-colors duration-300
+               ${
+                 hoverIndex === 3
+                   ? "text-blue-400"
+                   : "text-white"
+               }`}
+             onMouseEnter={() => setHoverIndex(3)}
+             onMouseLeave={() => setHoverIndex(null)}
+             onClick={() => setOpenIndex(openIndex === 3 ? null : 3)}
+           >
+             {/* Question */}
+             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
+              04. What tools and software will I learn?
+             </p>
+           
+             {/* Icon */}
+             <span
+               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
+                 ${
+                   hoverIndex === 3
+                     ? "text-blue-400"
+                     : "text-white"
+                 }`}
+             >
+               {openIndex === 3 ? <FaMinus /> : <FaPlus />}
+             </span>
+           
+             {/* Answer */}
+             {openIndex === 3 && (
+               <p
+                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
+                 onMouseEnter={() => setHoverIndex(null)}
+               >
+                Students use industry-standard software such as Autodesk Maya, Adobe Creative Suite, Nuke, and Unreal Engine, which prepares them for industry readiness.
+               </p>
+             )}
+           
+             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
+           </div>
+                                  <div
+             className={`w-full relative py-2 cursor-pointer transition-colors duration-300
+               ${
+                 hoverIndex === 4
+                   ? "text-blue-400"
+                   : "text-white"
+               }`}
+             onMouseEnter={() => setHoverIndex(4)}
+             onMouseLeave={() => setHoverIndex(null)}
+             onClick={() => setOpenIndex(openIndex === 4 ? null : 4)}
+           >
+             {/* Question */}
+             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
+              05. Can I take a part-time or online course?
+             </p>
+           
+             {/* Icon */}
+             <span
+               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
+                 ${
+                   hoverIndex === 4
+                     ? "text-blue-400"
+                     : "text-white"
+                 }`}
+             >
+               {openIndex === 4 ? <FaMinus /> : <FaPlus />}
+             </span>
+           
+             {/* Answer */}
+             {openIndex === 4 && (
+               <p
+                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
+                 onMouseEnter={() => setHoverIndex(null)}
+               >
+               Yes. We have flexible learning options, so you can either study full-time, part-time, or take a blended online option for your program to fit your learning needs.
+               </p>
+             )}
+           
+             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
+           </div>    
+                             </div>
           </div>
         </div>
 
@@ -373,7 +531,7 @@ const About = () => {
                  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
                  style={{
                    filter:
-                     "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+                     "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
                  }}
                />
               </div>
@@ -483,7 +641,7 @@ const About = () => {
           {/* Copyright */}
           <div className="w-full mt-10">
             <hr className="border-slate-700 w-full md:w-[88%] md:ml-24" />
-            <p className="text-white text-center text-lg mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+            <p className="text-white text-center text-base mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
               © Dream Animex Academy 2026 All rights reserved.
             </p>
           </div>
@@ -555,9 +713,7 @@ const SimpleEnquiryForm = ({ onClose }) => {
     }
     if(!formData.phone.trim()){
        newErrors.phone = 'Course is required';
-    } else if (!/^[^\s@]+$/.test(formData.course)) {
-      newErrors.course = 'Please enter a valid course';
-    }
+    } 
     // Message validation
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required';

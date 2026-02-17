@@ -11,6 +11,7 @@ import logo11 from '../Images/uiandgraphic.jpg'
 const OurCourses =()=>{
     const [isMenuOpen, setIsMenuOpen] = useState(false);
      const [showPopup, setShowPopup] = useState(false);
+     const [openCourses, setOpenCourses] = useState(false);
       const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
     };
@@ -31,7 +32,7 @@ const OurCourses =()=>{
      className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
      style={{
        filter:
-         "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+         "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
      }}
    />
    
@@ -60,10 +61,10 @@ const OurCourses =()=>{
             Our Courses
           </Link>
           </li>
-        <li>
-          <Link to='/student-corner' className="hover:text-red-600 transition-colors">
+        <li
+          className="hover:text-red-600 transition-colors">
             Student Corner
-          </Link>
+          
         </li>
         <li>
           <Link to='/studio-division' className="hover:text-red-600 transition-colors">
@@ -121,26 +122,37 @@ const OurCourses =()=>{
               About Us
             </Link>
           </li>
-    
-          <li className="border-b border-gray-100">
-            <Link
-              to="/courses"
-              onClick={closeMenu}
-              className="flex justify-between items-center px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-            >
-              Our Courses
-            </Link>
-          </li>
-    
-          <li className="border-b border-gray-100">
-            <Link
-              to="/student-corner"
-              onClick={closeMenu}
-              className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-            >
-              Student Corner
-            </Link>
-          </li>
+      <li className="border-b border-gray-100">
+                        <button
+                          onClick={() => setOpenCourses(!openCourses)}
+                          className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500 transition-colors"
+                        >
+                          Our Courses
+                          <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? "rotate-180" : ""}`} />
+                        </button>
+                        {openCourses && (
+                          <ul className="bg-gray-50">
+                            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                              <Link to="/graphic-design" onClick={closeMenu}>Graphic Design</Link>
+                            </li>
+                            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                              <Link to="/ui&ux-design" onClick={closeMenu}>UI / UX Design</Link>
+                            </li>
+                            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                              <Link to="/video-editing" onClick={closeMenu}>Video Editing</Link>
+                            </li>
+                            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                              <Link to="/digital-marketing" onClick={closeMenu}>Digital Marketing</Link>
+                            </li>
+                            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                              <Link to="/graphicuiux" onClick={closeMenu}>Graphic Design & UI/UX Design</Link>
+                            </li>
+                          </ul>
+                        )}
+                      </li>
+     <li className="border-b border-gray-100 text-cyan-900 font-bold text-lg  hover:text-red-500 px-6 py-3">
+                             Student Corner
+                          </li>
     
           <li className="border-b border-gray-100">
             <Link
@@ -197,7 +209,7 @@ const OurCourses =()=>{
       </div>
 
       <div className="w-full h-[15%] px-6 flex items-center bg-gradient-to-r from-gray-900 to-gray-800">
-        <h2 className="text-3xl lg:text-3xl text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
+        <h2 className="text-2xl lg:text-3xl text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
           Graphic Design Course (4 Months)
         </h2>
       </div>
@@ -219,7 +231,7 @@ const OurCourses =()=>{
       </div>
 
       <div className="w-full h-[15%] px-6 flex items-center">
-        <h2 className="text-3xl lg:text-3xl text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
+        <h2 className="text-2xl lg:text-3xl text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
           Video Editing Course (4 Months)
         </h2>
       </div>
@@ -241,7 +253,7 @@ const OurCourses =()=>{
       </div>
 
       <div className="w-full h-[15%] px-6 flex items-center">
-        <h2 className="text-3xl lg:text-3xl text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
+        <h2 className="text-2xl lg:text-3xl text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
           UI & UX Design Course (4 Months)
         </h2>
       </div>
@@ -265,7 +277,7 @@ const OurCourses =()=>{
       </div>
 
       <div className="w-full h-[15%] px-6 flex items-center">
-        <h2 className="text-3xl  text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
+        <h2 className="text-2xl lg:text-3xl  text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
           Digital Marketing (6 Months)
         </h2>
       </div>
@@ -285,7 +297,7 @@ const OurCourses =()=>{
       </div>
 
       <div className="w-full h-[15%] px-6 flex items-center">
-        <h2 className="text-2xl  text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
+        <h2 className="text-xl lg:text-3xl  text-white font-bold" style={{ fontFamily: "Dancing Script, cursive" }}>
           Graphic Design and UI & UX Design Course (6 Months)
         </h2>
       </div>
@@ -319,7 +331,7 @@ const OurCourses =()=>{
                  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
                  style={{
                    filter:
-                     "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+                     "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
                  }}
                />
               </div>
@@ -498,8 +510,6 @@ const OurCourses =()=>{
             }
             if(!formData.course.trim()){
               newErrors.course = 'Course is required';
-            } else if (!/^[^\s@]+$/.test(formData.course)) {
-              newErrors.course = 'Please enter a valid course';
             }
             // Message validation
             if (!formData.message.trim()) {

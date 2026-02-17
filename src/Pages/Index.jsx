@@ -23,6 +23,9 @@ import img4 from '../Images/img4.png';
 const Index = () => {
    const [openIndex, setOpenIndex] = useState(null);
 const [hoverIndex, setHoverIndex] = useState(false);
+const [openCourses, setOpenCourses] = useState(false);
+const [popupType, setPopupType] = useState(null); 
+
 
  const [isMenuOpen, setIsMenuOpen] = useState(false);
  const [current, setCurrent] = useState(0);
@@ -30,17 +33,25 @@ const [hoverIndex, setHoverIndex] = useState(false);
   // State for Enquiry Popup
   const [showPopup, setShowPopup] = useState(false);
 
-  // Effect to show popup only on initial site visit (new tab/window)
-  useEffect(() => {
-  if (typeof window !== "undefined") {
-    const hasPopupShown = sessionStorage.getItem("enquiryPopupShown");
+    useEffect(() => {
+  const autoPopupClosed = sessionStorage.getItem("autoPopupClosed");
 
-    if (hasPopupShown !== "true") {
-      setShowPopup(true);
-      sessionStorage.setItem("enquiryPopupShown", "true");
-    }
+  if (autoPopupClosed !== "true") {
+    setShowPopup(true);
+    setPopupType("auto");
   }
 }, []);
+
+  // Effect to show popup only on initial site visit (new tab/window)
+  useEffect(() => {
+  const hasPopupShown = sessionStorage.getItem("enquiryPopupShown");
+
+  if (hasPopupShown !== "true") {
+    setShowPopup(true);
+    sessionStorage.setItem("enquiryPopupShown", "true");
+  }
+}, []);
+
 
         const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
@@ -75,7 +86,7 @@ const closeMenu = () => {
   className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
   style={{
     filter:
-      "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+      "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
   }}
 />
    
@@ -150,12 +161,17 @@ const closeMenu = () => {
     
     {/* Enquire Button - Hidden on mobile, visible on desktop */}
     <div className='hidden md:flex w-[15%] h-full justify-center items-center'>
-      <button 
-        onClick={() => setShowPopup(true)}
-        className='bg-red-600 text-white text-lg px-5 py-2 rounded hover:bg-red-700 transition-colors'
-      >
-        Enquiry
-      </button>
+    <button
+  onClick={() => {
+     setPopupType("manual");
+    setShowPopup(true);
+    
+  }}
+  className="bg-red-600 text-white text-lg px-5 py-2 rounded"
+>
+  Enquiry
+</button>
+
     </div>
     
     {/* Menu Icon - ONLY on mobile */}
@@ -194,24 +210,41 @@ const closeMenu = () => {
         </Link>
       </li>
 
-      <li className="border-b border-gray-100">
-        <Link
-          to="/courses"
-          onClick={closeMenu}
-          className="flex justify-between items-center px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-        >
-          Our Courses
-        </Link>
-      </li>
+       <li className="border-b border-gray-100">
+                         <button
+                           onClick={() => setOpenCourses(!openCourses)}
+                           className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500 transition-colors"
+                         >
+                           Our Courses
+                           <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? "rotate-180" : ""}`} />
+                         </button>
+                         {openCourses && (
+                           <ul className="bg-gray-50">
+                             <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                               <Link to="/graphic-design" onClick={closeMenu}>Graphic Design</Link>
+                             </li>
+                             <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                               <Link to="/ui&ux-design" onClick={closeMenu}>UI / UX Design</Link>
+                             </li>
+                             <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                               <Link to="/video-editing" onClick={closeMenu}>Video Editing</Link>
+                             </li>
+                             <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                               <Link to="/digital-marketing" onClick={closeMenu}>Digital Marketing</Link>
+                             </li>
+                             <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                               <Link to="/graphicuiux" onClick={closeMenu}>Graphic Design & UI/UX Design</Link>
+                             </li>
+                           </ul>
+                         )}
+                       </li>
 
-      <li className="border-b border-gray-100">
-        <Link
-          to="/student-corner"
-          onClick={closeMenu}
-          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-        >
+      <li className="border-b border-gray-100 text-cyan-900 font-bold text-lg  hover:text-red-500 px-6 py-3">
+       
+        
+        
           Student Corner
-        </Link>
+     
       </li>
 
       <li className="border-b border-gray-100">
@@ -280,119 +313,199 @@ const closeMenu = () => {
 
         
  <div className='w-full h-auto  top-[664px] left-0 '>
-  <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-3 border border-white'>
+  <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-3 '>
     {/* First row */}
-     <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0 '>
-      <div className='w-full h-[200px] md:h-[36%] rounded-2xl'>
-        <img src={logo7} alt='' className='w-full h-full rounded-2xl object-cover'/>
-      </div>
-      <div className='w-full h-auto min-h-[50px] md:h-[12%] border-[1px] border-solid border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-3xl font-bold text-center'>Graphic Design</h3>
-      </div>
-      <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-8 md:pt-3 text-lg md:text-lg'>Graphic design is the visual communication of ideas through typography, imagery, and color, focusing on balancing aesthetics with functionality.</p>
-      </div>
-      <div className="w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0">
-  <Link to="/graphic-design">
-    <button
-      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-yellow-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
-    >
-      Read More
-    </button>
-  </Link>
+<div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border border-white rounded-2xl p-3 flex flex-col hover:bg-cyan-950">
+
+  {/* IMAGE BOX – NEVER SMALL */}
+  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+  <img
+  src={logo7}
+  className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
+  alt="Graphic Design"
+/>
+
 </div>
 
+
+  {/* TITLE */}
+  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+      Graphic Design
+    </h3>
     </div>
-    
-     <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0 '>
-      <div className='w-full h-48 md:h-[36%] rounded-2xl'>
-        <img src={logo3} alt='' className='w-full h-full rounded-2xl object-cover'/>
-      </div>
-      <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-red-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-3xl font-bold text-center'>Video Editing</h3>
-      </div>
-      <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>Video editing involves manipulating video and audio to create a compelling narrative, utilizing techniques like B-roll for context, color correction for consistency, and cutting to pacing.</p>
-      </div>
-     <div className="w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0">
-  <Link to="/video-editing">
-    <button
-      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-red-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
-    >
+
+  {/* DESCRIPTION */}
+  <div className="w-full flex-1 md:h-[20%] mt-3">
+    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
+      Graphic design is the visual communication of ideas through typography,
+      imagery, and color, focusing on balancing aesthetics with functionality.
+    </p>
+  </div>
+
+  {/* BUTTON */}
+  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+    <Link to='/graphic-design'>
+    <button className="text-white bg-yellow-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
       Read More
     </button>
-  </Link>
+    </Link>
+  </div>
+
 </div>
-    </div> 
-    
-     <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0'>
-      <div className='w-full h-48 md:h-[36%] rounded-2xl'>
-        <img src={logo4} alt='' className='w-full h-full rounded-2xl object-cover'/>
-      </div>
-      <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-3xl font-bold text-center'>UI & UX Design</h3>
-      </div>
-      <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>UI/UX design focuses on creating intuitive, user-centered digital experiences where functionality meets aesthetics. </p>
-      </div>
-      <div className='w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0'>
-         <Link to="/ui&ux-design">
-    <button
-      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-yellow-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
-    >
-      Read More
-      </button>
-      </Link>
-      </div>
+
+     
+   
+<div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border border-white rounded-2xl p-3 flex flex-col hover:bg-cyan-950">
+
+  {/* IMAGE BOX – NEVER SMALL */}
+  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+  <img
+    src={logo3}
+    alt="video editing"
+     className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
+  />
+</div>
+
+
+  {/* TITLE */}
+  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+      Video Editing
+    </h3>
     </div>
+
+  {/* DESCRIPTION */}
+  <div className="w-full flex-1 md:h-[20%] mt-3">
+    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
+      Video editing involves manipulating video and audio to create a compelling narrative, utilizing techniques like B-roll for context, color correction for consistency, and cutting to pacing.
+    </p>
+  </div>
+
+  {/* BUTTON */}
+  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+    <Link to='/video-editing'>
+    <button className="text-white bg-red-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
+      Read More
+    </button>
+    </Link>
+  </div>
+</div>
+
+
+   <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border border-white  rounded-2xl p-3 flex flex-col hover:bg-cyan-950">
+
+  {/* IMAGE BOX – NEVER SMALL */}
+  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+  <img
+    src={logo4}
+    alt="ui/ux design"
+     className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
+  />
+</div>
+
+
+  {/* TITLE */}
+  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+      UI & UX Design
+    </h3>
+    </div>
+
+  {/* DESCRIPTION */}
+  <div className="w-full flex-1 md:h-[20%] mt-3">
+    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
+    UI/UX design focuses on creating intuitive, user-centered digital experiences where functionality meets aesthetics.
+    </p>
+  </div>
+
+  {/* BUTTON */}
+  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+    <Link to='/ui&ux-design'>
+    <button className="text-white bg-yellow-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
+      Read More
+    </button>
+    </Link>
+  </div>
+</div>
   </div> 
 
   {/* Second row */}
-   <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-2'>
-    <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0'>
-      <div className='w-full h-48 md:h-[36%] rounded-2xl'>
-        <img src={logo5} alt='' className='w-full h-full rounded-2xl object-cover'/>
-      </div>
-      <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-red-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-2xl font-bold text-center'>Digital Marketing</h3>
-      </div>
-      <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-6 md:pt-2 text-lg md:text-lg'>Digital marketing combines creativity with technology, using data-driven strategies—SEO, social media, and content—to connect directly with audiences. </p>
-      </div>
-      <div className="w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0">
-  <Link to="/digital-marketing">
-    <button
-      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-red-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
-    >
+   <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-2 '>
+   <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border border-white rounded-2xl p-3 flex flex-col hover:bg-cyan-950">
+
+  {/* IMAGE BOX – NEVER SMALL */}
+  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+  <img
+    src={logo5}
+    alt="digital marketing"
+     className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
+  />
+</div>
+
+
+  {/* TITLE */}
+  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+      Digital Marketing
+    </h3>
+    </div>
+
+  {/* DESCRIPTION */}
+  <div className="w-full flex-1 md:h-[20%] mt-3">
+    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
+Digital marketing combines creativity with technology, using data-driven strategies—SEO, social media, and content—to connect directly with audiences.
+    </p>
+  </div>
+
+  {/* BUTTON */}
+  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+     <Link to="/digital-marketing">
+    <button className="text-white bg-red-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
       Read More
     </button>
-  </Link>
+    </Link>
+  </div>
 </div>
-    </div>
      
-     <div className='w-full md:w-[24%] h-auto  mb-4 md:mb-0'>
-      <div className='w-full h-48 md:h-[36%] rounded-2xl'>
-        <img src={logo6} alt='' className='w-full h-full rounded-2xl object-cover'/>
-      </div>
-      <div className='w-full h-auto min-h-[60px] md:h-[12%] border-[1px] border-solid border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-2 p-2'>
-        <h3 className='text-white text-lg md:text-xl font-bold text-center'>Graphic Design and UI/UX Design</h3>
-      </div>
-      <div className='w-full h-auto md:h-[33%] mt-1'>
-        <p className='text-white text-center p-4 md:p-6 md:pt-1 text-lg md:text-lg'>Graphic and UI/UX design focuses on merging aesthetics with functionality, aiming to create intuitive, user-centered experiences.</p>
-      </div>
-      <div className='w-full h-auto md:h-[16%] flex justify-center items-center py-4 md:py-0'>
-         <Link to="/graphic&uiux">
-    <button
-      className=" text-white  border border-white px-8 md:px-14 py-2 md:py-2 rounded-full text-sm md:text-lg font-semibold  bg-yellow-500 hover:bg-yellow-600  hover:scale-105  transition-all  duration-300  shadow-md "
-    >
-      Read More
-      </button>
-      </Link>
-      </div>
+     <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border border-white rounded-2xl p-3 flex flex-col hover:bg-cyan-950 ">
+
+  {/* IMAGE BOX – NEVER SMALL */}
+  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+  <img
+    src={logo6}
+    alt="graphic&ui/ux"
+     className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
+  />
+</div>
+
+
+  {/* TITLE */}
+  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+      Graphic & UI/UX Design
+    </h3>
     </div>
+
+  {/* DESCRIPTION */}
+  <div className="w-full flex-1 md:h-[20%] mt-3">
+    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
+Graphic and UI/UX design focuses on merging aesthetics with functionality, aiming to create intuitive, user-centered experiences.
+    </p>
+  </div>
+
+  {/* BUTTON */}
+  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+    <Link to="/graphic&uiux">
+    <button className="text-white bg-yellow-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
+      Read More
+    </button>
+    </Link>
+  </div>
+</div>
   </div>
 </div>  
-     <div className="w-full h-auto md:h-[580px] flex flex-col md:flex-row">
+     <div className="w-full h-auto md:h-[580px] flex flex-col md:flex-row ">
   
   {/* Text Section – TOP on mobile, LEFT on desktop */}
   <div className="w-full md:w-1/2 h-auto md:h-full order-1 md:order-1">
@@ -400,7 +513,7 @@ const closeMenu = () => {
     <h3>Why Choose Us</h3>
   </div>
 
-  <h2 className="text-white text-2xl md:text-4xl mt-6 md:mt-6 ml-4 md:ml-16 font-bold">
+  <h2 className="text-white text-2xl md:text-4xl mt-6 md:mt-6 ml-4 md:ml-16 font-bold" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
     The Choice Of Future Professionals
   </h2>
 
@@ -680,7 +793,7 @@ const closeMenu = () => {
   className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
   style={{
     filter:
-      "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+      "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
   }}
 />
                  </div>
@@ -797,25 +910,40 @@ const closeMenu = () => {
            </div>
 
       {/* Enquiry Popup Modal with Validation */}
-      {showPopup && (
-        <>
-          {/* Overlay */}
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-60 z-[9999]"
-            onClick={() => setShowPopup(false)}
-          ></div>
-          
-          {/* Popup Content */}
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl z-[10000] w-[90%] max-w-md p-6 md:p-8">
-            <h3 className="text-2xl font-bold text-cyan-900 mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-              Enquiry Now
-            </h3>
-            
-            {/* Simple Form with validation on submit only */}
-            <SimpleEnquiryForm onClose={() => setShowPopup(false)} />
-          </div>
-        </>
-      )}
+     {showPopup && (
+  <>
+    <div
+  className="fixed inset-0 bg-black bg-opacity-60 z-[9999]"
+  onClick={() => {
+    setShowPopup(false);
+    setPopupType(null);
+    sessionStorage.setItem("autoPopupClosed", "true");
+  }}
+></div>
+
+
+  <div
+  className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+  bg-white rounded-xl shadow-2xl z-[10000] w-[90%] max-w-md p-6"
+  onClick={(e) => e.stopPropagation()}
+>
+
+
+      <h3 className="text-2xl font-bold text-cyan-900 mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+        Enquiry Now
+      </h3>
+
+      <SimpleEnquiryForm
+        popupType={popupType}
+        onClose={() => {
+          setShowPopup(false);
+          setPopupType(null);
+        }}
+      />
+    </div>
+  </>
+)}
+
        </div>
   
 </div>
@@ -824,7 +952,7 @@ const closeMenu = () => {
 }
 
 // Simple form component with validation on submit only
-const SimpleEnquiryForm = ({ onClose }) => {
+const SimpleEnquiryForm = ({ onClose, popupType }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -835,63 +963,62 @@ const SimpleEnquiryForm = ({ onClose }) => {
   
   const [errors, setErrors] = useState({});
   const [showErrors, setShowErrors] = useState(false);
-
+ 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
   const validateForm = () => {
-    const newErrors = {};
-    
-    // Name validation
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
-    }
-    
-    // Phone validation
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!/^[0-9]{10}$/.test(formData.phone.replace(/[-\s]/g, ''))) {
-      newErrors.phone = 'Please enter 10 digits';
-    }
-     if(!formData.course.trim()){
-      newErrors.course = 'Course is required';
-     }
-    else if (!/^[^\s@]+$/.test(formData.course)) {
-      newErrors.course = 'Please enter a valid course';
-    }
-    // Message validation
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    }
-    
-    return newErrors;
-  };
+  const newErrors = {};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    const newErrors = validateForm();
-    
-    if (Object.keys(newErrors).length === 0) {
-      // No errors - submit form
-      alert('Form submitted successfully!');
-      console.log('Form Data:', formData);
-      onClose(); // Close popup
-    } else {
-      // Show errors
-      setErrors(newErrors);
-      setShowErrors(true);
+  if (!formData.name.trim()) {
+    newErrors.name = 'Name is required';
+  }
+
+  if (!formData.email.trim()) {
+    newErrors.email = 'Email is required';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    newErrors.email = 'Please enter a valid email';
+  }
+
+  if (!formData.phone.trim()) {
+    newErrors.phone = 'Phone number is required';
+  } else if (!/^[0-9]{10}$/.test(formData.phone.replace(/[-\s]/g, ''))) {
+    newErrors.phone = 'Please enter 10 digits';
+  }
+
+  // ✅ FIXED COURSE VALIDATION
+  if (!formData.course) {
+    newErrors.course = 'Course is required';
+  }
+
+  if (!formData.message.trim()) {
+    newErrors.message = 'Message is required';
+  }
+
+  return newErrors;
+};
+
+ const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const newErrors = validateForm();
+
+  if (Object.keys(newErrors).length === 0) {
+    console.log(formData);
+
+    if (popupType === "auto") {
+      sessionStorage.setItem("autoPopupClosed", "true");
     }
-  };
+
+    onClose();
+  } else {
+    setErrors(newErrors);
+    setShowErrors(true);
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -1009,21 +1136,35 @@ const SimpleEnquiryForm = ({ onClose }) => {
       </div>
 
       {/* Form Actions */}
-      <div className="flex justify-end gap-3">
-        <button
-          type="button"
-          onClick={onClose}
-          className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-        >
-          Submit
-        </button>
-      </div>
+    <div className="flex justify-end gap-4 mt-4">
+  
+    <div className="flex flex-col items-center">
+      <button
+    type="button"
+    onClick={() => {
+      if (popupType === "auto") {
+        sessionStorage.setItem("autoPopupClosed", "true");
+      }
+      onClose();
+    }}
+    className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
+  >
+    Cancel
+  </button>
+
+
+    
+    </div>
+  
+
+  <button
+    type="submit"
+    className="px-6 py-2 bg-red-600 text-white rounded-lg"
+  >
+    Submit
+  </button>
+</div>
+
 
       {/* Required fields hint */}
       <p className="text-xs text-gray-500 mt-4 text-center">

@@ -10,6 +10,7 @@ const UIUXDesign = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [openCourses, setOpenCourses] = useState(false);
   return (
     <div className="w-full">
       {/* Background */}
@@ -27,7 +28,7 @@ const UIUXDesign = () => {
              className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
              style={{
                filter:
-                 "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+                 "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
              }}
            />
           </div>
@@ -52,10 +53,10 @@ const UIUXDesign = () => {
                          Our Courses
                        </Link>
                        </li>
-                     <li>
-                       <Link to='/student-corner' className="hover:text-red-600 transition-colors">
+                     <li
+                        className="hover:text-red-600 transition-colors">
                          Student Corner
-                       </Link>
+                       
                      </li>
                      <li>
                        <Link to='/studio-division' className="hover:text-red-600 transition-colors">
@@ -109,25 +110,39 @@ const UIUXDesign = () => {
                        </Link>
                      </li>
                
-                     <li className="border-b border-gray-100">
-                       <Link
-                         to="/courses"
-                         onClick={closeMenu}
-                         className="flex justify-between items-center px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-                       >
-                         Our Courses
-                       </Link>
-                     </li>
+                       <li className="border-b border-gray-100">
+                                                           <button
+                                                             onClick={() => setOpenCourses(!openCourses)}
+                                                             className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500 transition-colors"
+                                                           >
+                                                             Our Courses
+                                                             <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? "rotate-180" : ""}`} />
+                                                           </button>
+                                                           {openCourses && (
+                                                             <ul className="bg-gray-50">
+                                                               <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                                                                 <Link to="/graphic-design" onClick={closeMenu}>Graphic Design</Link>
+                                                               </li>
+                                                               <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                                                                 <Link to="/ui&ux-design" onClick={closeMenu}>UI / UX Design</Link>
+                                                               </li>
+                                                               <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                                                                 <Link to="/video-editing" onClick={closeMenu}>Video Editing</Link>
+                                                               </li>
+                                                               <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                                                                 <Link to="/digital-marketing" onClick={closeMenu}>Digital Marketing</Link>
+                                                               </li>
+                                                               <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
+                                                                 <Link to="/graphic&uiux" onClick={closeMenu}>Graphic Design & UI/UX Design</Link>
+                                                               </li>
+                                                             </ul>
+                                                           )}
+                                                         </li>
                
-                     <li className="border-b border-gray-100">
-                       <Link
-                         to="/student-corner"
-                         onClick={closeMenu}
-                         className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-                       >
-                         Student Corner
-                       </Link>
-                     </li>
+                    <li className="border-b border-gray-100 text-cyan-900 font-bold text-lg  hover:text-red-500 px-6 py-3">
+                             Student Corner
+                          </li>
+                
                
                      <li className="border-b border-gray-100">
                        <Link
@@ -305,7 +320,7 @@ const UIUXDesign = () => {
 
 
         {/* Footer */}
-        <div className="w-full min-h-[360px] px-4 md:px-0 mt-10 bg-cyan-900">
+        <div className="w-full min-h-[360px] px-4 md:px-0 mt-10 ">
           <div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:h-[250px] md:px-20">
             {/* Logo + Social */}
             <div className="w-full md:w-[280px] mb-4 md:mb-0 mt-4">
@@ -316,7 +331,7 @@ const UIUXDesign = () => {
                  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
                  style={{
                    filter:
-                     "drop-shadow(0 0 30px white) drop-shadow(0 0 60px white) drop-shadow(0 0 100px rgba(255,255,255,0.9))",
+                     "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
                  }}
                />
               </div>
@@ -474,9 +489,7 @@ const UIUXDesign = () => {
                                       }
                                         if(!formData.course.trim()){
               newErrors.course = 'Course is required';
-            } else if (!/^[^\s@]+$/.test(formData.course)) {
-              newErrors.course = 'Please enter a valid course';
-            }
+            } 
                                       // Message validation
                                       if (!formData.message.trim()) {
                                         newErrors.message = 'Message is required';
