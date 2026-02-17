@@ -424,7 +424,7 @@ const GraphicDesign = () => {
 
           <div className="w-full mt-10">
             <hr className="border-slate-700 w-full md:w-[88%] md:ml-24" />
-            <p className="text-white text-center text-2xl mt-3 font-[Lobster-Two]">© Dream Animax Academy 2026 All rights reserved.</p>
+            <p className="text-white text-center text-lg mt-3 font-[Lobster-Two]">© Dream Animax Academy 2026 All rights reserved.</p>
           </div>
         </div>
 

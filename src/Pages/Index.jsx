@@ -127,7 +127,7 @@ const closeMenu = () => {
                                </Link>
                              </li>
                              <li className="hover:bg-red-50 transition">
-                               <Link to="/ui-ux-design" className="block px-5 py-3 text-black hover:text-red-600">
+                               <Link to="/ui&ux-design" className="block px-5 py-3 text-black hover:text-red-600">
                                  UI/UX Design
                                </Link>
                              </li>
@@ -137,7 +137,7 @@ const closeMenu = () => {
                                </Link>
                              </li>
                              <li className="hover:bg-red-50 transition rounded-b-xl">
-                               <Link to="/video-graphic-design" className="block px-5 py-3 text-black hover:text-red-600">
+                               <Link to="/graphic&uiux" className="block px-5 py-3 text-black hover:text-red-600">
                                  UI/UX & Graphic Design
                                </Link>
                              </li>
