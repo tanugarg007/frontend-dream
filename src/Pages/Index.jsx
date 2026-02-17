@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-
-
 import { Link } from 'react-router-dom';
 import logo1 from '../Images/dream-anim-logo.png'
-
 import logo7 from '../Images/graphic des.jpg'
 import logo11 from '../Images/about1.jpg'
 import logo3 from '../Images/video edt.jpg'
@@ -12,7 +9,6 @@ import logo5 from '../Images/digitalmark1.jpg'
 import logo6 from '../Images/uiandgraphic.jpg'
 import logo9 from '../Images/page-background.JPG'
 import logo13 from '../Images/faq1.jpg'
-
 import {FaPlus} from "react-icons/fa";
 import {FaMinus} from "react-icons/fa";
 import img1 from "../Images/img1.png";

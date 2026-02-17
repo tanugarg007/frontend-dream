@@ -16,9 +16,9 @@ const About = () => {
   const [openCourses, setOpenCourses] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [hoverIndex,setHoverIndex]= useState(null);
-  const toggleAnswer = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+   const toggleAnswer = (index) => {
+     setOpenIndex(openIndex === index ? null : index);
+   };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -315,7 +315,7 @@ const About = () => {
                }`}
              onMouseEnter={() => setHoverIndex(0)}
              onMouseLeave={() => setHoverIndex(null)}
-             onClick={() => setOpenIndex(openIndex === 0 ? null : 0)}
+            onClick={() => toggleAnswer(0)}
            >
              {/* Question */}
              <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
@@ -358,7 +358,7 @@ const About = () => {
                }`}
              onMouseEnter={() => setHoverIndex(1)}
              onMouseLeave={() => setHoverIndex(null)}
-             onClick={() => setOpenIndex(openIndex === 1 ? null : 1)}
+            onClick={() => toggleAnswer(1)}
            >
              {/* Question */}
              <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
@@ -400,7 +400,7 @@ const About = () => {
                }`}
              onMouseEnter={() => setHoverIndex(2)}
              onMouseLeave={() => setHoverIndex(null)}
-             onClick={() => setOpenIndex(openIndex === 2 ? null : 2)}
+             onClick={() => toggleAnswer(2)}
            >
              {/* Question */}
              <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
@@ -440,7 +440,7 @@ const About = () => {
                }`}
              onMouseEnter={() => setHoverIndex(3)}
              onMouseLeave={() => setHoverIndex(null)}
-             onClick={() => setOpenIndex(openIndex === 3 ? null : 3)}
+             onClick={() => toggleAnswer(3)}
            >
              {/* Question */}
              <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
@@ -480,7 +480,7 @@ const About = () => {
                }`}
              onMouseEnter={() => setHoverIndex(4)}
              onMouseLeave={() => setHoverIndex(null)}
-             onClick={() => setOpenIndex(openIndex === 4 ? null : 4)}
+            onClick={() => toggleAnswer(4)}
            >
              {/* Question */}
              <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
