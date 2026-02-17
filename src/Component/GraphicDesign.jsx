@@ -324,7 +324,7 @@ const GraphicDesign = () => {
 
 
         {/* Footer */}
-        <div className="w-full min-h-[360px] px-4 md:px-0 mt-10">
+        <div className="w-full min-h-[360px] px-4 md:px-0 mt-10 ">
           <div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:h-[250px] md:px-20">
             {/* Logo + Social */}
             <div className="w-full md:w-[280px] mb-4 md:mb-0 mt-4">
@@ -335,7 +335,7 @@ const GraphicDesign = () => {
                 className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
                 style={{
                   filter:
-                    "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
+                    "drop-shadow(0 0 40px white) drop-shadow(0 0 30px white) drop-shadow(0 0 60px rgba(255,255,255,0.9))",
                 }}
               />
               </div>
