@@ -427,7 +427,7 @@ const OurCourses =()=>{
           {/* Copyright */}
           <div className="w-full mt-10">
             <hr className="border-slate-700 w-full md:w-[88%] md:ml-24" />
-            <p className="text-white text-center text-lg mt-3 py-4 " style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+            <p className="text-white text-center text-base mt-3 py-4 " style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
               © Dream Animex Academy 2026 All rights reserved.
             </p>
           </div>
