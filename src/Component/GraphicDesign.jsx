@@ -324,7 +324,7 @@ const GraphicDesign = () => {
 
 
         {/* Footer */}
-        <div className="w-full min-h-[360px] px-4 md:px-0 mt-10 ">
+        <div className="w-full min-h-[360px] px-4 md:px-0 mt-10">
           <div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:h-[250px] md:px-20">
             {/* Logo + Social */}
             <div className="w-full md:w-[280px] mb-4 md:mb-0 mt-4">
