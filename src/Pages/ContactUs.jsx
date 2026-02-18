@@ -18,6 +18,8 @@ const ContactUs = () => {
 
   const [errors, setErrors] = useState({});
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -38,16 +40,15 @@ const ContactUs = () => {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    alert("Form Submitted Successfully ✅");
+   setIsSubmitted(true);
 
-    setFormData({
-      fullName: "",
-      mail: "",
-      contactNumber: "",
-      address: "",
-      course: "",
-    });
-    setErrors({});
+  setFormData({
+    fullName: "",
+    mail: "",
+    contactNumber: "",
+    address: "",
+    course: "",
+  });
   };
     const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
@@ -293,6 +294,25 @@ const closeMenu = () => {
     </div>
   </div>
   {/* ================= FORM ================= */}
+  {isSubmitted ? (
+  <div className="w-[92%] md:w-[50%] mx-auto mt-[-150px] md:mt-[-200px]
+                  bg-white rounded-lg shadow-lg p-10 text-center">
+    <h2 className="text-3xl font-bold text-green-600 mb-4">
+      🎉 Form Submitted Successfully!
+    </h2>
+
+    <p className="text-gray-600 mb-6">
+      Thank you for contacting us. Our team will get back to you shortly.
+    </p>
+
+    <button
+      onClick={() => setIsSubmitted(false)}
+      className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
+    >
+      Submit Another Response
+    </button>
+  </div>
+) : (
   <form
     onSubmit={handleSubmit}
     className="w-[92%] md:w-[50%]
@@ -407,7 +427,9 @@ const closeMenu = () => {
       Submit
     </button>
   </form>
+)}
 </div>
+          
 
       
 
