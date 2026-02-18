@@ -68,7 +68,7 @@ const closeMenu = () => {
 
 
   return (
-   <div className="w-full">
+   <div className="w-full ">
 
  <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat md:min-h-screen  "
   style={{ backgroundImage: `url(${logo9})`  }}  >
@@ -1014,26 +1014,7 @@ const SimpleEnquiryForm = ({ onClose, popupType }) => {
       setShowErrors(true);
     }
   };
-      if (isSubmitted) {
-    return (
-      <div className="text-center py-8">
-        <h2 className="text-2xl font-bold text-green-600 mb-4">
-          🎉 Enquiry Submitted Successfully!
-        </h2>
 
-        <p className="text-gray-600 mb-6">
-          Thank you for contacting us. Our team will get back to you shortly.
-        </p>
-
-        <button
-          onClick={onClose}
-          className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-        >
-          Close
-        </button>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit} noValidate>
