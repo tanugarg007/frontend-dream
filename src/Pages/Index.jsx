@@ -959,7 +959,7 @@ const SimpleEnquiryForm = ({ onClose, popupType }) => {
   
   const [errors, setErrors] = useState({});
   const [showErrors, setShowErrors] = useState(false);
- 
+   const [isSubmitted, setIsSubmitted] = useState(false);
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
@@ -1008,13 +1008,32 @@ const SimpleEnquiryForm = ({ onClose, popupType }) => {
       sessionStorage.setItem("autoPopupClosed", "true");
     }
 
-    onClose();
-  } else {
-    setErrors(newErrors);
-    setShowErrors(true);
-  }
-};
+    setIsSubmitted(true); // ✅ SUCCESS SHOW
+    } else {
+      setErrors(newErrors);
+      setShowErrors(true);
+    }
+  };
+      if (isSubmitted) {
+    return (
+      <div className="text-center py-8">
+        <h2 className="text-2xl font-bold text-green-600 mb-4">
+          🎉 Enquiry Submitted Successfully!
+        </h2>
 
+        <p className="text-gray-600 mb-6">
+          Thank you for contacting us. Our team will get back to you shortly.
+        </p>
+
+        <button
+          onClick={onClose}
+          className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+        >
+          Close
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} noValidate>
