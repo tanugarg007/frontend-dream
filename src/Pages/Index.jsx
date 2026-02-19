@@ -961,74 +961,91 @@ const SimpleEnquiryForm = ({ onClose, popupType }) => {
     name: '',
     email: '',
     phone: '',
-    course:'',
-    message: ''
+    course: '',
+    message: '',
   });
-  
+
   const [errors, setErrors] = useState({});
   const [showErrors, setShowErrors] = useState(false);
-   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
+    setFormData((prev) => ({ ...prev, [id]: value }));
+    setErrors((prev) => ({ ...prev, [id]: '' }));
   };
 
   const validateForm = () => {
-  const newErrors = {};
+    const newErrors = {};
 
-  if (!formData.name.trim()) {
-    newErrors.name = 'Name is required';
-  }
-
-  if (!formData.email.trim()) {
-    newErrors.email = 'Email is required';
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-    newErrors.email = 'Please enter a valid email';
-  }
-
-  if (!formData.phone.trim()) {
-    newErrors.phone = 'Phone number is required';
-  } else if (!/^[0-9]{10}$/.test(formData.phone.replace(/[-\s]/g, ''))) {
-    newErrors.phone = 'Please enter 10 digits';
-  }
-
-  // ✅ FIXED COURSE VALIDATION
-  if (!formData.course) {
-    newErrors.course = 'Course is required';
-  }
-
-  if (!formData.message.trim()) {
-    newErrors.message = 'Message is required';
-  }
-
-  return newErrors;
-};
-
- const handleSubmit = (e) => {
-  e.preventDefault();
-
-  const newErrors = validateForm();
-
-  if (Object.keys(newErrors).length === 0) {
-    console.log(formData);
-
-    if (popupType === "auto") {
-      sessionStorage.setItem("autoPopupClosed", "true");
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
     }
 
-    setIsSubmitted(true); // ✅ SUCCESS SHOW
-    } else {
-      setErrors(newErrors);
-      setShowErrors(true);
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
     }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!/^[0-9]{10}$/.test(formData.phone.replace(/[-\s]/g, ''))) {
+      newErrors.phone = 'Please enter 10 digits';
+    }
+
+    if (!formData.course) {
+      newErrors.course = 'Course is required';
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+
+    return newErrors;
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newErrors = validateForm();
+
+    if (Object.keys(newErrors).length === 0) {
+      console.log(formData);
+
+      if (popupType === 'auto') {
+        sessionStorage.setItem('autoPopupClosed', 'true');
+      }
+
+      setIsSubmitted(true);
+      return;
+    }
+
+    setErrors(newErrors);
+    setShowErrors(true);
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="py-6 text-center">
+        <h2 className="mb-3 text-2xl font-bold text-green-600">
+          Enquiry Submitted Successfully!
+        </h2>
+        <p className="mb-5 text-gray-600">Thank you. Our team will contact you soon.</p>
+        <button
+          onClick={onClose}
+          className="rounded-lg bg-red-600 px-5 py-2 text-white transition hover:bg-red-700"
+        >
+          Close
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      {/* Name Field */}
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="name">
           Name <span className="text-red-500">*</span>
         </label>
         <input
@@ -1037,19 +1054,15 @@ const SimpleEnquiryForm = ({ onClose, popupType }) => {
           value={formData.name}
           onChange={handleChange}
           placeholder="Your full name"
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none
-            ${showErrors && errors.name 
-              ? "border-red-500" 
-              : "border-gray-300 focus:border-red-500"}`}
+          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
+            showErrors && errors.name ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
+          }`}
         />
-        {showErrors && errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-        )}
+        {showErrors && errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
       </div>
 
-      {/* Email Field */}
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="email">
           Email <span className="text-red-500">*</span>
         </label>
         <input
@@ -1058,19 +1071,15 @@ const SimpleEnquiryForm = ({ onClose, popupType }) => {
           value={formData.email}
           onChange={handleChange}
           placeholder="your@email.com"
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none
-            ${showErrors && errors.email 
-              ? "border-red-500" 
-              : "border-gray-300 focus:border-red-500"}`}
+          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
+            showErrors && errors.email ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
+          }`}
         />
-        {showErrors && errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-        )}
+        {showErrors && errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
       </div>
 
-      {/* Phone Field */}
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="phone">
           Phone <span className="text-red-500">*</span>
         </label>
         <input
@@ -1079,48 +1088,37 @@ const SimpleEnquiryForm = ({ onClose, popupType }) => {
           value={formData.phone}
           onChange={handleChange}
           placeholder="Your contact number"
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none
-            ${showErrors && errors.phone 
-              ? "border-red-500" 
-              : "border-gray-300 focus:border-red-500"}`}
+          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
+            showErrors && errors.phone ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
+          }`}
         />
-        {showErrors && errors.phone && (
-          <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
-        )}
+        {showErrors && errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
       </div>
-         {/* Course Field */}
-<div className="mb-4">
-  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="course">
-    Course <span className="text-red-500">*</span>
-  </label>
 
-  <select
-    id="course"
-    value={formData.course}
-    onChange={handleChange}
-    className={`w-full px-3 py-2 border rounded-lg focus:outline-none
-      ${showErrors && errors.course
-        ? "border-red-500"
-        : "border-gray-300 focus:border-red-500"}`}
-  >
-    <option value="">Select a course</option>
-    <option value="Graphic Design">Graphic Design</option>
-    <option value="UI/UX Design">UI / UX Design</option>
-    <option value="Digital Marketing">Digital Marketing</option>
-    <option value="Graphic + UI/UX Design">
-      Graphic Design + UI / UX Design
-    </option>
-    <option value="Video Editing">Video Editing</option>
-  </select>
+      <div className="mb-4">
+        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="course">
+          Course <span className="text-red-500">*</span>
+        </label>
+        <select
+          id="course"
+          value={formData.course}
+          onChange={handleChange}
+          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
+            showErrors && errors.course ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
+          }`}
+        >
+          <option value="">Select a course</option>
+          <option value="Graphic Design">Graphic Design</option>
+          <option value="UI/UX Design">UI / UX Design</option>
+          <option value="Digital Marketing">Digital Marketing</option>
+          <option value="Graphic + UI/UX Design">Graphic Design + UI / UX Design</option>
+          <option value="Video Editing">Video Editing</option>
+        </select>
+        {showErrors && errors.course && <p className="mt-1 text-sm text-red-500">{errors.course}</p>}
+      </div>
 
-  {showErrors && errors.course && (
-    <p className="text-red-500 text-sm mt-1">{errors.course}</p>
-  )}
-</div>
-
-      {/* Message Field */}
       <div className="mb-6">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="message">
+        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="message">
           Message <span className="text-red-500">*</span>
         </label>
         <textarea
@@ -1129,54 +1127,38 @@ const SimpleEnquiryForm = ({ onClose, popupType }) => {
           value={formData.message}
           onChange={handleChange}
           placeholder="I'm interested in..."
-          className={`w-full px-3 py-2 border rounded-lg focus:outline-none
-            ${showErrors && errors.message 
-              ? "border-red-500" 
-              : "border-gray-300 focus:border-red-500"}`}
+          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
+            showErrors && errors.message ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
+          }`}
         />
-        {showErrors && errors.message && (
-          <p className="text-red-500 text-sm mt-1">{errors.message}</p>
-        )}
+        {showErrors && errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
       </div>
 
-      {/* Form Actions */}
-    <div className="flex justify-end gap-4 mt-4">
-  
-    <div className="flex flex-col items-center">
-      <button
-    type="button"
-    onClick={() => {
-      if (popupType === "auto") {
-        sessionStorage.setItem("autoPopupClosed", "true");
-      }
-      onClose();
-    }}
-    className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
-  >
-    Cancel
-  </button>
+      <div className="mt-4 flex justify-end gap-4">
+        <button
+          type="button"
+          onClick={() => {
+            if (popupType === 'auto') {
+              sessionStorage.setItem('autoPopupClosed', 'true');
+            }
+            onClose();
+          }}
+          className="rounded-lg bg-gray-300 px-4 py-2 text-gray-800 transition hover:bg-gray-400"
+        >
+          Cancel
+        </button>
 
+        <button type="submit" className="rounded-lg bg-red-600 px-6 py-2 text-white">
+          Submit
+        </button>
+      </div>
 
-    
-    </div>
-  
-
-  <button
-    type="submit"
-    className="px-6 py-2 bg-red-600 text-white rounded-lg"
-  >
-    Submit
-  </button>
-</div>
-
-
-      {/* Required fields hint */}
-      <p className="text-xs text-gray-500 mt-4 text-center">
+      <p className="mt-4 text-center text-xs text-gray-500">
         <span className="text-red-500">*</span> Required fields
       </p>
     </form>
   );
 };
-
 export default Index;
+
 
