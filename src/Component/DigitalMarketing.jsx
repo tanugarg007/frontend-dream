@@ -49,7 +49,7 @@ const DigitalMarketing = () => {
                        </Link>
                      </li>
                        <li>
-                         <Link to='/courses' className="hover:text-red-600 transition-colors">
+                         <Link to='/our-courses' className="hover:text-red-600 transition-colors">
                          Our Courses
                        </Link>
                        </li>
@@ -276,28 +276,7 @@ const DigitalMarketing = () => {
     {/* Divider */}
     <div className="w-full h-[1px] bg-gray-200 my-4"></div>
 
-    {/* Certification */}
-    <div>
-      <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
-        Certification
-      </h3>
-      <p className="text-gray-700 text-sm md:text-lg leading-relaxed">
-        Students receive a{" "}
-        <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink-600">
-          course completion certificate
-        </span>{" "}
-        from{" "}
-        <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-700">
-          Dream Animex
-        </span>{" "}
-        after successfully completing the selected program.
-      </p>
-    </div>
-
-    {/* Divider */}
-    <div className="w-full h-[1px] bg-gray-200 my-4"></div>
-
-    {/* Modules Covered */}
+         {/* Modules Covered */}
     <div>
       <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
         Modules Covered
@@ -321,42 +300,65 @@ const DigitalMarketing = () => {
         ))}
       </div>
     </div>
-
+    {/* Divider */}
+    <div className="w-full h-[1px] bg-gray-200 my-4"></div>
+        {/* Certification */}
+    <div>
+      <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
+        Certification
+      </h3>
+      <p className="text-gray-700 text-sm md:text-lg leading-relaxed">
+        Students receive a{" "}
+        <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink-600">
+          course completion certificate
+        </span>{" "}
+        from{" "}
+        <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-700">
+          Dream Animex
+        </span>{" "}
+        after successfully completing the selected program.
+      </p>
+    </div>
   </div>
 </div>
 
 
-        {/* Footer */}
-        <div className="w-full min-h-[360px] px-4 md:px-0 mt-10 ">
-           <div className="w-full h-[30px]">
-               <hr className="border-slate-700 w-full md:w-[88%] mt-7 md:ml-24" />
+     <div className="w-[92%] mx-auto min-h-[360px] px-0 mt-10">
+             <div className="w-full h-[30px]">
+               <hr className="border-slate-700 w-full mt-7" />
              </div>
-          <div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:h-[250px] md:px-20">
-            {/* Logo + Social */}
-            <div className="w-full md:w-[280px] mb-4 md:mb-0 mt-4">
-              <div className="flex justify-start md:justify-center">
-              <img
-                src={logo1}
-                alt="logo"
-                className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
-                style={{
-                  filter:
-                    "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
-                }}
-              />
-              </div>
-              <div className="flex mt-6 gap-3 justify-start md:justify-center">
-                <Link to="https://www.linkedin.com/company/dreamanimex">
-                  <div className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center">
-                    <i className="fa-brands fa-linkedin-in text-white text-xl"></i>
-                  </div>
-                </Link>
-                <Link to="https://www.instagram.com/dreamanimex/">
-                  <div className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center">
-                    <i className="fa-brands fa-instagram text-white text-xl"></i>
-                  </div>
-                </Link>
-               <a
+   
+             <div className="w-full flex flex-col items-start gap-5 md:flex-row md:justify-center md:items-start md:gap-7 md:px-1">
+               {/* Logo + Social */}
+               <div className="w-full md:w-[240px] mt-4 ">
+                 <div className="flex justify-start md:justify-center">
+                <img
+  src={logo1}
+  alt="logo"
+  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+  style={{
+    filter:
+      "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
+  }}
+/>
+                 </div>
+                 <div className="flex mt-6">
+                   <div className="w-full h-[50px] flex gap-3 items-center justify-start md:justify-center">
+                     <Link
+                       to="https://www.linkedin.com/company/dreamanimex"
+                      
+                       className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
+                     >
+                       <i className="fa-brands fa-linkedin-in text-white text-xl"></i>
+                     </Link>
+                     <Link
+                       to="https://www.instagram.com/dreamanimex/"
+                       
+                       className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
+                     >
+                       <i className="fa-brands fa-instagram text-xl text-white"></i>
+                     </Link>
+                     <a
   href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
   target="_blank"
   rel="noopener noreferrer"
@@ -364,37 +366,40 @@ const DigitalMarketing = () => {
 >
   <i className="fa-regular fa-envelope text-white text-xl"></i>
 </a>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div className="w-full md:w-[260px] pl-4 mt-4">
-              <h3 className="text-white text-2xl md:text-3xl">Quick Links</h3>
-              <ul className="text-white text-lg mt-3 leading-7">
-                <li>Home</li>
-                <li>About Us</li>
-                <li>Our Courses</li>
-                <li>Contact Us</li>
-                <li>Studio Divison</li>
-                <li>Student Corner</li>
-              </ul>
-            </div>
-
-            {/* Courses */}
-            <div className="w-full md:w-[260px] pl-4 mt-4">
-              <h3 className="text-white text-2xl md:text-3xl">Our Courses</h3>
-              <ul className="text-white text-lg mt-3 leading-7">
-                <li>Graphic Design</li>
-                <li>Video Editing</li>
-                <li>UI/UX Design</li>
-                <li>Digital Marketing</li>
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div className="w-full md:w-[405px] mt-4 p-2">
-              <h3 className="text-white text-2xl md:text-3xl mt-0">Contact Us</h3>
-              <div className='flex flex-row mt-2 items-center'><i className="fa-solid fa-envelope text-2xl text-white"></i> <p className="text-white ml-5 break-all">
+                   </div>
+                 </div>
+               </div>
+   
+               {/* Quick Links */}
+               <div className="w-full md:w-[240px] mt-4">
+                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" >Quick Links</h3>
+                 <ul className="text-white text-lg leading-7 ml-2">
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Home</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">About Us</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Our Courses</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Contact Us</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Studio Division</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Student Corner</li>
+                 </ul>
+               </div>
+   
+               {/* Courses */}
+               <div className="w-full md:w-[240px] mt-4 ">
+                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4">Our Courses</h3>
+                 <ul className="text-white text-lg leading-7 ml-2">
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Graphic Design</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Video Editing</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">UI/UX Design</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Digital Marketing</li>
+                 </ul>
+               </div>
+   
+               {/* Contact */}
+               <div className="w-full md:w-[300px] mt-4 p-0">
+                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Contact Us</h3>
+                 <div className="flex items-start mb-3 ml-2">
+                   <i className="fa-solid fa-envelope text-2xl text-white mt-1"></i>
+                    <p className="text-white ml-5 break-all">
   <a
     href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
     target="_blank"
@@ -403,8 +408,11 @@ const DigitalMarketing = () => {
   >
     info.dreamanimex@gmail.com
   </a>
-</p></div>
-              <div className='flex flex-row mt-2 items-center'><i className="fa-brands fa-instagram text-2xl text-white"></i> <p className="text-white ml-5 break-all mt-2">
+</p>
+                 </div>
+                 <div className="flex items-start mb-3 ml-2">
+                   <i className="fa-brands fa-instagram text-2xl text-white mt-1"></i>
+                   <p className="text-white ml-5 break-all mt-2">
   <a
     href="https://www.instagram.com/dreamanimex/"
     target="_blank"
@@ -413,26 +421,38 @@ const DigitalMarketing = () => {
   >
    instagram.com/dreamanimex
   </a>
-</p></div>
-              <div className='flex flex-row mt-2 items-center'><i className="fa-brands fa-linkedin-in text-2xl text-white"></i>            <p className="text-white ml-5 break-all mt-2">
+</p>
+                 </div>
+                 <div className="flex items-start mb-3 ml-2">
+                   <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
+                   <p className="text-white ml-5 mt-2 ">
   <a
     href=" https://www.linkedin.com/company/dreamanimex/"
     target="_blank"
     rel="noopener noreferrer"
-    className="hover:text-red-400 transition-colors underline "
+    className="hover:text-red-400 transition-colors underline whitespace-nowrap inline-block"
   >
     linkedin.com/company/dreamanimex
   </a>
-</p></div>
-              <div className='flex flex-row mt-2 items-center'><i className="fa-solid fa-phone text-2xl text-white"></i><p className='text-white ml-4'>9888695595</p></div>
-            </div>
-          </div>
-
-          <div className="w-full mt-10">
-            <hr className="border-slate-700 w-full md:w-[88%] md:ml-24" />
-            <p className="text-white text-center text-base mt-3">© Dream Animax Academy 2026 All rights reserved.</p>
-          </div>
-        </div>
+</p>
+                 </div>
+                 <div className="flex items-start mb-3 ml-2">
+                   <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
+                   <p className="text-white ml-5 hover:text-red-400 transition-colors">
+                     9888695595
+                   </p>
+                 </div>
+               </div>
+             </div>
+   
+             {/* Copyright */}
+             <div className="w-full mt-10">
+               <hr className="border-slate-700 w-full" />
+               <p className="text-white text-center text-base mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+                 © Dream Animex Academy 2026 All rights reserved.
+               </p>
+             </div>
+           </div>
              {showPopup && (
                      <>
                        {/* Overlay */}

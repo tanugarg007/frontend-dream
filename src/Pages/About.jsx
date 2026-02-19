@@ -229,15 +229,25 @@ const About = () => {
        
         </header>
 
-        <div className="w-full h-[70px] mt-20"></div>
+        <div className="w-full h-[70px] mt-10"></div>
 
         {/* Heading */}
-        <div className="w-full h-[140px] bg-white text-cyan-900 text-3xl leading-snug justify-center items-center shadow-sm flex flex-col">
-          <h2 style={{ fontFamily: "Playwrite NZ Basic, cursive" }} className="font-bold">
-            About The Institute
-          </h2>
-          <h3 style={{ fontFamily: "Playwrite NZ Basic, cursive" }} className="font-bold">Dream Animex</h3>
-          <p  style={{ fontFamily: "Playwrite NZ Basic, cursive" }} className="font-bold">Where Skills Meet Creativity</p>
+        <div className="mx-auto mt-2 w-[95%] max-w-8xl px-2 md:px-4">
+          <div className="relative overflow-hidden rounded-3xl border border-white/60 bg-gradient-to-br from-slate-50 via-white to-cyan-50 px-5 py-6 text-center shadow-[0_20px_60px_-25px_rgba(14,116,144,0.55)] md:px-10 md:py-8">
+            <div className="pointer-events-none absolute -left-10 top-0 h-28 w-28 rounded-full bg-cyan-300/30 blur-2xl" />
+            <div className="pointer-events-none absolute -right-8 bottom-0 h-24 w-24 rounded-full bg-sky-400/25 blur-2xl" />
+
+            <span className="inline-flex items-center rounded-full border border-cyan-300/70 bg-white px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-800 shadow-sm">
+              About The Institute
+            </span>
+            <h2 style={{ fontFamily: "Playwrite NZ Basic, cursive" }} className="mt-4 text-3xl font-bold leading-tight text-cyan-900 md:text-5xl">
+              Dream Animex
+            </h2>
+            <p style={{ fontFamily: "Playwrite NZ Basic, cursive" }} className="mt-2 text-2xl font-semibold leading-tight text-slate-800 md:text-4xl">
+              Where Skills Meet Creativity
+            </p>
+            <div className="mx-auto mt-5 h-1.5 w-24 rounded-full bg-gradient-to-r from-cyan-500 via-sky-500 to-cyan-300" />
+          </div>
         </div>
 
         {/* About Section */}
@@ -246,12 +256,12 @@ const About = () => {
             <img
               src={logo14}
               alt="Dream Animex Institute"
-              className="w-[260px] h-[260px] md:w-[430px] md:h-[450px] rounded-xl shadow-md shadow-white hover:shadow-xl transition-shadow duration-300"
+              className="w-[260px] h-[260px] md:w-[410px] md:h-[400px] rounded-xl shadow-md shadow-white hover:shadow-xl transition-shadow duration-300"
             />
           </div>
           <div className="w-full md:w-1/2 flex flex-col justify-center order-2 md:order-1">
           <p
-  className="text-white text-base md:text-xl pt-4 px-8 md:px-8 leading-relaxed 
+  className="text-white text-base md:text-lg pt-4 px-8 md:px-8 leading-relaxed 
              ml-0 md:ml-28 text-center md:text-left md:mr-20"
   style={{ fontFamily: 'Playwrite NZ Basic, cursive' }}
 >
@@ -259,7 +269,7 @@ const About = () => {
 </p>
 
 <p
-  className="text-white text-base md:text-xl pt-5 px-10 md:px-8 leading-relaxed 
+  className="text-white text-base md:text-lg pt-5 px-10 md:px-8 leading-relaxed 
              ml-0 md:ml-28 text-center md:text-left"
   style={{ fontFamily: 'Playwrite NZ Basic, cursive' }}
 >
@@ -267,7 +277,7 @@ const About = () => {
 </p>
 
 <p
-  className="text-white text-base md:text-xl pt-5 px-10 md:px-8 leading-relaxed 
+  className="text-white text-base md:text-lg pt-5 px-10 md:px-8 leading-relaxed 
              ml-0 md:ml-28 text-center md:text-left"
   style={{ fontFamily: 'Playwrite NZ Basic, cursive' }}
 >
@@ -278,280 +288,267 @@ const About = () => {
         </div>
 
         {/* FAQ Section */}
-        <div className="w-full min-h-[550px] flex flex-col md:flex-row mt-5">
-          <div className="w-full md:w-[40%] flex justify-center items-center p-4">
-            <img
-              src={logo13}
-              alt="FAQ - Dream Animex"
-              className="w-[260px] md:w-[430px] h-auto object-contain rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
-            />
-          </div>
+            <div className='w-[92%] mx-auto h-auto md:h-[540px] flex flex-col md:flex-row gap-4 md:gap-6'>
+             <div className='w-full md:w-[39%] h-auto md:h-full flex justify-center md:justify-start items-center py-6 md:py-0 md:pl-20 '>
+                  <img src={logo13} alt='' className='w-[260px] h-[300px] md:w-[390px] md:h-[425px] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700 mt-3'/>
+             </div>
+             <div className='w-full md:w-[61%] h-auto md:h-full'>
+                 <div className='w-full h-auto md:min-h-[130px] rounded-xl  px-4 py-4 md:px-10 md:py-5 flex flex-col justify-center gap-3'>
+                   <div className="bg-white text-black w-[52px] h-[42px] rounded-lg flex justify-center items-center text-base font-semibold">
+                          FAQ
+                        </div>
+                         <h3 className="text-2xl md:text-3xl text-white font-bold leading-tight" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+                            Frequently Asked Questions
+                          </h3>
+                 </div>
+                  <div className='w-full h-auto md:h-[75%] mt-4 md:mt-0  px-4 md:px-10'>
+                      <div className={`w-full relative py-2 cursor-pointer transition-colors duration-300 mt-1 
+    ${
+      hoverIndex === 0 && openIndex !== 0
+        ? "text-blue-400"
+        : openIndex === 0 && hoverIndex === 0
+        ? "text-blue-400"
+        : "text-white"
+    }`}
+  onMouseEnter={() => setHoverIndex(0)}
+  onMouseLeave={() => setHoverIndex(null)}
+  onClick={() => setOpenIndex(openIndex === 0 ? null : 0)}
+>
+  {/* Question */}
+  <p className="text-base md:text-xl pr-10">
+    01. What programs are available at Reliance Animation Academy?
+  </p>
 
-          <div className="w-full md:w-[60%]">
-            <div className="w-full">
-              <div className="w-full flex items-center gap-3 px-5 mt-2">
-                <div className="w-[45px] h-[45px] bg-white rounded-lg flex justify-center items-center shadow-md">
-                  <h4 className="text-black text-xl" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-                    FAQ
-                  </h4>
-                </div>
-              </div>
-              <h2
-                className="text-white text-2xl md:text-4xl ml-5 mt-4 font-bold"
-                style={{ fontFamily: "Playwrite NZ Basic, cursive" }}
-              >
-                Frequently Asked Questions
-              </h2>
-            </div>
+  {/* Icon */}
+  <span
+    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
+      ${
+        hoverIndex === 0 && openIndex !== 0
+          ? "text-blue-400"
+          : openIndex === 0 && hoverIndex === 0
+          ? "text-blue-400"
+          : "text-white"
+      }`}
+  >
+    {openIndex === 0 ? <FaMinus /> : <FaPlus />}
+  </span>
 
-               <div className='w-full h-auto md:h-[75%] mt-4 md:mt-0 '>
-                                 <div className={`w-full relative py-2 cursor-pointer transition-colors duration-300 mt-1
-               ${
-                 hoverIndex === 0 && openIndex !== 0
-                   ? "text-blue-400"
-                   : openIndex === 0 && hoverIndex === 0
-                   ? "text-blue-400"
-                   : "text-white"
-               }`}
-             onMouseEnter={() => setHoverIndex(0)}
-             onMouseLeave={() => setHoverIndex(null)}
-            onClick={() => toggleAnswer(0)}
-           >
-             {/* Question */}
-             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
-               01. What programs are available at Reliance Animation Academy?
-             </p>
-           
-             {/* Icon */}
-             <span
-               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
-                 ${
-                   hoverIndex === 0 && openIndex !== 0
-                     ? "text-blue-400"
-                     : openIndex === 0 && hoverIndex === 0
-                     ? "text-blue-400"
-                     : "text-white"
-                 }`}
-             >
-               {openIndex === 0 ? <FaMinus /> : <FaPlus />}
-             </span>
-           
-             {/* Answer */}
-             {openIndex === 0 && (
-               <p
-                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
-                 onMouseEnter={() => setHoverIndex(null)} // 👈 answer par hover → question white
-               >
-                 We offer degree, diploma, and certificate programs in Animation, VFX,
-                 Motion Graphics, Game Design, Web/UI-UX, Graphic Design, and Digital Editing.
-               </p>
-             )}
-           
-             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
-           </div>
-                <div
-             className={`w-full relative py-2 cursor-pointer transition-colors duration-300
-               ${
-                 hoverIndex === 1
-                   ? "text-blue-400"
-                   : "text-white"
-               }`}
-             onMouseEnter={() => setHoverIndex(1)}
-             onMouseLeave={() => setHoverIndex(null)}
-            onClick={() => toggleAnswer(1)}
-           >
-             {/* Question */}
-             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
-               02. What is the eligibility for these programs?
-             </p>
-           
-             {/* Icon */}
-             <span
-               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
-                 ${
-                   hoverIndex === 1
-                     ? "text-blue-400"
-                     : "text-white"
-                 }`}
-             >
-               {openIndex === 1 ? <FaMinus /> : <FaPlus />}
-             </span>
-           
-             {/* Answer */}
-             {openIndex === 1 && (
-               <p
-                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
-                 onMouseEnter={() => setHoverIndex(null)}
-               >
-                 The programs are open to students who have completed their 10+2 or equivalent.
-                 At the point when a student is promoted to an advanced or master’s program,
-                 basic computer knowledge and an interest in being creative are recommended.
-               </p>
-             )}
-           
-             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
-           </div>
-                 <div
-             className={`w-full relative py-2 cursor-pointer transition-colors duration-300
-               ${
-                 hoverIndex === 2
-                   ? "text-blue-400"
-                   : "text-white"
-               }`}
-             onMouseEnter={() => setHoverIndex(2)}
-             onMouseLeave={() => setHoverIndex(null)}
-             onClick={() => toggleAnswer(2)}
-           >
-             {/* Question */}
-             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
-              03. Are the courses beginner-friendly?
-             </p>
-           
-             {/* Icon */}
-             <span
-               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
-                 ${
-                   hoverIndex === 2
-                     ? "text-blue-400"
-                     : "text-white"
-                 }`}
-             >
-               {openIndex === 2 ? <FaMinus /> : <FaPlus />}
-             </span>
-           
-             {/* Answer */}
-             {openIndex === 2 && (
-               <p
-                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
-                 onMouseEnter={() => setHoverIndex(null)}
-               >
-                 Yes, our programs are designed for beginners as well as advanced learners, and students are guided through steps, receive practical training, and work in real-world projects.
-               </p>
-             )}
-           
-             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
-           </div>
-                     <div
-             className={`w-full relative py-2 cursor-pointer transition-colors duration-300
-               ${
-                 hoverIndex === 3
-                   ? "text-blue-400"
-                   : "text-white"
-               }`}
-             onMouseEnter={() => setHoverIndex(3)}
-             onMouseLeave={() => setHoverIndex(null)}
-             onClick={() => toggleAnswer(3)}
-           >
-             {/* Question */}
-             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
-              04. What tools and software will I learn?
-             </p>
-           
-             {/* Icon */}
-             <span
-               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
-                 ${
-                   hoverIndex === 3
-                     ? "text-blue-400"
-                     : "text-white"
-                 }`}
-             >
-               {openIndex === 3 ? <FaMinus /> : <FaPlus />}
-             </span>
-           
-             {/* Answer */}
-             {openIndex === 3 && (
-               <p
-                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
-                 onMouseEnter={() => setHoverIndex(null)}
-               >
-                Students use industry-standard software such as Autodesk Maya, Adobe Creative Suite, Nuke, and Unreal Engine, which prepares them for industry readiness.
-               </p>
-             )}
-           
-             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
-           </div>
-                                  <div
-             className={`w-full relative py-2 cursor-pointer transition-colors duration-300
-               ${
-                 hoverIndex === 4
-                   ? "text-blue-400"
-                   : "text-white"
-               }`}
-             onMouseEnter={() => setHoverIndex(4)}
-             onMouseLeave={() => setHoverIndex(null)}
-            onClick={() => toggleAnswer(4)}
-           >
-             {/* Question */}
-             <p className="text-base md:text-xl ml-5 md:ml-20 pr-10">
-              05. Can I take a part-time or online course?
-             </p>
-           
-             {/* Icon */}
-             <span
-               className={`absolute right-2 md:right-14 top-3 text-xl md:text-2xl transition-colors duration-300
-                 ${
-                   hoverIndex === 4
-                     ? "text-blue-400"
-                     : "text-white"
-                 }`}
-             >
-               {openIndex === 4 ? <FaMinus /> : <FaPlus />}
-             </span>
-           
-             {/* Answer */}
-             {openIndex === 4 && (
-               <p
-                 className="text-sm md:text-xl ml-5 md:ml-20 mt-2 leading-relaxed text-white"
-                 onMouseEnter={() => setHoverIndex(null)}
-               >
-               Yes. We have flexible learning options, so you can either study full-time, part-time, or take a blended online option for your program to fit your learning needs.
-               </p>
-             )}
-           
-             <hr className="border-stone-400 w-full md:w-[92%] ml-0 md:ml-20 mt-3" />
-           </div>    
-                             </div>
+  {/* Answer */}
+  {openIndex === 0 && (
+    <p
+      className="text-sm md:text-lg mt-2 leading-relaxed text-white"
+      onMouseEnter={() => setHoverIndex(null)} // 👈 answer par hover → question white
+    >
+      We offer degree, diploma, and certificate programs in Animation, VFX,
+      Motion Graphics, Game Design, Web/UI-UX, Graphic Design, and Digital Editing.
+    </p>
+  )}
+
+  <hr className="border-stone-400 w-full mt-3" />
+</div>
+     <div
+  className={`w-full relative py-2 cursor-pointer transition-colors duration-300
+    ${
+      hoverIndex === 1
+        ? "text-blue-400"
+        : "text-white"
+    }`}
+  onMouseEnter={() => setHoverIndex(1)}
+  onMouseLeave={() => setHoverIndex(null)}
+  onClick={() => setOpenIndex(openIndex === 1 ? null : 1)}
+>
+  {/* Question */}
+  <p className="text-base md:text-xl pr-10">
+    02. What is the eligibility for these programs?
+  </p>
+
+  {/* Icon */}
+  <span
+    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
+      ${
+        hoverIndex === 1
+          ? "text-blue-400"
+          : "text-white"
+      }`}
+  >
+    {openIndex === 1 ? <FaMinus /> : <FaPlus />}
+  </span>
+
+  {/* Answer */}
+  {openIndex === 1 && (
+    <p
+      className="text-sm md:text-lg mt-2 leading-relaxed text-white"
+      onMouseEnter={() => setHoverIndex(null)}
+    >
+      The programs are open to students who have completed their 10+2 or equivalent.
+      At the point when a student is promoted to an advanced or master’s program,
+      basic computer knowledge and an interest in being creative are recommended.
+    </p>
+  )}
+
+  <hr className="border-stone-400 w-full mt-3" />
+</div>
+      <div
+  className={`w-full relative py-2 cursor-pointer transition-colors duration-300
+    ${
+      hoverIndex === 2
+        ? "text-blue-400"
+        : "text-white"
+    }`}
+  onMouseEnter={() => setHoverIndex(2)}
+  onMouseLeave={() => setHoverIndex(null)}
+  onClick={() => setOpenIndex(openIndex === 2 ? null : 2)}
+>
+  {/* Question */}
+  <p className="text-base md:text-xl pr-10">
+   03. Are the courses beginner-friendly?
+  </p>
+
+  {/* Icon */}
+  <span
+    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
+      ${
+        hoverIndex === 2
+          ? "text-blue-400"
+          : "text-white"
+      }`}
+  >
+    {openIndex === 2 ? <FaMinus /> : <FaPlus />}
+  </span>
+
+  {/* Answer */}
+  {openIndex === 2 && (
+    <p
+      className="text-sm md:text-lg mt-2 leading-relaxed text-white"
+      onMouseEnter={() => setHoverIndex(null)}
+    >
+      Yes, our programs are designed for beginners as well as advanced learners, and students are guided through steps, receive practical training, and work in real-world projects.
+    </p>
+  )}
+
+  <hr className="border-stone-400 w-full mt-3" />
+</div>
+          <div
+  className={`w-full relative py-2 cursor-pointer transition-colors duration-300
+    ${
+      hoverIndex === 3
+        ? "text-blue-400"
+        : "text-white"
+    }`}
+  onMouseEnter={() => setHoverIndex(3)}
+  onMouseLeave={() => setHoverIndex(null)}
+  onClick={() => setOpenIndex(openIndex === 3 ? null : 3)}
+>
+  {/* Question */}
+  <p className="text-base md:text-xl pr-10">
+   04. What tools and software will I learn?
+  </p>
+
+  {/* Icon */}
+  <span
+    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
+      ${
+        hoverIndex === 3
+          ? "text-blue-400"
+          : "text-white"
+      }`}
+  >
+    {openIndex === 3 ? <FaMinus /> : <FaPlus />}
+  </span>
+
+  {/* Answer */}
+  {openIndex === 3 && (
+    <p
+      className="text-sm md:text-lg mt-2 leading-relaxed text-white"
+      onMouseEnter={() => setHoverIndex(null)}
+    >
+     Students use industry-standard software such as Autodesk Maya, Adobe Creative Suite, Nuke, and Unreal Engine, which prepares them for industry readiness.
+    </p>
+  )}
+
+  <hr className="border-stone-400 w-full mt-3" />
+</div>
+                       <div
+  className={`w-full relative py-2 cursor-pointer transition-colors duration-300
+    ${
+      hoverIndex === 4
+        ? "text-blue-400"
+        : "text-white"
+    }`}
+  onMouseEnter={() => setHoverIndex(4)}
+  onMouseLeave={() => setHoverIndex(null)}
+  onClick={() => setOpenIndex(openIndex === 4 ? null : 4)}
+>
+  {/* Question */}
+  <p className="text-base md:text-xl pr-10">
+   05. Can I take a part-time or online course?
+  </p>
+
+  {/* Icon */}
+  <span
+    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
+      ${
+        hoverIndex === 4
+          ? "text-blue-400"
+          : "text-white"
+      }`}
+  >
+    {openIndex === 4 ? <FaMinus /> : <FaPlus />}
+  </span>
+
+  {/* Answer */}
+  {openIndex === 4 && (
+    <p
+      className="text-sm md:text-lg mt-2 leading-relaxed text-white"
+      onMouseEnter={() => setHoverIndex(null)}
+    >
+    Yes. We have flexible learning options, so you can either study full-time, part-time, or take a blended online option for your program to fit your learning needs.
+    </p>
+  )}
+
+  <hr className="border-stone-400 w-full mt-3" />
+</div>    
+                  </div>
+             </div>
           </div>
-        </div>
 
         {/* Footer */}
-        <div className="w-full min-h-[360px] px-4 md:px-0 mt-10">
-          <div className="w-full h-[30px]">
-            <hr className="border-slate-700 w-full md:w-[88%] mt-7 md:ml-24" />
-          </div>
-
-          <div className="w-full flex flex-col items-start md:flex-row md:justify-between md:items-start md:h-[250px] md:px-20">
-            {/* Logo + Social */}
-            <div className="w-full md:w-[280px] mb-0 md:mb-0 mt-4">
-              <div className="flex justify-start md:justify-center">
-               <img
-                 src={logo1}
-                 alt="logo"
-                 className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
-                 style={{
-                   filter:
-                     "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
-                 }}
-               />
-              </div>
-              <div className="flex mt-6">
-                <div className="w-full h-[50px] flex gap-3 items-center justify-start md:justify-center">
-                  <Link
-                    to="https://www.linkedin.com/company/dreamanimex"
-                   
-                    className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
-                  >
-                    <i className="fa-brands fa-linkedin-in text-white text-xl"></i>
-                  </Link>
-                  <Link
-                    to="https://www.instagram.com/dreamanimex/"
-                    
-                    className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
-                  >
-                    <i className="fa-brands fa-instagram text-xl text-white"></i>
-                  </Link>
-                  <a
+         <div className="w-[92%] mx-auto min-h-[360px] px-0 mt-10">
+             <div className="w-full h-[30px]">
+               <hr className="border-slate-700 w-full mt-7" />
+             </div>
+   
+             <div className="w-full flex flex-col items-start gap-5 md:flex-row md:justify-center md:items-start md:gap-7 md:px-1">
+               {/* Logo + Social */}
+               <div className="w-full md:w-[240px] mt-4 ">
+                 <div className="flex justify-start md:justify-center">
+                <img
+  src={logo1}
+  alt="logo"
+  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+  style={{
+    filter:
+      "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
+  }}
+/>
+                 </div>
+                 <div className="flex mt-6">
+                   <div className="w-full h-[50px] flex gap-3 items-center justify-start md:justify-center">
+                     <Link
+                       to="https://www.linkedin.com/company/dreamanimex"
+                      
+                       className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
+                     >
+                       <i className="fa-brands fa-linkedin-in text-white text-xl"></i>
+                     </Link>
+                     <Link
+                       to="https://www.instagram.com/dreamanimex/"
+                       
+                       className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
+                     >
+                       <i className="fa-brands fa-instagram text-xl text-white"></i>
+                     </Link>
+                     <a
   href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
   target="_blank"
   rel="noopener noreferrer"
@@ -559,40 +556,40 @@ const About = () => {
 >
   <i className="fa-regular fa-envelope text-white text-xl"></i>
 </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div className="w-full md:w-[260px] pl-4 mt-4">
-              <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Quick Links</h3>
-              <ul className="text-white text-lg leading-7">
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Home</li>
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">About Us</li>
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Our Courses</li>
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Contact Us</li>
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Studio Division</li>
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Student Corner</li>
-              </ul>
-            </div>
-
-            {/* Courses */}
-            <div className="w-full md:w-[260px] pl-4 mt-4">
-              <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Our Courses</h3>
-              <ul className="text-white text-lg leading-7">
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Graphic Design</li>
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Video Editing</li>
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">UI/UX Design</li>
-                <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Digital Marketing</li>
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div className="w-full md:w-[405px] mt-4 p-2">
-              <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Contact Us</h3>
-              <div className="flex items-start mb-3">
-                <i className="fa-solid fa-envelope text-2xl text-white mt-1"></i>
-                <p className="text-white ml-5 break-all">
+                   </div>
+                 </div>
+               </div>
+   
+               {/* Quick Links */}
+               <div className="w-full md:w-[240px] mt-4">
+                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" >Quick Links</h3>
+                 <ul className="text-white text-lg leading-7 ml-2">
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Home</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">About Us</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Our Courses</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Contact Us</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Studio Division</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Student Corner</li>
+                 </ul>
+               </div>
+   
+               {/* Courses */}
+               <div className="w-full md:w-[240px] mt-4 ">
+                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4">Our Courses</h3>
+                 <ul className="text-white text-lg leading-7 ml-2">
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Graphic Design</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Video Editing</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">UI/UX Design</li>
+                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Digital Marketing</li>
+                 </ul>
+               </div>
+   
+               {/* Contact */}
+               <div className="w-full md:w-[300px] mt-4 p-0">
+                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Contact Us</h3>
+                 <div className="flex items-start mb-3 ml-2">
+                   <i className="fa-solid fa-envelope text-2xl text-white mt-1"></i>
+                    <p className="text-white ml-5 break-all">
   <a
     href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
     target="_blank"
@@ -602,10 +599,10 @@ const About = () => {
     info.dreamanimex@gmail.com
   </a>
 </p>
-              </div>
-              <div className="flex items-start mb-3">
-                <i className="fa-brands fa-instagram text-2xl text-white mt-1"></i>
-               <p className="text-white ml-5 break-all mt-2">
+                 </div>
+                 <div className="flex items-start mb-3 ml-2">
+                   <i className="fa-brands fa-instagram text-2xl text-white mt-1"></i>
+                   <p className="text-white ml-5 break-all mt-2">
   <a
     href="https://www.instagram.com/dreamanimex/"
     target="_blank"
@@ -615,37 +612,37 @@ const About = () => {
    instagram.com/dreamanimex
   </a>
 </p>
-              </div>
-              <div className="flex items-start mb-3">
-                <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
-                <p className="text-white ml-5 break-all mt-2">
+                 </div>
+                 <div className="flex items-start mb-3 ml-2">
+                   <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
+                   <p className="text-white ml-5 mt-2 ">
   <a
     href=" https://www.linkedin.com/company/dreamanimex/"
     target="_blank"
     rel="noopener noreferrer"
-    className="hover:text-red-400 transition-colors underline "
+    className="hover:text-red-400 transition-colors underline whitespace-nowrap inline-block"
   >
     linkedin.com/company/dreamanimex
   </a>
 </p>
-              </div>
-              <div className="flex items-start mb-3">
-                <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
-                <p className="text-white ml-5 hover:text-red-400 transition-colors">
-                  9888695595
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Copyright */}
-          <div className="w-full mt-10">
-            <hr className="border-slate-700 w-full md:w-[88%] md:ml-24" />
-            <p className="text-white text-center text-base mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-              © Dream Animex Academy 2026 All rights reserved.
-            </p>
-          </div>
-        </div>
+                 </div>
+                 <div className="flex items-start mb-3 ml-2">
+                   <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
+                   <p className="text-white ml-5 hover:text-red-400 transition-colors">
+                     9888695595
+                   </p>
+                 </div>
+               </div>
+             </div>
+   
+             {/* Copyright */}
+             <div className="w-full mt-10">
+               <hr className="border-slate-700 w-full" />
+               <p className="text-white text-center text-base mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
+                 © Dream Animex Academy 2026 All rights reserved.
+               </p>
+             </div>
+           </div>
 
         {/* Enquiry Popup Modal */}
         {showPopup && (
