@@ -42,7 +42,7 @@ const About = () => {
       >
         <header className="fixed top-0 left-0 w-full z-50">
           {/* Logo */}
-          <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center">
+          <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center ml-5">
            <img
              src={logo1}
              alt="logo"

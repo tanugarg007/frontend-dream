@@ -22,7 +22,7 @@ const StudioDivision = () => {
         {/* ================= HEADER ================= */}
        <header className="fixed top-0 left-0 w-full z-50">
   {/* Logo - Visible on both mobile and desktop */}
-  <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center">
+  <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center ml-5">
    
 <img
   src={logo1}
@@ -291,7 +291,7 @@ opportunities.
                <hr className="border-slate-700 w-full mt-7" />
              </div>
    
-             <div className="w-full flex flex-col items-start gap-5 md:flex-row md:justify-center md:items-start md:gap-7 md:px-1">
+             <div className="w-full flex flex-col items-start gap-5 md:flex-row md:justify-center md:items-start md:gap-7 md:px-1 ">
                {/* Logo + Social */}
                <div className="w-full md:w-[240px] mt-4 ">
                  <div className="flex justify-start md:justify-center">

@@ -75,7 +75,7 @@ const closeMenu = () => {
    
 <header className="fixed top-0 left-0 w-full z-50">
   {/* Logo - Visible on both mobile and desktop */}
-  <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center border border-white ml-5">
+  <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center ml-5">
    <img
   src={logo1}
   alt="logo"
@@ -302,7 +302,7 @@ const closeMenu = () => {
 
          <div className='w-full h-24  flex justify-center items-center'>
   
-    <h2 className="text-[#24707f] text-5xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>COURSES</h2>
+    <h2 className="text-[#24707f] text-4xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>COURSES</h2>
  
 </div>
 
