@@ -75,11 +75,11 @@ const closeMenu = () => {
    
 <header className="fixed top-0 left-0 w-full z-50">
   {/* Logo - Visible on both mobile and desktop */}
-  <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center">
+  <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center border border-white ml-5">
    <img
   src={logo1}
   alt="logo"
-  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
+  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px] "
   style={{
     filter:
       "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",

@@ -48,11 +48,44 @@ const GraphicandUIUX = () => {
                          About Us
                        </Link>
                      </li>
-                       <li>
-                         <Link to='/our-courses' className="hover:text-red-600 transition-colors">
-                         Our Courses
-                       </Link>
-                       </li>
+                          <li className="relative group cursor-pointer">
+                                                                       <span className="flex items-center gap-1 hover:text-red-600 transition-colors duration-300">
+                                                                         Our Courses
+                                                                         <i className="fa-solid fa-caret-down transition-transform duration-300 group-hover:rotate-180"></i>
+                                                                       </span>
+                                                                        <ul className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 scale-95 group-hover:scale-100 border border-gray-200 z-50">
+                                                                        <li className="hover:bg-red-50 transition">
+                                                                            <Link to="/our-courses" className="block px-5 py-3 text-black hover:text-red-600 hover:bg-red-50 transition">
+                                                                              Our Courses
+                                                                            </Link>
+                                                                        </li>
+                                                                         <li className="hover:bg-red-50 transition">
+                                                                           <Link to="/graphic-design" className="block px-5 py-3 text-black hover:text-red-600">
+                                                                             Graphic Design
+                                                                           </Link>
+                                                                         </li>
+                                                                         <li className="hover:bg-red-50 transition">
+                                                                           <Link to="/video-editing" className="block px-5 py-3 text-black hover:text-red-600">
+                                                                             Video Editing
+                                                                           </Link>
+                                                                         </li>
+                                                                         <li className="hover:bg-red-50 transition">
+                                                                           <Link to="/ui&ux-design" className="block px-5 py-3 text-black hover:text-red-600">
+                                                                             UI/UX Design
+                                                                           </Link>
+                                                                         </li>
+                                                                         <li className="hover:bg-red-50 transition">
+                                                                           <Link to="/digital-marketing" className="block px-5 py-3 text-black hover:text-red-600">
+                                                                             Digital Marketing
+                                                                           </Link>
+                                                                         </li>
+                                                                         <li className="hover:bg-red-50 transition rounded-b-xl">
+                                                                           <Link to="/graphic&uiux" className="block px-5 py-3 text-black hover:text-red-600">
+                                                                             UI/UX & Graphic Design
+                                                                           </Link>
+                                                                         </li>
+                                                                       </ul> 
+                                                                     </li>
                      <li
                         className="hover:text-red-600 transition-colors">
                          Student Corner
