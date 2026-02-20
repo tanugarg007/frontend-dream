@@ -10,12 +10,13 @@ import {
   FiUser,
   FiX,
 } from 'react-icons/fi';
+import { useAuth } from '../../context/AuthContext';
 
 const AdminLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const adminUser = JSON.parse(localStorage.getItem('adminUser') || '{}');
+  const { user: adminUser, logout } = useAuth();
 
   const navItems = useMemo(
     () => [
@@ -28,8 +29,7 @@ const AdminLayout = () => {
   );
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminUser');
+    logout();
     navigate('/login');
   };
 
@@ -134,11 +134,11 @@ const AdminLayout = () => {
 
             <div className="flex items-center gap-3">
               <div className="hidden text-right sm:block">
-                <p className="text-sm font-semibold text-slate-800">{adminUser.name || 'Admin'}</p>
-                <p className="text-xs text-slate-500">{adminUser.email || 'admin@animex.local'}</p>
+                <p className="text-sm font-semibold text-slate-800">{adminUser?.name || 'Admin'}</p>
+                <p className="text-xs text-slate-500">{adminUser?.email || 'admin@animex.local'}</p>
               </div>
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                {adminUser.name ? adminUser.name.charAt(0).toUpperCase() : <FiUser />}
+                {adminUser?.name ? adminUser.name.charAt(0).toUpperCase() : <FiUser />}
               </div>
             </div>
           </div>

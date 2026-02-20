@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+const ADMIN_CHANGE_PASSWORD_ENDPOINT =
+  process.env.REACT_APP_ADMIN_CHANGE_PASSWORD_ENDPOINT || '/users/admin/forgot-password';
+
+const joinUrl = (base, endpoint) => {
+  if (!base) return endpoint;
+  return `${base.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
+};
 
 const Settings = () => {
+  const { token } = useAuth();
   const [profile, setProfile] = useState({
     name: 'Admin User',
     email: 'admin@animex.com',
-    avatar: '/avatar.png',
   });
+  const [avatarPreview, setAvatarPreview] = useState('');
 
   const [password, setPassword] = useState({
     current: '',
     new: '',
     confirm: '',
   });
+  const [passwordErrors, setPasswordErrors] = useState({});
+  const [isPasswordLoading, setIsPasswordLoading] = useState(false);
 
   const handleProfileUpdate = (e) => {
     e.preventDefault();
@@ -19,14 +32,71 @@ const Settings = () => {
     alert('Profile updated successfully!');
   };
 
-  const handlePasswordUpdate = (e) => {
-    e.preventDefault();
-    if (password.new !== password.confirm) {
-      alert('Passwords do not match!');
+  const handleAvatarChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Please select JPG, PNG or WEBP image.');
       return;
     }
-    // API call to change password
-    alert('Password changed successfully!');
+
+    const previewUrl = URL.createObjectURL(file);
+    setAvatarPreview(previewUrl);
+  };
+
+  const handlePasswordUpdate = async (e) => {
+    e.preventDefault();
+    const nextErrors = {};
+
+    if (!password.current.trim()) nextErrors.current = 'Current password is required.';
+    if (!password.new.trim()) nextErrors.new = 'New password is required.';
+    if (!password.confirm.trim()) nextErrors.confirm = 'Confirm password is required.';
+    if (password.new && password.new.length < 6) {
+      nextErrors.new = 'New password must be at least 6 characters.';
+    }
+    if (password.new && password.confirm && password.new !== password.confirm) {
+      nextErrors.confirm = 'Passwords do not match.';
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setPasswordErrors(nextErrors);
+      return;
+    }
+    setPasswordErrors({});
+    if (!token) {
+      alert('Please login again. Token not found.');
+      return;
+    }
+
+    setIsPasswordLoading(true);
+    try {
+      const response = await fetch(joinUrl(API_BASE_URL, ADMIN_CHANGE_PASSWORD_ENDPOINT), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          currentPassword: password.current,
+          newPassword: password.new,
+        }),
+      });
+
+      const responseBody = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        alert(responseBody?.error || responseBody?.message || 'Password update failed');
+        return;
+      }
+
+      alert(responseBody?.message || 'Password changed successfully!');
+      setPassword({ current: '', new: '', confirm: '' });
+    } catch (error) {
+      alert('Unable to connect to server. Please try again.');
+    } finally {
+      setIsPasswordLoading(false);
+    }
   };
 
   return (
@@ -60,7 +130,26 @@ const Settings = () => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Avatar</label>
-              <input type="file" accept="image/*" className="w-full" />
+              {avatarPreview && (
+                <img
+                  src={avatarPreview}
+                  alt="Avatar preview"
+                  className="mb-3 h-20 w-20 rounded-full border border-gray-200 object-cover"
+                />
+              )}
+              <input
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
+              <label
+                htmlFor="avatar-upload"
+                className="inline-flex cursor-pointer items-center rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200"
+              >
+                Choose Avatar
+              </label>
             </div>
             <button type="submit" className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90">
               Update Profile
@@ -77,33 +166,60 @@ const Settings = () => {
               <input
                 type="password"
                 value={password.current}
-                onChange={(e) => setPassword({ ...password, current: e.target.value })}
+                onChange={(e) => {
+                  setPassword({ ...password, current: e.target.value });
+                  if (passwordErrors.current) {
+                    setPasswordErrors((prev) => ({ ...prev, current: '' }));
+                  }
+                }}
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                required
               />
+              {passwordErrors.current && (
+                <p className="mt-1 text-sm text-red-600">{passwordErrors.current}</p>
+              )}
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">New Password</label>
               <input
                 type="password"
                 value={password.new}
-                onChange={(e) => setPassword({ ...password, new: e.target.value })}
+                onChange={(e) => {
+                  setPassword({ ...password, new: e.target.value });
+                  if (passwordErrors.new) {
+                    setPasswordErrors((prev) => ({ ...prev, new: '' }));
+                  }
+                }}
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                required
               />
+              {passwordErrors.new && (
+                <p className="mt-1 text-sm text-red-600">{passwordErrors.new}</p>
+              )}
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Confirm New Password</label>
               <input
                 type="password"
                 value={password.confirm}
-                onChange={(e) => setPassword({ ...password, confirm: e.target.value })}
+                onChange={(e) => {
+                  setPassword({ ...password, confirm: e.target.value });
+                  if (passwordErrors.confirm) {
+                    setPasswordErrors((prev) => ({ ...prev, confirm: '' }));
+                  }
+                }}
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                required
               />
+              {passwordErrors.confirm && (
+                <p className="mt-1 text-sm text-red-600">{passwordErrors.confirm}</p>
+              )}
             </div>
-            <button type="submit" className="bg-secondary text-white px-4 py-2 rounded hover:bg-secondary/90">
-              Change Password
+            <button
+              type="submit"
+              disabled={isPasswordLoading}
+              className={`w-full sm:w-auto bg-red-600 text-white px-5 py-2.5 rounded-lg font-semibold shadow-md transition ${
+                isPasswordLoading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-red-700'
+              }`}
+            >
+              {isPasswordLoading ? 'Updating...' : 'Change Password'}
             </button>
           </form>
         </div>
