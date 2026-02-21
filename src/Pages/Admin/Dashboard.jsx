@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiBookOpen, FiClock, FiMail, FiTrendingUp, FiUsers } from 'react-icons/fi';
+import { FiArrowRight, FiBookOpen, FiClock, FiMail, FiTrendingUp } from 'react-icons/fi';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 
@@ -27,26 +27,33 @@ const Dashboard = () => {
 
   useEffect(() => {
     const loadDashboardData = async () => {
+      const parseList = (body) => {
+        if (Array.isArray(body)) return body;
+        if (Array.isArray(body?.data)) return body.data;
+        if (Array.isArray(body?.enquiries)) return body.enquiries;
+        return [];
+      };
+
       try {
-        const [coursesResponse, enquiriesResponse] = await Promise.all([
-          fetch(`${API_BASE_URL}/users/courses`),
-          fetch(`${API_BASE_URL}/users/enquiries`),
-        ]);
+        const token = localStorage.getItem('adminToken') || localStorage.getItem('token') || '';
+
+        const coursesPromise = fetch(`${API_BASE_URL}/users/courses`);
+        const enquiriesPromise = (async () => {
+          const adminResponse = await fetch(`${API_BASE_URL}/admin/enquiries`, {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          }).catch(() => null);
+
+          if (adminResponse?.ok) return adminResponse;
+          return fetch(`${API_BASE_URL}/users/enquiries`);
+        })();
+
+        const [coursesResponse, enquiriesResponse] = await Promise.all([coursesPromise, enquiriesPromise]);
 
         const coursesBody = await coursesResponse.json().catch(() => []);
         const enquiriesBody = await enquiriesResponse.json().catch(() => []);
 
-        const parsedCourses = Array.isArray(coursesBody)
-          ? coursesBody
-          : Array.isArray(coursesBody?.data)
-            ? coursesBody.data
-            : [];
-
-        const parsedEnquiries = Array.isArray(enquiriesBody)
-          ? enquiriesBody
-          : Array.isArray(enquiriesBody?.data)
-            ? enquiriesBody.data
-            : [];
+        const parsedCourses = parseList(coursesBody);
+        const parsedEnquiries = parseList(enquiriesBody);
 
         setCourses(parsedCourses);
         setEnquiries(parsedEnquiries);
@@ -61,16 +68,6 @@ const Dashboard = () => {
     loadDashboardData();
   }, []);
 
-  const topCategory = useMemo(() => {
-    if (!courses.length) return 'N/A';
-    const counts = courses.reduce((acc, course) => {
-      const category = getCategory(course);
-      acc[category] = (acc[category] || 0) + 1;
-      return acc;
-    }, {});
-
-    return Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0] || 'N/A';
-  }, [courses]);
 
   const recentEnquiriesToday = useMemo(() => {
     const today = new Date();
@@ -116,13 +113,6 @@ const Dashboard = () => {
       change: 'Live',
       icon: FiBookOpen,
       tone: 'from-amber-500 to-orange-600',
-    },
-    {
-      title: 'Top Category',
-      value: isLoading ? '...' : topCategory,
-      change: 'From courses',
-      icon: FiUsers,
-      tone: 'from-emerald-500 to-teal-600',
     },
     {
       title: 'Latest Update',

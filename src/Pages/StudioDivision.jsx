@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import logo9 from '../Images/page-background.JPG';
 import logo1 from '../Images/dream-anim-logo.png';
 
@@ -7,8 +7,16 @@ const StudioDivision = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [openCourses, setOpenCourses] = useState(null);
+  const location = useLocation();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    if (location.state?.openCoursesMenu) {
+      setIsMenuOpen(true);
+      setOpenCourses(true);
+    }
+  }, [location.state]);
 
   return (
     <div className="w-full">
@@ -58,10 +66,13 @@ const StudioDivision = () => {
           </Link>
         </li>
               <li className="relative group cursor-pointer">
-                           <span className="flex items-center gap-1 hover:text-red-600 transition-colors duration-300">
+                           <Link
+                             to="/our-courses"
+                             className="flex items-center gap-1 hover:text-red-600 transition-colors duration-300"
+                           >
                              Our Courses
                              <i className="fa-solid fa-caret-down transition-transform duration-300 group-hover:rotate-180"></i>
-                           </span>
+                           </Link>
                             <ul className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 scale-95 group-hover:scale-100 border border-gray-200 z-50">
                              <li className="hover:bg-red-50 transition">
                                <Link to="/graphic-design" className="block px-5 py-3 text-black hover:text-red-600">
@@ -155,13 +166,15 @@ const StudioDivision = () => {
       </li>
 
        <li className="border-b border-gray-100">
-                         <button
+                         <Link
+                           to="/our-courses"
+                           state={{ openCoursesMenu: true }}
                            onClick={() => setOpenCourses(!openCourses)}
                            className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500 transition-colors"
                          >
                            Our Courses
                            <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? "rotate-180" : ""}`} />
-                         </button>
+                         </Link>
                          {openCourses && (
                            <ul className="bg-gray-50">
                              <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
@@ -256,11 +269,7 @@ opportunities.
 
                 </p>
 
-                <p className="mt-4">
-                  Students work on live assignments, collaborate with professionals,
-                  and gain real production experience. We actively welcome collaborations
-                  and portfolio submissions for freelance and project-based roles.
-                </p>
+                
               </div>
             </div>
 
@@ -492,21 +501,38 @@ opportunities.
                         return newErrors;
                       };
                     
-                      const handleSubmit = (e) => {
-                        e.preventDefault();
-                        
-                        const newErrors = validateForm();
-                        
-                        if (Object.keys(newErrors).length === 0) {
-                          // No errors - submit form
-                          // alert('Form submitted successfully!');
-                          console.log('Form Data:', formData);
-                          setIsSubmitted(true); // ✅ SUCCESS SHOW
-    } else {
-      setErrors(newErrors);
-      setShowErrors(true);
+                const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const newErrors = validateForm();
+
+  if (Object.keys(newErrors).length !== 0) {
+    setErrors(newErrors);
+    setShowErrors(true);
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/users/enquiry", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Enquiry submit failed");
     }
-  };
+
+     
+
+    setIsSubmitted(true);
+  } catch (error) {
+    console.error("Enquiry error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
      if (isSubmitted) {
     return (
       <div className="text-center py-8">

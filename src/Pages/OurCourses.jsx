@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo1 from '../Images/dream-anim-logo.png'
 import logo9 from '../Images/page-background.JPG'
 import logo8 from '../Images/graphic des.jpg'
@@ -12,12 +12,20 @@ const OurCourses =()=>{
     const [isMenuOpen, setIsMenuOpen] = useState(false);
      const [showPopup, setShowPopup] = useState(false);
      const [openCourses, setOpenCourses] = useState(false);
+     const location = useLocation();
       const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
     };
     const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+    useEffect(() => {
+      if (location.state?.openCoursesMenu) {
+        setIsMenuOpen(true);
+        setOpenCourses(true);
+      }
+    }, [location.state]);
     return(
       <div>
         <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat md:min-h-screen  "
@@ -123,13 +131,15 @@ const OurCourses =()=>{
             </Link>
           </li>
       <li className="border-b border-gray-100">
-                        <button
+                        <Link
+                          to="/our-courses"
+                          state={{ openCoursesMenu: true }}
                           onClick={() => setOpenCourses(!openCourses)}
                           className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500 transition-colors"
                         >
                           Our Courses
                           <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? "rotate-180" : ""}`} />
-                        </button>
+                        </Link>
                         {openCourses && (
                           <ul className="bg-gray-50">
                             <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
@@ -145,7 +155,7 @@ const OurCourses =()=>{
                               <Link to="/digital-marketing" onClick={closeMenu}>Digital Marketing</Link>
                             </li>
                             <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
-                              <Link to="/graphicuiux" onClick={closeMenu}>Graphic Design & UI/UX Design</Link>
+                              <Link to="/graphic&uiux" onClick={closeMenu}>Graphic Design & UI/UX Design</Link>
                             </li>
                           </ul>
                         )}
@@ -521,21 +531,37 @@ const OurCourses =()=>{
             return newErrors;
           };
         
-          const handleSubmit = (e) => {
-            e.preventDefault();
-            
-            const newErrors = validateForm();
-            
-            if (Object.keys(newErrors).length === 0) {
-              // No errors - submit form
-              // alert('Form submitted successfully!');
-              console.log('Form Data:', formData);
-              setIsSubmitted(true); // ✅ SUCCESS SHOW
-    } else {
-      setErrors(newErrors);
-      setShowErrors(true);
+        const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const newErrors = validateForm();
+
+  if (Object.keys(newErrors).length !== 0) {
+    setErrors(newErrors);
+    setShowErrors(true);
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/users/enquiry", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Enquiry submit failed");
     }
-  };
+
+
+    setIsSubmitted(true);
+  } catch (error) {
+    console.error("Enquiry error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
      if (isSubmitted) {
     return (
       <div className="text-center py-8">

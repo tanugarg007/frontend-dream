@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import logo1 from '../Images/dream-anim-logo.png';
 import logo9 from '../Images/page-background.JPG';
 import logo5 from '../Images/videoediting.jpg'
@@ -9,8 +9,16 @@ const VideoEditing = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [openCourses, setOpenCourses] = useState(false);
+ const [showPopup, setShowPopup] = useState(false);
+ const [openCourses, setOpenCourses] = useState(false);
+ const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.openCoursesMenu) {
+      setIsMenuOpen(true);
+      setOpenCourses(true);
+    }
+  }, [location.state]);
   return (
     <div className="w-full">
       {/* Background */}
@@ -48,17 +56,15 @@ const VideoEditing = () => {
                          About Us
                        </Link>
                      </li>
-                          <li className="relative group cursor-pointer">
-                                                                       <span className="flex items-center gap-1 hover:text-red-600 transition-colors duration-300">
-                                                                         Our Courses
-                                                                         <i className="fa-solid fa-caret-down transition-transform duration-300 group-hover:rotate-180"></i>
-                                                                       </span>
-                                                                        <ul className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 scale-95 group-hover:scale-100 border border-gray-200 z-50">
-                                                                        <li className="hover:bg-red-50 transition">
-                                                                            <Link to="/our-courses" className="block px-5 py-3 text-black hover:text-red-600 hover:bg-red-50 transition">
-                                                                              Our Courses
-                                                                            </Link>
-                                                                        </li>
+                           <li className="relative group cursor-pointer">
+                                                                      <Link
+                                                                        to="/our-courses"
+                                                                        className="flex items-center gap-1 hover:text-red-600 transition-colors duration-300"
+                                                                      >
+                                                                        Our Courses
+                                                                        <i className="fa-solid fa-caret-down transition-transform duration-300 group-hover:rotate-180"></i>
+                                                                      </Link>
+                                                                      <ul className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 scale-95 group-hover:scale-100 border border-gray-200 z-50">
                                                                          <li className="hover:bg-red-50 transition">
                                                                            <Link to="/graphic-design" className="block px-5 py-3 text-black hover:text-red-600">
                                                                              Graphic Design
@@ -141,16 +147,18 @@ const VideoEditing = () => {
                           About Us
                         </Link>
                       </li>
-                   <li className="border-b border-gray-100">
-                             <button
-                                onClick={() => setOpenCourses(!openCourses)}
-                                className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500 transition-colors"
-                              >
-                                Our Courses
-                                <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? "rotate-180" : ""}`} />
-                              </button>
-                              {openCourses && (
-                                <ul className="bg-gray-50">
+                     <li className="border-b border-gray-100">
+                                       <Link
+                                         to="/our-courses"
+                                         state={{ openCoursesMenu: true }}
+                                         onClick={() => setOpenCourses(!openCourses)}
+                                         className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500 transition-colors"
+                                       >
+                                         Our Courses
+                                         <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? "rotate-180" : ""}`} />
+                                       </Link>
+                                       {openCourses && (
+                                         <ul className="bg-gray-50">
                                   <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
                                     <Link to="/graphic-design" onClick={closeMenu}>Graphic Design</Link>
                                   </li>
@@ -209,7 +217,7 @@ const VideoEditing = () => {
 
         {/* Hero Section */}
      <div
-  className="w-full h-auto md:h-[500px] flex flex-col md:flex-row justify-center items-center
+  className="w-full h-auto md:h-[520px] flex flex-col md:flex-row justify-center items-center
              mt-20 md:mt-0
              rounded-br-[20px] md:rounded-br-[200px]"
   style={{
@@ -238,9 +246,12 @@ const VideoEditing = () => {
       </div>
 
       {/* Content */}
-      <div className="w-full px-4 md:px-0 pl-0 md:pl-8 pt-3 md:pt-5 pr-0 md:pr-6">
-        <p className="text-sm md:text-lg text-gray-600 leading-relaxed px-5 md:px-0">
+      <div className="w-full px-4 md:px-0 pl-0 md:pl-8 pt-3 md:pt-3 pr-0 md:pr-6">
+        <p className="text-sm md:text-lg text-gray-600 leading-relaxed px-5 md:px-0 ">
           Focused on storytelling, editing techniques, transitions, and audio balancing, this course trains students to produce polished video content for social media, marketing, and professional projects. Students go beyond basic cutting to explore rhythm-based editing, colour psychology, and seamless transition effects that keep viewers hooked. Whether it’s a 15-second Reel or a 5-minute brand film, this course ensures every frame serves the story.
+        </p>
+         <p className="text-sm md:text-lg font-semibold text-gray-700 mt-1 px-5 md:px-0">
+          Duration: 4 Months
         </p>
       </div>
 
@@ -553,21 +564,38 @@ const VideoEditing = () => {
                                       return newErrors;
                                     };
                                   
-                                    const handleSubmit = (e) => {
-                                      e.preventDefault();
-                                      
-                                      const newErrors = validateForm();
-                                      
-                                      if (Object.keys(newErrors).length === 0) {
-                                        // No errors - submit form
-                                        // alert('Form submitted successfully!');
-                                        console.log('Form Data:', formData);
-                                       setIsSubmitted(true); // ✅ SUCCESS SHOW
-                               } else {
-                               setErrors(newErrors);
-                          setShowErrors(true);
+                    const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const newErrors = validateForm();
+
+  if (Object.keys(newErrors).length !== 0) {
+    setErrors(newErrors);
+    setShowErrors(true);
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/users/enquiry", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Enquiry submit failed");
     }
-  };
+
+    
+
+    setIsSubmitted(true);
+  } catch (error) {
+    console.error("Enquiry error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
      if (isSubmitted) {
     return (
       <div className="text-center py-8">

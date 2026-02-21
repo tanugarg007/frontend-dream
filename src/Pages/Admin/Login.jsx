@@ -77,9 +77,7 @@ const Login = () => {
     if (!formData.password) {
       newErrors.password = 'Password is required';
      }
-    //  else if (formData.password.length < 10) {
-    //   newErrors.password = 'Password must be at least 10 characters';
-    // }
+  
 
     return newErrors;
   };
