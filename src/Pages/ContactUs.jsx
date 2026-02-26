@@ -132,7 +132,7 @@ const ContactUs = () => {
 
                   <div className="mt-8 space-y-4">
                    
-                    <div className="rounded-xl border border-slate-600/80 bg-slate-700/50 px-4 py-3">
+                    <div className="rounded-xl border border-slate-600/80 bg-red-800 px-4 py-3">
                       <p className="text-xs text-slate-300 uppercase tracking-wide">
                         Support
                       </p>
