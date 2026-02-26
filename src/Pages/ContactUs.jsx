@@ -119,11 +119,13 @@ const ContactUs = () => {
             <div className="relative z-20 w-[92%] lg:w-[78%] xl:w-[72%] mx-auto mt-[-170px] md:mt-[-220px] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-5">
                 <div
-                  className="lg:col-span-2 text-white p-8 md:p-10 bg-cover bg-center"
+                  className="lg:col-span-2 relative overflow-hidden text-white p-8 md:p-10 bg-cover bg-center"
                   style={{
-                    backgroundImage: `linear-gradient(rgba(15, 23, 52, 0.92), rgba(30, 64, 185, 0.78)), url(${logo9})`,
+                    backgroundImage: `url(${logo9})`,
                   }}
                 >
+                  <div className="absolute inset-0 bg-slate-900/35 pointer-events-none" />
+                  <div className="relative z-10">
                   <p className="text-blue-200 text-sm tracking-[0.2em] font-semibold uppercase">
                     Contact Details
                   </p>
@@ -145,6 +147,7 @@ const ContactUs = () => {
                         Fast responses for all course inquiries
                       </p>
                     </div>
+                  </div>
                   </div>
                 </div>
 
