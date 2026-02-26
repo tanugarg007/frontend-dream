@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import logo9 from "../Images/page-background.JPG";
-import logo18 from "../Assets/orangeback.jpg";
 import Footer from "../Component/Footer";
 
-
 const ContactUs = () => {
-  const [showPopup, setShowPopup] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     mail: "",
     contactNumber: "",
-    address: "",
+    city: "",
     course: "",
   });
 
   const [errors, setErrors] = useState({});
-
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
@@ -27,224 +23,232 @@ const ContactUs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let newErrors = {};
+    const newErrors = {};
     if (!formData.fullName) newErrors.fullName = "Full name is required";
     if (!formData.mail) newErrors.mail = "Email is required";
-    if (!formData.contactNumber)
+    if (!formData.contactNumber) {
       newErrors.contactNumber = "Contact number is required";
-    if (!formData.address) newErrors.address = "Address is required";
+    }
+    if (!formData.city) newErrors.city = "City is required";
     if (!formData.course) newErrors.course = "Please select a course";
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-  //  addEnquiry({
-  //   name: formData.fullName,
-  //   email: formData.mail,
-  //   phone: formData.contactNumber,
-  //   address: formData.address,
-  //   course: formData.course,
-  //   page: "Contact",
-  //   message: `Preferred course: ${formData.course}`,
-  //  });
-   setIsSubmitted(true);
-
-  setFormData({
-    fullName: "",
-    mail: "",
-    contactNumber: "",
-    address: "",
-    course: "",
-  });
+    setIsSubmitted(true);
+    setFormData({
+      fullName: "",
+      mail: "",
+      contactNumber: "",
+      city: "",
+      course: "",
+    });
   };
+
+  const fieldClass = (hasError) =>
+    `w-full mt-2 border-2 bg-white/95 px-4 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-100 ${
+      hasError
+        ? "border-red-500"
+        : "border-slate-200 focus:border-blue-700 hover:border-blue-500"
+    }`;
+
   return (
-    <div className="w-full">
-      {/* ================= HERO BACKGROUND ================= */}
+    <div className="w-full bg-slate-50">
       <div
         className="relative w-full min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${logo9})` }}
       >
-   
+        <div className="absolute inset-0 bg-slate-900/35" />
+        <div className="relative pt-[52px] pb-14 md:pb-20">
+          <div className="w-full h-[340px] md:h-[440px] overflow-hidden rounded-b-[44px] md:rounded-b-[64px] border-b border-white/10 shadow-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-blue-900">
+            <div className="absolute inset-x-0 top-0 h-[3px] bg-cyan-300/70" />
+            <div className="h-full max-w-6xl mx-auto px-6 md:px-10 flex flex-col justify-start items-center text-center relative pt-14 md:pt-16">
+              <div className="absolute -top-10 -left-10 w-44 h-44 bg-blue-500/20 blur-3xl rounded-full" />
+              <div className="absolute bottom-4 right-0 w-52 h-52 bg-cyan-400/15 blur-3xl rounded-full" />
+              <h2 className="text-white text-4xl md:text-5xl font-bold tracking-[0.06em] mt-2 md:mb-2 relative">
+                CONTACT US
+              </h2>
 
-        {/* ================= HERO SECTION ================= */}
-      <div className="relative pt-[70px]">
+              <p className="text-white/90 text-base md:text-lg mb-6 max-w-3xl leading-relaxed relative">
+                Have questions about our courses? Fill out the contact form below
+                or call us directly. Our team is here to guide you toward the
+                right creative career path.
+              </p>
+              {/* <div className="hidden md:flex items-center gap-4 relative">
+                <span className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm">
+                  Career Guidance
+                </span>
+                <span className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm">
+                  Fast Response
+                </span>
+                <span className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm">
+                  Expert Team
+                </span>
+              </div> */}
+            </div>
+          </div>
 
-  {/* ===== ORANGE BACKGROUND ===== */}
-  <div
-    className="w-full h-[320px] md:h-[450px]
-               rounded-br-[60px] md:rounded-br-[180px]"
-    style={{ backgroundImage: `url(${logo18})` }}
-  >
-     <div className="h-full flex flex-col justify-center items-center text-center">
+          {isSubmitted ? (
+            <div className="w-[92%] md:w-[62%] lg:w-[52%] mx-auto mt-[-170px] md:mt-[-220px] bg-white rounded-3xl shadow-2xl border border-slate-200 p-10 text-center">
+              <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-800 text-xs font-bold flex items-center justify-center mx-auto mb-4">
+                DONE
+              </div>
+              <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                Form Submitted Successfully!
+              </h2>
 
-      {/* Heading */}
-      <h2 className="text-white text-4xl md:text-5xl font-semibold
-                     mt-6 md:mb-3 "
-             >
-        CONTACT US
-      </h2>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Thank you for contacting us. Our team will get back to you
+                shortly.
+              </p>
 
-      {/* Paragraph */}
-      <p
-        className="text-white text-base md:text-xl
-                   mb-20 md:mb-36
-                   px-6 md:px-[420px]"
-      >
-        Reach out to us through the contact form below or simply give us a call.
-        We’d love to connect and guide you toward a successful creative career.
-      </p>
+              <button
+                onClick={() => setIsSubmitted(false)}
+                className="px-7 py-3 bg-slate-800 text-white rounded-xl font-semibold hover:bg-slate-900 transition"
+              >
+                Submit Another Response
+              </button>
+            </div>
+          ) : (
+            <div className="w-[92%] lg:w-[78%] xl:w-[72%] mx-auto mt-[-170px] md:mt-[-220px] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-5">
+                <div className="lg:col-span-2 bg-slate-800 text-white p-8 md:p-10">
+                  <p className="text-blue-200 text-sm tracking-[0.2em] font-semibold uppercase">
+                    Contact Details
+                  </p>
+                  <h3 className="text-3xl font-bold mt-3 leading-tight">
+                    Start Your Creative Journey Today
+                  </h3>
+                  <p className="text-slate-300 mt-4 leading-relaxed">
+                    Share your details, and our counselors will help you choose
+                    the best course based on your goals.
+                  </p>
 
-    </div>
-  </div>
-  {/* ================= FORM ================= */}
-  {isSubmitted ? (
-  <div className="w-[92%] md:w-[50%] mx-auto mt-[-150px] md:mt-[-200px]
-                  bg-white rounded-lg shadow-lg p-10 text-center">
-    <h2 className="text-3xl font-bold text-green-600 mb-4">
-      🎉 Form Submitted Successfully!
-    </h2>
-
-    <p className="text-gray-600 mb-6">
-      Thank you for contacting us. Our team will get back to you shortly.
-    </p>
-
-    <button
-      onClick={() => setIsSubmitted(false)}
-      className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
-    >
-      Submit Another Response
-    </button>
-  </div>
-) : (
-  <form
-    onSubmit={handleSubmit}
-    className="w-[92%] md:w-[50%]
-               mx-auto
-               mt-[-150px] md:mt-[-200px]
-               bg-white rounded-lg shadow-lg 
-               p-6 md:p-8"
-  >
-
-    {/* Row 1 */}
-    <div className="flex flex-col md:flex-row gap-4">
-      <div className="w-full">
-  <label className="font-semibold">Full Name</label>
-
-  <input
-    name="fullName"
-    value={formData.fullName}
-    placeholder="Full Name"
-    onChange={handleChange}
-    className={`w-full border px-4 py-2 rounded-lg mt-1
-      focus:outline-none
-      ${errors.fullName
-        ? "border-red-500"
-        : "border-gray-300 border-[2px] hover:border-orange-800 focus:border-orange-800"}`}
-  />
-
-  {errors.fullName && (
-    <p className="text-red-500 text-sm">{errors.fullName}</p>
-  )}
-</div>
-
-
-      <div className="w-full">
-        <label className="font-semibold">Email</label>
-        <input
-          name="mail"
-          value={formData.mail}
-          placeholder="Email"
-          onChange={handleChange}
-          className={`w-full border px-4 py-2 rounded-lg mt-1
-             ${errors.mail
-        ? "border-red-500"
-        : "border-gray-300 border-[2px] hover:border-orange-800 focus:border-orange-800"}`}
-        />
-         {errors.mail && (
-          <p className="text-red-500 text-sm">{errors.mail}</p>
-        )}
-      </div>
-    </div>
-
-    {/* Row 2 */}
-    <div className="flex flex-col md:flex-row gap-4 mt-4">
-      <div className="w-full">
-        <label className="font-semibold">Contact Number</label>
-        <input
-          name="contactNumber"
-          value={formData.contactNumber}
-          onChange={handleChange}
-          placeholder="Contact number"
-          className={`w-full border px-4 py-2 rounded-lg mt-1
-            ${errors.contactNumber
-        ? "border-red-500"
-        : "border-gray-300 border-[2px] hover:border-orange-800 focus:border-orange-800"}`}
-        />
-        {errors.contactNumber && (
-          <p className="text-red-500 text-sm">{errors.contactNumber}</p>
-        )}
-      </div>
-
-      <div className="w-full">
-        <label className="font-semibold">City</label>
-        <input
-          name="city"
-          value={formData.city}
-          placeholder="City"
-          onChange={handleChange}
-          className={`w-full border px-4 py-2 rounded-lg mt-1
-             ${errors.city
-        ? "border-red-500"
-        : "border-gray-300 border-[2px] hover:border-orange-800 focus:border-orange-800"}`}
-        />
-        {errors.city && (
-          <p className="text-red-500 text-sm">{errors.city}</p>
-        )}
-      </div>
-    </div>
-
-    {/* Course */}
-    <div className="mt-4">
-      <label className="font-semibold">Preferred Course</label>
-      <select
-        name="course"
-        value={formData.course}
-        onChange={handleChange}
-        className={`w-full border px-4 py-2 rounded-lg mt-1
-           ${errors.course
-        ? "border-red-500"
-        : "border-gray-300 border-[2px] hover:border-orange-800 focus:border-orange-800"}`}
-      >
-        <option value="">Select Option</option>
-        <option>Graphic Design</option>
-        <option>UI & UX Design</option>
-        <option>Digital Marketing</option>
-        <option>Video Editing</option>
-        <option>Graphic Design and Video Editing</option>
-      </select>
-      {errors.course && <p className="text-red-500 text-sm">{errors.course}</p>}
-    </div>
-
-    {/* Submit */}
-    <button className="w-full mt-6 bg-red-800 text-white py-3 rounded text-xl hover:bg-blue-800">
-      Submit
-    </button>
-  </form>
-)}
-</div>
-          
-
-      
-
-          <Footer />
-              
-                      </div>
+                  <div className="mt-8 space-y-4">
+                   
+                    <div className="rounded-xl border border-slate-600/80 bg-slate-700/50 px-4 py-3">
+                      <p className="text-xs text-slate-300 uppercase tracking-wide">
+                        Support
+                      </p>
+                      <p className="text-sm font-semibold mt-1">
+                        Fast responses for all course inquiries
+                      </p>
                     </div>
-                  );
-                };
-                
-             
-   export default ContactUs
+                  </div>
+                </div>
 
+                <form
+                  onSubmit={handleSubmit}
+                  className="lg:col-span-3 p-6 md:p-10"
+                >
+                  <h3 className="text-2xl md:text-3xl font-bold text-slate-800">
+                    Let's Connect
+                  </h3>
+                  <p className="text-slate-600 mt-2 mb-6">
+                    Fill out this form, and our team will contact you shortly.
+                  </p>
 
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="w-full">
+                      <label className="font-semibold text-slate-700">
+                        Full Name
+                      </label>
+                      <input
+                        name="fullName"
+                        value={formData.fullName}
+                        placeholder="Full Name"
+                        onChange={handleChange}
+                        className={fieldClass(errors.fullName)}
+                      />
+                      {errors.fullName && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.fullName}
+                        </p>
+                      )}
+                    </div>
 
+                    <div className="w-full">
+                      <label className="font-semibold text-slate-700">Email</label>
+                      <input
+                        name="mail"
+                        value={formData.mail}
+                        placeholder="Email"
+                        onChange={handleChange}
+                        className={fieldClass(errors.mail)}
+                      />
+                      {errors.mail && (
+                        <p className="text-red-500 text-sm mt-1">{errors.mail}</p>
+                      )}
+                    </div>
+
+                    <div className="w-full">
+                      <label className="font-semibold text-slate-700">
+                        Contact Number
+                      </label>
+                      <input
+                        name="contactNumber"
+                        value={formData.contactNumber}
+                        onChange={handleChange}
+                        placeholder="Contact number"
+                        className={fieldClass(errors.contactNumber)}
+                      />
+                      {errors.contactNumber && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.contactNumber}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="w-full">
+                      <label className="font-semibold text-slate-700">City</label>
+                      <input
+                        name="city"
+                        value={formData.city}
+                        placeholder="City"
+                        onChange={handleChange}
+                        className={fieldClass(errors.city)}
+                      />
+                      {errors.city && (
+                        <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mt-4">
+                    <label className="font-semibold text-slate-700">
+                      Preferred Course
+                    </label>
+                    <select
+                      name="course"
+                      value={formData.course}
+                      onChange={handleChange}
+                      className={fieldClass(errors.course)}
+                    >
+                      <option value="">Select Option</option>
+                      <option>Graphic Design</option>
+                      <option>UI & UX Design</option>
+                      <option>Digital Marketing</option>
+                      <option>Video Editing</option>
+                      <option>Graphic Design and Video Editing</option>
+                    </select>
+                    {errors.course && (
+                      <p className="text-red-500 text-sm mt-1">{errors.course}</p>
+                    )}
+                  </div>
+
+                  <button className="w-full mt-6 bg-red-800 text-white py-3 rounded-xl text-lg font-semibold hover:bg-blue-800 transition">
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <Footer />
+      </div>
+    </div>
+  );
+};
+
+export default ContactUs;

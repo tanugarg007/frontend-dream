@@ -59,7 +59,7 @@ const EnquiryModal = ({ isOpen, onClose }) => {
         <h3 className="text-2xl font-bold text-cyan-900 mb-4">Enquiry Now</h3>
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-3">
-            <label className="block text-sm font-bold mb-1">Name</label>
+            <label className="block text-sm font-bold mb-1"> Full Name</label>
             <input id="name" value={formData.name} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
             {showErrors && errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
           </div>
@@ -69,7 +69,7 @@ const EnquiryModal = ({ isOpen, onClose }) => {
             {showErrors && errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
           <div className="mb-3">
-            <label className="block text-sm font-bold mb-1">Phone</label>
+            <label className="block text-sm font-bold mb-1">Contact Number</label>
             <input id="phone" value={formData.phone} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
             {showErrors && errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
           </div>
@@ -79,7 +79,7 @@ const EnquiryModal = ({ isOpen, onClose }) => {
             {showErrors && errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
           </div>
           <div className="mb-3">
-            <label className="block text-sm font-bold mb-1">Course</label>
+            <label className="block text-sm font-bold mb-1"> Preferred Course</label>
             <select id="course" value={formData.course} onChange={handleChange} className="w-full px-3 py-2 border rounded">
               <option value="">Select a course</option>
               <option value="Graphic Design">Graphic Design</option>
