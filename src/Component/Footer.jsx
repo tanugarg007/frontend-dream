@@ -46,11 +46,21 @@ const Footer = () => {
         <div className="w-full md:w-[240px] mt-4">
           <h3 className="text-white text-2xl md:text-3xl font-bold mb-4">Our Courses</h3>
           <ul className="text-white text-lg leading-7 ml-2">
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Graphic Design</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Video Editing</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">UI/UX Design</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Digital Marketing</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Graphic + Video Editing</li>
+            <li className="mb-2">
+              <Link to="/graphic-design" className="hover:text-red-400 transition-colors cursor-pointer">Graphic Design</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/video-editing" className="hover:text-red-400 transition-colors cursor-pointer">Video Editing</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/ui&ux-design" className="hover:text-red-400 transition-colors cursor-pointer">UI/UX Design</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/digital-marketing" className="hover:text-red-400 transition-colors cursor-pointer">Digital Marketing</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/graphic&videoediting" className="hover:text-red-400 transition-colors cursor-pointer">Graphic + Video Editing</Link>
+            </li>
           </ul>
         </div>
 

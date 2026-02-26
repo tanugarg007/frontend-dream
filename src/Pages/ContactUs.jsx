@@ -118,7 +118,12 @@ const ContactUs = () => {
           ) : (
             <div className="relative z-20 w-[92%] lg:w-[78%] xl:w-[72%] mx-auto mt-[-170px] md:mt-[-220px] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-5">
-                <div className="lg:col-span-2 bg-slate-800 text-white p-8 md:p-10">
+                <div
+                  className="lg:col-span-2 text-white p-8 md:p-10 bg-cover bg-center"
+                  style={{
+                    backgroundImage: `linear-gradient(rgba(15, 23, 52, 0.92), rgba(30, 64, 185, 0.78)), url(${logo9})`,
+                  }}
+                >
                   <p className="text-blue-200 text-sm tracking-[0.2em] font-semibold uppercase">
                     Contact Details
                   </p>
@@ -132,7 +137,7 @@ const ContactUs = () => {
 
                   <div className="mt-8 space-y-4">
                    
-                    <div className="rounded-xl border border-slate-600/80 bg-red-800 px-4 py-3">
+                    <div className="rounded-xl border border-slate-600/80 bg-slate-700/50 px-4 py-3">
                       <p className="text-xs text-slate-300 uppercase tracking-wide">
                         Support
                       </p>
