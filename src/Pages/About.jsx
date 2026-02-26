@@ -67,7 +67,7 @@ const About = () => {
     className="
       relative
       w-[95%] md:w-[85%]
-      bg-white/90 backdrop-blur-xl
+      bg-white/30 backdrop-blur-xl
       rounded-3xl shadow-2xl
       border-l-8 border-red-800
       px-6 md:px-14 py-8 md:py-10
@@ -80,7 +80,7 @@ const About = () => {
       alt=""
       className="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-30"
     />
-    <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/45 to-white/20 rounded-3xl"></div>
+    <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/20 to-white/10 rounded-3xl"></div>
     <div className="relative z-10 h-full w-full flex flex-col md:flex-row items-center justify-between gap-8">
       <div className="w-full md:w-[70%] text-center md:text-left">
         <p className="inline-block px-3 py-1 rounded-full bg-[#1a525e]/10 text-[#1a525e] text-xs md:text-sm font-semibold tracking-wide ml-10">
@@ -95,7 +95,7 @@ const About = () => {
           <img
             src={logo}
             alt="Dream Animex Logo"
-            className="w-[90px] h-[110px] md:w-[130px] md:h-[160px] object-contain opacity-50"
+            className="w-[90px] h-[110px] md:w-[130px] md:h-[160px] object-contain opacity-60"
           />
         </div>
       </div>
