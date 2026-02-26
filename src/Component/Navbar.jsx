@@ -8,13 +8,8 @@ const Navbar = ({ onEnquiryClick }) => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.state?.openCoursesMenu) {
-      setIsMenuOpen(true);
-      setOpenCourses(true);
-    } else {
-      setOpenCourses(false);
-    }
-  }, [location.state]);
+    setOpenCourses(false);
+  }, [location.pathname]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
@@ -35,8 +30,7 @@ const Navbar = ({ onEnquiryClick }) => {
             <li className="relative cursor-pointer" onMouseLeave={() => setOpenCourses(false)}>
               <Link
                 to="/our-courses"
-                state={{ openCoursesMenu: true }}
-                onClick={() => setOpenCourses(true)}
+                onClick={() => setOpenCourses(false)}
                 className="flex items-center gap-1 hover:text-red-600"
               >
                 Our Courses
@@ -87,7 +81,7 @@ const Navbar = ({ onEnquiryClick }) => {
                 <Link to="/about" onClick={closeMenu} className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500">About Us</Link>
               </li>
               <li className="border-b border-gray-100">
-                <Link to="/our-courses" state={{ openCoursesMenu: true }} onClick={() => setOpenCourses(true)} className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500">Our Courses <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? 'rotate-180' : ''}`} /></Link>
+                <Link to="/our-courses" onClick={closeMenu} className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500">Our Courses <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? 'rotate-180' : ''}`} /></Link>
                 {openCourses && (
                   <ul className="bg-gray-50">
                     <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white"><Link to="/graphic-design" onClick={closeMenu}>Graphic Design</Link></li>

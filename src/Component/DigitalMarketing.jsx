@@ -44,7 +44,7 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
 
       {/* Title */}
       <div className="w-full pl-4 md:pl-8 pt-4 md:pt-6">
-        <h2 className="text-3xl md:text-5xl font-[Lobster-Two] text-gray-800 tracking-tight">
+        <h2 className="text-3xl md:text-3xl text-gray-800 tracking-tight">
           Digital Marketing
         </h2>
       </div>
@@ -85,8 +85,8 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
 
     {/* Right Image */}
     <div className="w-full md:w-[40%] h-auto md:h-full flex justify-center items-center mt-6 md:mt-0 pb-4 md:pb-0">
-      <div className="w-[260px] md:w-[380px] h-[220px] md:h-[320px] rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-        <img src={logo5} alt="" className="w-full h-full object-cover" />
+      <div className="w-[260px] md:w-[350px] h-[220px] md:h-[320px] rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
+        <img src={logo5} alt="" className="w-full h-full object-cover scale-[1.25]" />
       </div>
     </div>
 
@@ -99,7 +99,7 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
 
   {/* Header */}
   <div className="w-full border-b border-gray-100 flex items-center px-4 md:px-5 py-3">
-    <h2 className="text-xl md:text-3xl font-bold font-[Lobster-Two] tracking-tight bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+    <h2 className="text-xl md:text-3xl font-bold  tracking-tight bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
       Why Choose Our Digital Marketing Course?
     </h2>
   </div>

@@ -34,7 +34,7 @@ const Index = () => {
             {/* First row */}
             <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-                <img src={logo7} className="w-full h-full object-cover rounded-xl" alt="Graphic Design" style={{ aspectRatio: '1/1' }} />
+                <img src={logo7} className="w-full h-full object-cover rounded-xl" alt="Graphic Design " style={{ aspectRatio: '1/1' }} />
               </div>
               <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
                 <h3 className="text-white text-lg md:text-2xl font-bold text-center">Graphic Design</h3>
