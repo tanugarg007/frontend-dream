@@ -26,7 +26,7 @@ const Index = () => {
         </div>
 
         <div className='w-full h-24  flex justify-center items-center'>
-          <h2 className="text-[#24707f] text-5xl font-bold text-center">COURSES</h2>
+          <h2 className="text-white text-5xl font-bold text-center">COURSES</h2>
         </div>
 
         <div className='w-full h-auto  top-[664px] left-0 '>

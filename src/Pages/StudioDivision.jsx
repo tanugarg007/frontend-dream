@@ -22,7 +22,7 @@ const StudioDivision = () => {
           <div className="w-[95%] md:w-[85%]
             bg-white/90 backdrop-blur-xl
             rounded-2xl shadow-2xl
-            border-l-8 border-yellow-500
+            border-l-8 border-red-800
             px-8 md:px-14 py-10">
 
             <div className="flex flex-col md:flex-row gap-10">
@@ -33,7 +33,7 @@ const StudioDivision = () => {
                 <h2 className="text-4xl font-extrabold text-gray-900 mt-2">
                   Studio Division
                 </h2>
-                 <p className="text-yellow-600 uppercase tracking-widest text-sm font-semibold mt-3">
+                 <p className="text-red-800 uppercase tracking-widest text-sm font-semibold mt-3">
                   Creative Production Wing
                 </p>
               </div>

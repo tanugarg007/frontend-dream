@@ -19,7 +19,7 @@ const OurCourses =()=>{
        <div className="w-full h-[50px]  mt-20"></div>
 
       <div className="w-full h-[60px] md:h-[90px] border border-white mt-5 flex justify-center items-center bg-white">
-         <h2 className=" text-3xl md:text-5xl text-cyan-900 font-bold text-center ">
+         <h2 className=" text-3xl md:text-5xl text-red-800 font-bold text-center ">
            Our Courses
             </h2>
 </div>

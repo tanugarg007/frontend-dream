@@ -78,19 +78,17 @@ const About = () => {
     <img
       src={logo16}
       alt=""
-      className="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-90"
+      className="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-30"
     />
     <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/45 to-white/20 rounded-3xl"></div>
     <div className="relative z-10 h-full w-full flex flex-col md:flex-row items-center justify-between gap-8">
       <div className="w-full md:w-[70%] text-center md:text-left">
-        <p className="inline-block px-3 py-1 rounded-full bg-[#1a525e]/10 text-[#1a525e] text-xs md:text-sm font-semibold tracking-wide">
+        <p className="inline-block px-3 py-1 rounded-full bg-[#1a525e]/10 text-[#1a525e] text-xs md:text-sm font-semibold tracking-wide ml-10">
           ABOUT DREAM ANIMEX
         </p>
         <h2 className="text-[#133f48] text-3xl md:text-5xl font-extrabold mt-3 leading-tight">Dream Animex</h2>
         <p className="text-[#24707f] text-lg md:text-xl font-semibold mt-2 ml-10">Where Skill Meet Creativity</p>
-        <p className="text-[#1f4f58] text-sm md:text-base mt-3 max-w-xl">
-          Professional training, studio exposure, and creative mentorship designed to build confident, industry-ready talent.
-        </p>
+        
       </div>
       <div className="w-full md:w-[30%] flex justify-center md:justify-end">
         <div className="rounded-2xl  p-3 md:p-4  ">

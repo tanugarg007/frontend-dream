@@ -24,12 +24,22 @@ const Footer = () => {
         <div className="w-full md:w-[240px] mt-4">
           <h3 className="text-white text-2xl md:text-3xl font-bold mb-4">Quick Links</h3>
           <ul className="text-white text-lg leading-7 ml-2">
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Home</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">About Us</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Our Courses</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Contact Us</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Studio Division</li>
-            <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Student Corner</li>
+            <li className="mb-2">
+              <Link to="/" className="hover:text-red-400 transition-colors cursor-pointer">Home</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/about" className="hover:text-red-400 transition-colors cursor-pointer">About Us</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/our-courses" className="hover:text-red-400 transition-colors cursor-pointer">Our Courses</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/contact" className="hover:text-red-400 transition-colors cursor-pointer">Contact Us</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/studio-division" className="hover:text-red-400 transition-colors cursor-pointer">Studio Division</Link>
+            </li>
+          
           </ul>
         </div>
 
