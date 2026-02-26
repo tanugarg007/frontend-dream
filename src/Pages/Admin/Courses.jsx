@@ -3,10 +3,6 @@ import React, { useEffect, useState } from 'react';
 const initialFormData = {
   name: '',
   duration: '',
-  fee: '',
-  category: 'Graphic Design',
-  seats: '',
-  startDate: '',
   description: '',
 };
 
@@ -29,8 +25,6 @@ const Courses = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isDeletingId, setIsDeletingId] = useState(null);
   const [apiError, setApiError] = useState('');
-
-  const categories = ENQUIRY_COURSE_OPTIONS;
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('adminToken') || localStorage.getItem('token') || '';
@@ -112,10 +106,6 @@ const Courses = () => {
 
     if (!formData.name.trim()) nextErrors.name = 'Course name is required';
     if (!formData.duration.trim()) nextErrors.duration = 'Duration is required';
-    if (!formData.category.trim()) nextErrors.category = 'Category is required';
-    if (!formData.fee || Number(formData.fee) <= 0) nextErrors.fee = 'Enter a valid fee';
-    if (formData.seats && Number(formData.seats) <= 0) nextErrors.seats = 'Seats must be positive';
-    if (!formData.startDate) nextErrors.startDate = 'Start date is required';
 
     return nextErrors;
   };
@@ -123,11 +113,7 @@ const Courses = () => {
   const toPayload = () => ({
     title: formData.name.trim(),
     description: formData.description.trim(),
-    category: formData.category.trim(),
-    fee: formData.fee ? Number(formData.fee) : undefined,
     duration: formData.duration.trim() || undefined,
-    seats: formData.seats ? Number(formData.seats) : undefined,
-    startDate: formData.startDate || undefined,
   });
 
   const handleSubmitCourse = async (e) => {
@@ -282,75 +268,6 @@ const Courses = () => {
                   className="w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
                 {errors.duration && <p className="mt-1 text-xs text-red-600">{errors.duration}</p>}
-              </div>
-
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="category">
-                  Category
-                </label>
-                <select
-                  id="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleInputChange}
-                  className="w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                >
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-                {errors.category && <p className="mt-1 text-xs text-red-600">{errors.category}</p>}
-              </div>
-
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="fee">
-                  Fee (INR)
-                </label>
-                <input
-                  id="fee"
-                  name="fee"
-                  type="number"
-                  min="1"
-                  value={formData.fee}
-                  onChange={handleInputChange}
-                  placeholder="Ex: 12000"
-                  className="w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                />
-                {errors.fee && <p className="mt-1 text-xs text-red-600">{errors.fee}</p>}
-              </div>
-
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="seats">
-                  Seats (optional)
-                </label>
-                <input
-                  id="seats"
-                  name="seats"
-                  type="number"
-                  min="1"
-                  value={formData.seats}
-                  onChange={handleInputChange}
-                  placeholder="Ex: 30"
-                  className="w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                />
-                {errors.seats && <p className="mt-1 text-xs text-red-600">{errors.seats}</p>}
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="startDate">
-                  Start Date
-                </label>
-                <input
-                  id="startDate"
-                  name="startDate"
-                  type="date"
-                  value={formData.startDate}
-                  onChange={handleInputChange}
-                  className="w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                />
-                {errors.startDate && <p className="mt-1 text-xs text-red-600">{errors.startDate}</p>}
               </div>
 
               <div className="md:col-span-2">

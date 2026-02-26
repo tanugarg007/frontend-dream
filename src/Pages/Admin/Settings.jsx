@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 const ADMIN_CHANGE_PASSWORD_ENDPOINT =
-  process.env.REACT_APP_ADMIN_CHANGE_PASSWORD_ENDPOINT || '/users/admin/forgot-password';
+  process.env.REACT_APP_ADMIN_CHANGE_PASSWORD_ENDPOINT || '/users/forgot-password';
 
 const joinUrl = (base, endpoint) => {
   if (!base) return endpoint;
@@ -13,9 +13,10 @@ const joinUrl = (base, endpoint) => {
 const Settings = () => {
   const { token } = useAuth();
   const [profile, setProfile] = useState({
-    name: 'Admin User',
-    email: 'admin@animex.com',
+    name: '',
+    email: '',
   });
+  const [profileErrors, setProfileErrors] = useState({});
   const [avatarPreview, setAvatarPreview] = useState('');
 
   const [password, setPassword] = useState({
@@ -28,6 +29,21 @@ const Settings = () => {
 
   const handleProfileUpdate = (e) => {
     e.preventDefault();
+    const nextErrors = {};
+
+    if (!profile.name?.trim()) nextErrors.name = 'Name is required.';
+    if (!profile.email?.trim()) {
+      nextErrors.email = 'Email is required.';
+    } else if (!/\S+@\S+\.\S+/.test(profile.email.trim())) {
+      nextErrors.email = 'Enter a valid email address.';
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setProfileErrors(nextErrors);
+      return;
+    }
+
+    setProfileErrors({});
     // API call to update profile
     alert('Profile updated successfully!');
   };
@@ -107,26 +123,38 @@ const Settings = () => {
         {/* Profile Settings */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
-          <form onSubmit={handleProfileUpdate}>
+          <form onSubmit={handleProfileUpdate} noValidate>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Name</label>
               <input
                 type="text"
                 value={profile.name}
-                onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                onChange={(e) => {
+                  setProfile({ ...profile, name: e.target.value });
+                  if (profileErrors.name) {
+                    setProfileErrors((prev) => ({ ...prev, name: '' }));
+                  }
+                }}
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
+              {profileErrors.name && <p className="mt-1 text-sm text-red-600">{profileErrors.name}</p>}
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Email</label>
               <input
                 type="email"
                 value={profile.email}
-                onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+                onChange={(e) => {
+                  setProfile({ ...profile, email: e.target.value });
+                  if (profileErrors.email) {
+                    setProfileErrors((prev) => ({ ...prev, email: '' }));
+                  }
+                }}
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
+              {profileErrors.email && <p className="mt-1 text-sm text-red-600">{profileErrors.email}</p>}
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Avatar</label>
@@ -151,7 +179,7 @@ const Settings = () => {
                 Choose Avatar
               </label>
             </div>
-            <button type="submit" className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90">
+            <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
               Update Profile
             </button>
           </form>

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo1 from '../Images/dream-logo-ok.png';
+import logo from '../Images/dream-logo-ok.png';
 import logo9 from '../Images/page-background.JPG';
-import logo5 from '../Images/digital.png';
+import logo5 from '../Images/gv.png'
 import logo4 from '../Images/yellowback2.jpg';
 import whatsappImg from '../Assets/whatsapp.png';
 import Navbar from '../Component/Navbar';
 import EnquiryModal from '../Component/EnquiryModal';
 import Footer from './Footer';
 
-const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(false);
+const GraphicandVideoEditing = () => { const [showPopup, setShowPopup] = useState(false);
   return (
     <div className="w-full">
       {/* Background */}
@@ -21,14 +21,14 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
 
         {/* Hero Section */}
      <div
-  className="w-full h-auto md:h-[500px] flex flex-col md:flex-row justify-center items-center
+  className="w-full h-auto md:h-[530px] flex flex-col md:flex-row justify-center items-center
              mt-20 md:mt-0
              rounded-br-[20px] md:rounded-br-[200px]"
   style={{
     backgroundImage: `url(${logo4})`,
   }}
 >
-
+  
   <div className="
   w-[90%] md:w-[75%] 
   h-auto md:h-[70%] 
@@ -43,28 +43,25 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
     <div className="w-full md:w-[60%] h-auto md:h-full flex flex-col">
 
       {/* Title */}
-      <div className="w-full pl-4 md:pl-8 pt-4 md:pt-6">
-        <h2 className="text-3xl md:text-5xl font-[Lobster-Two] text-gray-800 tracking-tight">
-          Digital Marketing
+      <div className="w-full pl-2 md:pl-8 pt-4 md:pt-6">
+        <h2 className="text-2xl md:text-3xl font-[Lobster-Two] text-gray-800 tracking-tight">
+          Graphic Design + Video Editing Course
         </h2>
       </div>
 
       {/* Content */}
       <div className="w-full px-4 md:px-0 pl-0 md:pl-8 pt-3 md:pt-5 pr-0 md:pr-6">
-        <p className="text-sm md:text-lg text-gray-600 leading-relaxed px-5 md:px-0">
-          A comprehensive course covering online marketing strategies, campaign planning, audience targeting,
-          and performance analysis. Students gain practical exposure to marketing tools and real-world scenarios.
-          The program focuses on building data-driven marketing skills, understanding consumer behavior, and
-          creating result-oriented digital campaigns.
+        <p className="text-sm md:text-lg text-gray-600 leading-normal px-5 md:px-0 ">
+         An integrated program combining design and video production skills. Ideal for students who want to become versatile creative professionals with expertise across multiple visual media formats. The course focuses on building creative thinking, technical proficiency, and a strong visual storytelling approach. Students gain hands-on experience working on real-world projects that blend graphic design, motion, and video production.
         </p>
-        <p className="text-sm md:text-lg font-semibold text-gray-700 mt-1 px-5 md:px-0">
+         <p className="text-sm md:text-lg font-semibold text-gray-700 mt-1 px-5 md:px-0">
           Duration: 6 Months
         </p>
       </div>
-           
+
       {/* Buttons */}
       <div className="w-full flex flex-wrap gap-3 pl-4 md:pl-8 mt-4 md:mt-auto pb-4">
-        <button 
+         <button 
                 onClick={() => setShowPopup(true)}
                 className='bg-red-600 text-white text-lg px-5 py-2 rounded hover:bg-red-700 transition-all duration-300 transform hover:scale-105'
               >
@@ -100,7 +97,7 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
   {/* Header */}
   <div className="w-full border-b border-gray-100 flex items-center px-4 md:px-5 py-3">
     <h2 className="text-xl md:text-3xl font-bold font-[Lobster-Two] tracking-tight bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-      Why Choose Our Digital Marketing Course?
+      Why Choose Our Graphic Design + Video Editing Course?
     </h2>
   </div>
 
@@ -109,11 +106,11 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
 
     {/* Why Choose Points */}
     {[
-      ["purple","Learn powerful digital marketing strategies to promote brands, products, and services online."],
-      ["indigo", "Understand audience targeting, campaign planning, and content marketing for better reach and engagement."],
-      ["blue", "Gain hands-on experience with social media marketing, SEO, paid ads, and analytics tools."],
-      ["cyan", "Analyze campaign performance and optimize strategies using data-driven insights."],
-      ["teal", "Build practical skills to manage real-world digital marketing campaigns across multiple platforms."]
+      ["purple","We design creative visuals and edit cinematic videos that bring your ideas to life."],
+      ["indigo", "From concept to final cut, we craft visuals that speak, move, and inspire."],
+      ["blue", "Our approach blends creativity with strategy to deliver impactful visual experiences."],
+      ["cyan", "Professional graphic design and video editing services tailored to build strong brands."],
+      ["teal", "Your vision, our creativity — designing ideas and editing stories that truly matter."]
     ].map(([color, text], index) => (
       <p
         key={index}
@@ -126,21 +123,14 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
     {/* Divider */}
     <div className="w-full h-[1px] bg-gray-200 my-4"></div>
 
-         {/* Modules Covered */}
+   {/* Modules Covered */}
     <div>
       <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-        Modules Covered
+        Software Covered
       </h3>
 
       <div className="flex flex-wrap gap-3">
-        {[
-          "SEO",
-          "SEM",
-          "Social Media Marketing (SMM)",
-          "Content Marketing",
-          "Email Marketing & Automation",
-          "Reporting & Analytics"
-        ].map((tool, i) => (
+        {["Adobe Photoshop ", "  Adobe Illustrator", " Adobe Premiere Pro", "Adobe InDesign", " Adobe After Effects","DaVinci Resolve."].map((tool, i) => (
           <span
             key={i}
             className="px-4 py-2 text-sm font-semibold text-white rounded-lg shadow-md bg-gradient-to-r from-purple-500 to-indigo-500 hover:-translate-y-0.5 transition"
@@ -150,9 +140,12 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
         ))}
       </div>
     </div>
+
     {/* Divider */}
     <div className="w-full h-[1px] bg-gray-200 my-4"></div>
-        {/* Certification */}
+
+    
+      {/* Certification */}
     <div>
       <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
         Certification
@@ -173,12 +166,16 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
 </div>
 
 
- <Footer/>
+      <Footer/>
                     <EnquiryModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
       </div>
     </div>
   );
 };
 
-export default DigitalMarketing;
+export default GraphicandVideoEditing;
+
+
+
+
 

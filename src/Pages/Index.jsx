@@ -1,1192 +1,160 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from 'react-router-dom';
-import logo1 from '../Images/dream-anim-logo.png'
-import logo7 from '../Images/graphic des.jpg'
-import logo11 from '../Images/about1.jpg'
-import logo3 from '../Images/video edt.jpg'
-import logo4 from '../Images/uiux.jpg'
-import logo5 from '../Images/digitalmark1.jpg'
-import logo6 from '../Images/uiandgraphic.jpg'
-import logo9 from '../Images/page-background.JPG'
-import logo13 from '../Images/faq1.jpg'
-import {FaPlus} from "react-icons/fa";
-import {FaMinus} from "react-icons/fa";
-import img1 from "../Images/img1.png";
-import img2 from '../Images/img2.png';
-import img3 from '../Images/img3.png';
-import img4 from '../Images/img4.png';
+import React from "react";
+import { Link } from 'react-router-dom';
+import logo7 from '../Images/graphic.png';
+import logo11 from '../Images/choose.png';
+import logo3 from '../Images/video.png';
+import logo4 from '../Images/uiandux.png';
+import logo5 from '../Images/digital.png';
+import logo6 from '../Images/gv.png';
+import logo9 from '../Images/page-background.JPG';
+
+
+import logo10 from '../Images/slider.jpg.jpeg';
+import Navbar from "../Component/Navbar";
+import FAQ from "../Component/FAQ";
+import Footer from "../Component/Footer";
 
 const Index = () => {
-   const [openIndex, setOpenIndex] = useState(null);
-const [hoverIndex, setHoverIndex] = useState(false);
-const [openCourses, setOpenCourses] = useState(false);
-const [popupType, setPopupType] = useState(null); 
-
-
- const [isMenuOpen, setIsMenuOpen] = useState(false);
- const [current, setCurrent] = useState(0);
- const location = useLocation();
-
-  // State for Enquiry Popup
-  const [showPopup, setShowPopup] = useState(false);
-
-    useEffect(() => {
-  const autoPopupClosed = sessionStorage.getItem("autoPopupClosed");
-
-  if (autoPopupClosed !== "true") {
-    setShowPopup(true);
-    setPopupType("auto");
-  }
-}, []);
-
-  // Effect to show popup only on initial site visit (new tab/window)
-  useEffect(() => {
-  const hasPopupShown = sessionStorage.getItem("enquiryPopupShown");
-
-  if (hasPopupShown !== "true") {
-    setShowPopup(true);
-    sessionStorage.setItem("enquiryPopupShown", "true");
-  }
-}, []);
-
-
-        const toggleMenu = () => {
-      setIsMenuOpen(!isMenuOpen);
-    };
-const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  useEffect(() => {
-    if (location.state?.openCoursesMenu) {
-      setIsMenuOpen(true);
-      setOpenCourses(true);
-    }
-  }, [location.state]);
-
-  const images = [img1,img2,img3,img4]; // 👈 sabse upar
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [images.length]);
-
+  
 
   return (
-   <div className="w-full ">
-
- <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat md:min-h-screen"
-  style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}  >
-   
-<header className="fixed top-0 left-0 w-full z-50">
-  {/* Logo - Visible on both mobile and desktop */}
-  <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center ml-5">
-   <img
-  src={logo1}
-  alt="logo"
-  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px] "
-  style={{
-    filter:
-      "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
-  }}
-/>
-   
-  </div>
-
-  {/* Navigation */}
-  <nav className="fixed top-0 h-[70px] w-full bg-white flex items-center z-[40]">
-    {/* Left spacer - Different sizes for mobile vs desktop */}
-    <div className='w-[30%] md:w-[25%] h-full'></div>
-    
-    {/* Navigation Menu - Hidden on mobile, visible on desktop */}
-    <div className='hidden md:block w-[55%] h-full'>
-      <ul className='text-lg text-cyan-900 flex justify-evenly items-center mt-5 font-bold' style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-        <li>
-          <Link to='/' className="hover:text-red-600 transition-colors">
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to='/about' className="hover:text-red-600 transition-colors">
-            About Us
-          </Link>
-        </li>
-              <li className="relative group cursor-pointer">
-                           <Link
-                             to="/our-courses"
-                             className="flex items-center gap-1 hover:text-red-600 transition-colors duration-300"
-                           >
-                             Our Courses
-                             <i className="fa-solid fa-caret-down transition-transform duration-300 group-hover:rotate-180"></i>
-                           </Link>
-                            <ul className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 scale-95 group-hover:scale-100 border border-gray-200 z-50">
-                             <li className="hover:bg-red-50 transition">
-                               <Link to="/graphic-design" className="block px-5 py-3 text-black hover:text-red-600">
-                                 Graphic Design
-                               </Link>
-                             </li>
-                             <li className="hover:bg-red-50 transition">
-                               <Link to="/video-editing" className="block px-5 py-3 text-black hover:text-red-600">
-                                 Video Editing
-                               </Link>
-                             </li>
-                             <li className="hover:bg-red-50 transition">
-                               <Link to="/ui&ux-design" className="block px-5 py-3 text-black hover:text-red-600">
-                                 UI/UX Design
-                               </Link>
-                             </li>
-                             <li className="hover:bg-red-50 transition">
-                               <Link to="/digital-marketing" className="block px-5 py-3 text-black hover:text-red-600">
-                                 Digital Marketing
-                               </Link>
-                             </li>
-                             <li className="hover:bg-red-50 transition rounded-b-xl">
-                               <Link to="/graphic&uiux" className="block px-5 py-3 text-black hover:text-red-600">
-                                 UI/UX & Graphic Design
-                               </Link>
-                             </li>
-                           </ul> 
-                         </li>
-        <li className="hover:text-red-600 transition-colors">
-            Student Corner
-                 </li>
-        <li>
-          <Link to='/studio-division' className="hover:text-red-600 transition-colors">
-            Studio Division
-          </Link>
-        </li>
-        <li>
-          <Link to='/contact' className="hover:text-red-600 transition-colors">
-            Contact Us
-          </Link>
-        </li>
-      </ul>
-    </div> 
-    
-    {/* Enquire Button - Hidden on mobile, visible on desktop */}
-  {/* Enquire Button - Hidden on mobile, visible on desktop */}
-{/* Login & Enquire Buttons - Hidden on mobile, visible on desktop */}
-<div className='hidden md:flex w-[20%] h-full justify-center items-center gap-2'>
- 
-  <button
-    onClick={() => {
-      setPopupType("manual");
-      setShowPopup(true);
-    }}
-    className="bg-red-600 text-white text-lg px-5 py-2 rounded hover:bg-red-700"
-  >
-    Enquiry
-  </button>
-</div>
-    
-    {/* Menu Icon - ONLY on mobile */}
-   {/* Mobile Bars Icon */}
-<div className="md:hidden w-[70%] h-full flex justify-end items-center pr-4">
-  <button onClick={toggleMenu}>
-    <i className="fa-solid fa-bars text-cyan-900 text-2xl font-bold cursor-pointer"></i>
-  </button>
-</div>
-
-{/* Desktop spacer */}
-<div className="hidden md:block w-[5%] h-full"></div>
-
-{/* Mobile Dropdown Menu */}
-{isMenuOpen && (
-  <div className="md:hidden fixed top-[70px] left-0 w-full bg-white z-[9999] shadow-lg">
-    <ul className="flex flex-col py-4">
-
-      <li className="border-b border-gray-100">
-        <Link
-          to="/"
-          onClick={closeMenu}
-          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-        >
-          Home
-        </Link>
-      </li>
-
-      <li className="border-b border-gray-100">
-        <Link
-          to="/about"
-          onClick={closeMenu}
-          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-        >
-          About Us
-        </Link>
-      </li>
-
-      <li className="border-b border-gray-100">
-        <Link
-          to="/our-courses"
-          state={{ openCoursesMenu: true }}
-          onClick={() => setOpenCourses(!openCourses)}
-          className="w-full flex justify-between items-center px-6 py-4 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500 transition-colors"
-        >
-          Our Courses
-          <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? "rotate-180" : ""}`} />
-        </Link>
-        {openCourses && (
-          <ul className="bg-gray-50">
-            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
-              <Link to="/graphic-design" onClick={closeMenu}>Graphic Design</Link>
-            </li>
-            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
-              <Link to="/ui&ux-design" onClick={closeMenu}>UI / UX Design</Link>
-            </li>
-            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
-              <Link to="/video-editing" onClick={closeMenu}>Video Editing</Link>
-            </li>
-            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
-              <Link to="/digital-marketing" onClick={closeMenu}>Digital Marketing</Link>
-            </li>
-            <li className="px-10 py-3 text-gray-700 hover:bg-gray-600 hover:text-white transition-colors">
-              <Link to="/graphicuiux" onClick={closeMenu}>Graphic Design & UI/UX Design</Link>
-            </li>
-          </ul>
-        )}
-      </li>
-
-      <li className="border-b border-gray-100 text-cyan-900 font-bold text-lg hover:text-red-500 px-6 py-3">
-        Student Corner
-      </li>
-
-      <li className="border-b border-gray-100">
-        <Link
-          to="/studio-division"
-          onClick={closeMenu}
-          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-        >
-          Studio Division
-        </Link>
-      </li>
-
-      <li className="border-b border-gray-100">
-        <Link
-          to="/contact"
-          onClick={closeMenu}
-          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-        >
-          Contact Us
-        </Link>
-      </li>
-
-      {/* ✅ LOGIN LINK ADDED HERE */}
-      <li className="border-b border-gray-100">
-        <Link
-          to="/login"
-          onClick={closeMenu}
-          className="block px-6 py-3 text-cyan-900 font-bold text-lg hover:bg-gray-50 hover:text-red-500"
-        >
-          Login
-        </Link>
-      </li>
-
-    </ul>
-  </div>
-)}
-
-{/* Overlay */}
-{isMenuOpen && (
-  <div
-    className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-[9998] top-[70px]"
-    onClick={closeMenu}
-  ></div>
-)}
-</nav>
-</header>
-<div className="w-full aspect-[16/9] md:aspect-[21/9] mt-[70px]  overflow-hidden relative">
-  {images.map((img, index) => (
-    <img
-      key={index}
-      src={img}
-      alt=""
-      className={`w-full h-full absolute
-       
-        transition-opacity duration-1000
-        ${index === current ? "opacity-100" : "opacity-0"}
-      `}
-    />
-  ))}
-</div>
-
-
-         <div className='w-full h-24  flex justify-center items-center'>
-  
-    <h2 className="text-[#24707f] text-4xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>COURSES</h2>
- 
-</div>
-
-{/* Fixed WhatsApp Button */}
-<div className='fixed right-6 top-[650px] z-50 '>
-  <Link to='https://wa.me/919888695595'>
-  <div className='w-[40px] h-[40px] border border-white rounded-lg bg-white flex justify-center items-center '>
-    <i className="fa-brands fa-whatsapp text-3xl text-green-500 "></i>
-  </div>
-  </Link>
-</div>
-
-        
- <div className='w-full h-auto  top-[664px] left-0 '>
-  <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-3 '>
-    {/* First row */}
-<div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
-
-  {/* IMAGE BOX – NEVER SMALL */}
-  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-  <img
-  src={logo7}
-  className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
-  alt="Graphic Design"
-/>
-
-</div>
-
-
-  {/* TITLE */}
-  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
-    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-      Graphic Design
-    </h3>
-    </div>
-
-  {/* DESCRIPTION */}
-  <div className="w-full flex-1 md:h-[20%] mt-3">
-    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
-      Graphic design is the visual communication of ideas through typography,
-      imagery, and color, focusing on balancing aesthetics with functionality.
-    </p>
-  </div>
-
-  {/* BUTTON */}
-  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
-    <Link to='/graphic-design'>
-    <button className="text-white bg-yellow-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
-      Read More
-    </button>
-    </Link>
-  </div>
-
-</div>
-
-     
-   
-<div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
-
-  {/* IMAGE BOX – NEVER SMALL */}
-  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-  <img
-    src={logo3}
-    alt="video editing"
-     className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
-  />
-</div>
-
-
-  {/* TITLE */}
-  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
-    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-      Video Editing
-    </h3>
-    </div>
-
-  {/* DESCRIPTION */}
-  <div className="w-full flex-1 md:h-[20%] mt-3">
-    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
-      Video editing involves manipulating video and audio to create a compelling narrative, utilizing techniques like B-roll for context, color correction for consistency, and cutting to pacing.
-    </p>
-  </div>
-
-  {/* BUTTON */}
-  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
-    <Link to='/video-editing'>
-    <button className="text-white bg-red-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
-      Read More
-    </button>
-    </Link>
-  </div>
-</div>
-
-
-   <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white  rounded-2xl p-3 flex flex-col">
-
-  {/* IMAGE BOX – NEVER SMALL */}
-  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-  <img
-    src={logo4}
-    alt="ui/ux design"
-     className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
-  />
-</div>
-
-
-  {/* TITLE */}
-  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
-    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-      UI & UX Design
-    </h3>
-    </div>
-
-  {/* DESCRIPTION */}
-  <div className="w-full flex-1 md:h-[20%] mt-3">
-    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
-    UI/UX design focuses on creating intuitive, user-centered digital experiences where functionality meets aesthetics.
-    </p>
-  </div>
-
-  {/* BUTTON */}
-  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
-    <Link to='/ui&ux-design'>
-    <button className="text-white bg-yellow-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
-      Read More
-    </button>
-    </Link>
-  </div>
-</div>
-  </div> 
-
-  {/* Second row */}
-   <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-2 '>
-   <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
-
-  {/* IMAGE BOX – NEVER SMALL */}
-  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-  <img
-    src={logo5}
-    alt="digital marketing"
-     className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
-  />
-</div>
-
-
-  {/* TITLE */}
-  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
-    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-      Digital Marketing
-    </h3>
-    </div>
-
-  {/* DESCRIPTION */}
-  <div className="w-full flex-1 md:h-[20%] mt-3">
-    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
-Digital marketing combines creativity with technology, using data-driven strategies—SEO, social media, and content—to connect directly with audiences.
-    </p>
-  </div>
-
-  {/* BUTTON */}
-  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
-     <Link to="/digital-marketing">
-    <button className="text-white bg-red-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
-      Read More
-    </button>
-    </Link>
-  </div>
-</div>
-     
-     <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
-
-  {/* IMAGE BOX – NEVER SMALL */}
-  <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-  <img
-    src={logo6}
-    alt="graphic&ui/ux"
-     className="w-full h-[250px] md:h-[350px] object-cover rounded-xl"
-  />
-</div>
-
-
-  {/* TITLE */}
-  <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
-    <h3 className="text-white text-lg md:text-2xl font-bold text-center" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-      Graphic & UI/UX Design
-    </h3>
-    </div>
-
-  {/* DESCRIPTION */}
-  <div className="w-full flex-1 md:h-[20%] mt-3">
-    <p className="text-white text-center px-3 md:px-5 text-base leading-relaxed">
-Graphic and UI/UX design focuses on merging aesthetics with functionality, aiming to create intuitive, user-centered experiences.
-    </p>
-  </div>
-
-  {/* BUTTON */}
-  <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
-    <Link to="/graphic&uiux">
-    <button className="text-white bg-yellow-500 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">
-      Read More
-    </button>
-    </Link>
-  </div>
-</div>
-  </div>
-</div>  
-     <div className="w-full h-auto md:h-[580px] flex flex-col md:flex-row ">
-  
-  {/* Text Section – TOP on mobile, LEFT on desktop */}
-  <div className="w-full md:w-1/2 h-auto md:h-full order-1 md:order-1 pl-16">
-  <div className="w-[140px] h-[30px] bg-white text-lg mt-8 md:mt-6 ml-4 md:ml-16 text-center">
-    <h3>Why Choose Us</h3>
-  </div>
-
-  <h2 className="text-white text-2xl md:text-4xl mt-6 md:mt-6 ml-4 md:ml-16 font-bold" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-    The Choice Of Future Professionals
-  </h2>
-
-  <p className="text-white text-xl md:text-base mt-6 md:mt-6 ml-4 md:ml-16">
-    Dream Academy enables you to learn from industry experts with hands-on training,
-    cutting-edge tools, and real-world projects. We offer career-focused programs in
-    Graphic Design, Video Editing, UI/UX Design, and Digital Marketing for a successful
-    creative future.
-  </p>
-
-  {/* POINTS LIST */}
-  <ul className="text-white text-base md:text-lg mt-6 md:mt-6 ml-6 md:ml-20 list-disc space-y-2">
-    <li>Live mentor-led classes</li>
-    <li>Practical project-based learning</li>
-    <li>Portfolio-focused training</li>
-    <li>Beginner-friendly approach</li>
-    <li>Career & freelancing guidance</li>
-    <li>Flexible learning from home</li>
-  </ul>
-
-  <Link to="/about">
-    <button className="rounded-full bg-red-500 text-white text-base md:text-lg mt-6 md:mt-8 ml-4 md:ml-16 px-4 md:px-5 py-2 mb-8">
-      Read More
-    </button>
-  </Link>
-</div>
-
-
-  {/* Image Section – BOTTOM on mobile, RIGHT on desktop */}
-  <div className="w-full md:w-1/2 h-auto md:h-full order-2 md:order-2 flex justify-center items-center mt-8 md:mt-0 ">
-    <img 
-      src={logo11} 
-      alt="Animation Visual" 
-      className="w-[90%] md:w-[60%] h-auto md:h-[70%] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700"
-    />
-  </div>
-
-</div>
-          
-          <div className='w-[92%] mx-auto h-auto md:h-[500px] flex flex-col md:flex-row gap-4 md:gap-6'>
-             <div className='w-full md:w-[39%] h-auto md:h-full flex justify-center md:justify-start items-center py-6 md:py-0 md:pl-20 '>
-                  <img src={logo13} alt='' className='w-[260px] h-[300px] md:w-[390px] md:h-[425px] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700'/>
-             </div>
-             <div className='w-full md:w-[61%] h-auto md:h-full'>
-                 <div className='w-full h-auto md:h-[24%]   '>
-                   <div className="bg-white text-black w-[50px] h-[45px] rounded-lg 
-        flex justify-center items-center text-lg ml-4 md:ml-16 mt-2 ">
-                          FAQ
-                        </div>
-                         <h3 className="text-2xl md:text-3xl text-white font-bold ml-4 md:ml-16 mt-5" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-                            Frequently Asked Questions
-                          </h3>
-                 </div>
-                  <div className='w-full h-auto md:h-[75%] mt-4 md:mt-0  px-4 md:px-16'>
-                      <div className={`w-full relative py-2 cursor-pointer transition-colors duration-300 mt-1 
-    ${
-      hoverIndex === 0 && openIndex !== 0
-        ? "text-blue-400"
-        : openIndex === 0 && hoverIndex === 0
-        ? "text-blue-400"
-        : "text-white"
-    }`}
-  onMouseEnter={() => setHoverIndex(0)}
-  onMouseLeave={() => setHoverIndex(null)}
-  onClick={() => setOpenIndex(openIndex === 0 ? null : 0)}
->
-  {/* Question */}
-  <p className="text-base md:text-xl pr-10">
-    01. What programs are available at Reliance Animation Academy?
-  </p>
-
-  {/* Icon */}
-  <span
-    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
-      ${
-        hoverIndex === 0 && openIndex !== 0
-          ? "text-blue-400"
-          : openIndex === 0 && hoverIndex === 0
-          ? "text-blue-400"
-          : "text-white"
-      }`}
-  >
-    {openIndex === 0 ? <FaMinus /> : <FaPlus />}
-  </span>
-
-  {/* Answer */}
-  {openIndex === 0 && (
-    <p
-      className="text-sm md:text-xl mt-2 leading-relaxed text-white"
-      onMouseEnter={() => setHoverIndex(null)} // 👈 answer par hover → question white
-    >
-      We offer degree, diploma, and certificate programs in Animation, VFX,
-      Motion Graphics, Game Design, Web/UI-UX, Graphic Design, and Digital Editing.
-    </p>
-  )}
-
-  <hr className="border-stone-400 w-full mt-3" />
-</div>
-     <div
-  className={`w-full relative py-2 cursor-pointer transition-colors duration-300
-    ${
-      hoverIndex === 1
-        ? "text-blue-400"
-        : "text-white"
-    }`}
-  onMouseEnter={() => setHoverIndex(1)}
-  onMouseLeave={() => setHoverIndex(null)}
-  onClick={() => setOpenIndex(openIndex === 1 ? null : 1)}
->
-  {/* Question */}
-  <p className="text-base md:text-xl pr-10">
-    02. What is the eligibility for these programs?
-  </p>
-
-  {/* Icon */}
-  <span
-    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
-      ${
-        hoverIndex === 1
-          ? "text-blue-400"
-          : "text-white"
-      }`}
-  >
-    {openIndex === 1 ? <FaMinus /> : <FaPlus />}
-  </span>
-
-  {/* Answer */}
-  {openIndex === 1 && (
-    <p
-      className="text-sm md:text-xl mt-2 leading-relaxed text-white"
-      onMouseEnter={() => setHoverIndex(null)}
-    >
-      The programs are open to students who have completed their 10+2 or equivalent.
-      At the point when a student is promoted to an advanced or master’s program,
-      basic computer knowledge and an interest in being creative are recommended.
-    </p>
-  )}
-
-  <hr className="border-stone-400 w-full mt-3" />
-</div>
-      <div
-  className={`w-full relative py-2 cursor-pointer transition-colors duration-300
-    ${
-      hoverIndex === 2
-        ? "text-blue-400"
-        : "text-white"
-    }`}
-  onMouseEnter={() => setHoverIndex(2)}
-  onMouseLeave={() => setHoverIndex(null)}
-  onClick={() => setOpenIndex(openIndex === 2 ? null : 2)}
->
-  {/* Question */}
-  <p className="text-base md:text-xl pr-10">
-   03. Are the courses beginner-friendly?
-  </p>
-
-  {/* Icon */}
-  <span
-    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
-      ${
-        hoverIndex === 2
-          ? "text-blue-400"
-          : "text-white"
-      }`}
-  >
-    {openIndex === 2 ? <FaMinus /> : <FaPlus />}
-  </span>
-
-  {/* Answer */}
-  {openIndex === 2 && (
-    <p
-      className="text-sm md:text-xl mt-2 leading-relaxed text-white"
-      onMouseEnter={() => setHoverIndex(null)}
-    >
-      Yes, our programs are designed for beginners as well as advanced learners, and students are guided through steps, receive practical training, and work in real-world projects.
-    </p>
-  )}
-
-  <hr className="border-stone-400 w-full mt-3" />
-</div>
-          <div
-  className={`w-full relative py-2 cursor-pointer transition-colors duration-300
-    ${
-      hoverIndex === 3
-        ? "text-blue-400"
-        : "text-white"
-    }`}
-  onMouseEnter={() => setHoverIndex(3)}
-  onMouseLeave={() => setHoverIndex(null)}
-  onClick={() => setOpenIndex(openIndex === 3 ? null : 3)}
->
-  {/* Question */}
-  <p className="text-base md:text-xl pr-10">
-   04. What tools and software will I learn?
-  </p>
-
-  {/* Icon */}
-  <span
-    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
-      ${
-        hoverIndex === 3
-          ? "text-blue-400"
-          : "text-white"
-      }`}
-  >
-    {openIndex === 3 ? <FaMinus /> : <FaPlus />}
-  </span>
-
-  {/* Answer */}
-  {openIndex === 3 && (
-    <p
-      className="text-sm md:text-xl mt-2 leading-relaxed text-white"
-      onMouseEnter={() => setHoverIndex(null)}
-    >
-     Students use industry-standard software such as Autodesk Maya, Adobe Creative Suite, Nuke, and Unreal Engine, which prepares them for industry readiness.
-    </p>
-  )}
-
-  <hr className="border-stone-400 w-full mt-3" />
-</div>
-                       <div
-  className={`w-full relative py-2 cursor-pointer transition-colors duration-300
-    ${
-      hoverIndex === 4
-        ? "text-blue-400"
-        : "text-white"
-    }`}
-  onMouseEnter={() => setHoverIndex(4)}
-  onMouseLeave={() => setHoverIndex(null)}
-  onClick={() => setOpenIndex(openIndex === 4 ? null : 4)}
->
-  {/* Question */}
-  <p className="text-base md:text-xl pr-10">
-   05. Can I take a part-time or online course?
-  </p>
-
-  {/* Icon */}
-  <span
-    className={`absolute right-2 md:right-1 top-3 text-xl md:text-2xl transition-colors duration-300
-      ${
-        hoverIndex === 4
-          ? "text-blue-400"
-          : "text-white"
-      }`}
-  >
-    {openIndex === 4 ? <FaMinus /> : <FaPlus />}
-  </span>
-
-  {/* Answer */}
-  {openIndex === 4 && (
-    <p
-      className="text-sm md:text-xl mt-2 leading-relaxed text-white"
-      onMouseEnter={() => setHoverIndex(null)}
-    >
-    Yes. We have flexible learning options, so you can either study full-time, part-time, or take a blended online option for your program to fit your learning needs.
-    </p>
-  )}
-
-  <hr className="border-stone-400 w-full mt-3" />
-</div>    
-                  </div>
-             </div>
+    <div className="w-full ">
+      <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat md:min-h-screen" style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}>
+         
+        <div className="w-full  mt-[70px]">
+          <img src={logo10} alt="animex" className="w-full" />
+        </div>
+
+        <div className='w-full h-24  flex justify-center items-center'>
+          <h2 className="text-[#24707f] text-5xl font-bold text-center">COURSES</h2>
+        </div>
+
+        <div className='w-full h-auto  top-[664px] left-0 '>
+          <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-3 '>
+            {/* First row */}
+            <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
+              <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+                <img src={logo7} className="w-full h-full object-cover rounded-xl" alt="Graphic Design" style={{ aspectRatio: '1/1' }} />
+              </div>
+              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+                <h3 className="text-white text-lg md:text-2xl font-bold text-center">Graphic Design</h3>
+              </div>
+              <div className="w-full flex-1 md:h-[20%] mt-3">
+                <p className="text-white text-center px-3 md:px-5 text-base leading-normal">Graphic design is the visual communication of ideas through typography, imagery, and color, focusing on balancing aesthetics with functionality.</p>
+              </div>
+              <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+                <Link to='/graphic-design'>
+                  <button className="text-white bg-red-800 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">Read More</button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
+              <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+                <img src={logo3} alt="video editing" className="w-full h-full object-cover rounded-xl" style={{ aspectRatio: '1/1' }} />
+              </div>
+              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+                <h3 className="text-white text-lg md:text-2xl font-bold text-center">Video Editing</h3>
+              </div>
+              <div className="w-full flex-1 md:h-[20%] mt-3">
+                <p className="text-white text-center px-3 md:px-5 text-base leading-normal">Video editing involves manipulating video and audio to create a compelling narrative, utilizing techniques like B-roll for context, color correction for consistency, and cutting to pacing.</p>
+              </div>
+              <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+                <Link to='/video-editing'>
+                  <button className="text-white bg-red-800 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">Read More</button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white  rounded-2xl p-3 flex flex-col">
+              <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+                <img src={logo4} alt="ui/ux design" className="w-full h-full object-cover rounded-xl" style={{ aspectRatio: '1/1' }} />
+              </div>
+              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+                <h3 className="text-white text-lg md:text-2xl font-bold text-center">UI & UX Design</h3>
+              </div>
+              <div className="w-full flex-1 md:h-[20%] mt-3">
+                <p className="text-white text-center px-3 md:px-5 text-base leading-normal">UI/UX design focuses on creating intuitive, user-centered digital experiences where functionality meets aesthetics.</p>
+              </div>
+              <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+                <Link to='/ui&ux-design'>
+                  <button className="text-white bg-red-800 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">Read More</button>
+                </Link>
+              </div>
+            </div>
           </div>
 
-    <div className="w-[92%] mx-auto min-h-[360px] px-0 mt-10">
-             <div className="w-full h-[30px]">
-               <hr className="border-slate-700 w-full mt-7" />
-             </div>
-   
-             <div className="w-full flex flex-col items-start gap-5 md:flex-row md:justify-center md:items-start md:gap-7 md:px-1">
-               {/* Logo + Social */}
-               <div className="w-full md:w-[240px] mt-4 ">
-                 <div className="flex justify-start md:justify-center">
-                <img
-  src={logo1}
-  alt="logo"
-  className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]"
-  style={{
-    filter:
-      "drop-shadow(0 0 40px white) drop-shadow(0 0 40px white) drop-shadow(0 0 70px rgba(255,255,255,0.9))",
-  }}
-/>
-                 </div>
-                 <div className="flex mt-6">
-                   <div className="w-full h-[50px] flex gap-3 items-center justify-start md:justify-center">
-                     <Link
-                       to="https://www.linkedin.com/company/dreamanimex"
-                      
-                       className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
-                     >
-                       <i className="fa-brands fa-linkedin-in text-white text-xl"></i>
-                     </Link>
-                     <Link
-                       to="https://www.instagram.com/dreamanimex/"
-                       
-                       className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
-                     >
-                       <i className="fa-brands fa-instagram text-xl text-white"></i>
-                     </Link>
-                     <a
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-[50px] h-[50px] rounded-full bg-sky-700 flex justify-center items-center hover:bg-sky-800 transition-all duration-300 transform hover:scale-110"
->
-  <i className="fa-regular fa-envelope text-white text-xl"></i>
-</a>
-                   </div>
-                 </div>
-               </div>
-   
-               {/* Quick Links */}
-               <div className="w-full md:w-[240px] mt-4">
-                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" >Quick Links</h3>
-                 <ul className="text-white text-lg leading-7 ml-2">
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Home</li>
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">About Us</li>
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Our Courses</li>
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Contact Us</li>
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Studio Division</li>
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Student Corner</li>
-                 </ul>
-               </div>
-   
-               {/* Courses */}
-               <div className="w-full md:w-[240px] mt-4 ">
-                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4">Our Courses</h3>
-                 <ul className="text-white text-lg leading-7 ml-2">
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Graphic Design</li>
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Video Editing</li>
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">UI/UX Design</li>
-                   <li className="hover:text-red-400 transition-colors cursor-pointer mb-2">Digital Marketing</li>
-                 </ul>
-               </div>
-   
-               {/* Contact */}
-               <div className="w-full md:w-[300px] mt-4 p-0">
-                 <h3 className="text-white text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>Contact Us</h3>
-                 <div className="flex items-start mb-3 ml-2">
-                   <i className="fa-solid fa-envelope text-2xl text-white mt-1"></i>
-                    <p className="text-white ml-5 break-all">
-  <a
-    href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-red-400 transition-colors underline"
-  >
-    info.dreamanimex@gmail.com
-  </a>
-</p>
-                 </div>
-                 <div className="flex items-start mb-3 ml-2">
-                   <i className="fa-brands fa-instagram text-2xl text-white mt-1"></i>
-                   <p className="text-white ml-5 break-all mt-2">
-  <a
-    href="https://www.instagram.com/dreamanimex/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-red-400 transition-colors underline"
-  >
-   instagram.com/dreamanimex
-  </a>
-</p>
-                 </div>
-                 <div className="flex items-start mb-3 ml-2">
-                   <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
-                   <p className="text-white ml-5 mt-2 ">
-  <a
-    href=" https://www.linkedin.com/company/dreamanimex/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-red-400 transition-colors underline whitespace-nowrap inline-block"
-  >
-    linkedin.com/company/dreamanimex
-  </a>
-</p>
-                 </div>
-                 <div className="flex items-start mb-3 ml-2">
-                   <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
-                   <p className="text-white ml-5 hover:text-red-400 transition-colors">
-                     9888695595
-                   </p>
-                 </div>
-               </div>
-             </div>
-   
-             {/* Copyright */}
-             <div className="w-full mt-10">
-               <hr className="border-slate-700 w-full" />
-               <p className="text-white text-center text-base mt-3 py-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-                 © Dream Animex Academy 2026 All rights reserved.
-               </p>
-             </div>
-           </div>
+          {/* Second row */}
+          <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-2 '>
+            <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
+              <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+                <img src={logo5} alt="digital marketing" className="w-full h-full object-cover rounded-xl" style={{ aspectRatio: '1/1' }} />
+              </div>
+              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+                <h3 className="text-white text-lg md:text-2xl font-bold text-center">Digital Marketing</h3>
+              </div>
+              <div className="w-full flex-1 md:h-[20%] mt-3">
+                <p className="text-white text-center px-3 md:px-5 text-base leading-normal">Digital marketing combines creativity with technology, using data-driven strategies—SEO, social media, and content—to connect directly with audiences.</p>
+              </div>
+              <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+                <Link to="/digital-marketing">
+                  <button className="text-white bg-red-800 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">Read More</button>
+                </Link>
+              </div>
+            </div>
 
-      {/* Enquiry Popup Modal with Validation */}
-     {showPopup && (
-  <>
-    <div
-  className="fixed inset-0 bg-black bg-opacity-60 z-[9999]"
-  onClick={() => {
-    setShowPopup(false);
-    setPopupType(null);
-    sessionStorage.setItem("autoPopupClosed", "true");
-  }}
-></div>
+            <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
+              <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
+                <img src={logo6} alt="graphic&videoediting" className="w-full h-full object-cover rounded-xl" style={{ aspectRatio: '1/1' }} />
+              </div>
+              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center mt-4 px-3">
+                <h3 className="text-white text-lg md:text-2xl font-bold text-center">Graphic & Video Editing</h3>
+              </div>
+              <div className="w-full flex-1 md:h-[20%] mt-3">
+                <p className="text-white text-center px-3 md:px-5 text-base leading-normal">Graphic design and video editing are complementary creative fields focused on visual storytelling, with high demand for professionals in both fields.</p>
+              </div>
+              <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3">
+                <Link to="/graphic&videoediting">
+                  <button className="text-white bg-red-800 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">Read More</button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <div className="w-full h-auto md:h-[580px] flex flex-col md:flex-row ">
+          <div className="w-full md:w-1/2 h-auto md:h-full order-1 md:order-1 pl-16 ">
+            <h2 className="text-white text-2xl md:text-4xl mt-6 md:mt-14 ml-4 md:ml-16 font-bold">Why Choose Us</h2>
+            <p className="text-white text-xl md:text-base mt-6 md:mt-6 ml-4 md:ml-16">Dream Animex enables you to learn from industry experts with hands-on training, cutting-edge tools, and real-world projects. We offer career-focused programs in Graphic Design, Video Editing, UI/UX Design, and Digital Marketing for a successful creative future.</p>
+            <ul className="text-white text-base md:text-lg mt-6 md:mt-6 ml-6 md:ml-20 list-disc space-y-2">
+              <li>Live mentor-led classes</li>
+              <li>Practical project-based learning</li>
+              <li>Portfolio-focused training</li>
+              <li>Beginner-friendly approach</li>
+              <li>Career & freelancing guidance</li>
+              <li>Flexible learning from home</li>
+            </ul>
+            <Link to="/about">
+              <button className="rounded-full bg-red-800 text-white text-base md:text-lg mt-6 md:mt-8 ml-4 md:ml-16 px-4 md:px-5 py-2 mb-8">Read More</button>
+            </Link>
+          </div>
 
-  <div
-  className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-  bg-white rounded-xl shadow-2xl z-[10000] w-[90%] max-w-md p-6"
-  onClick={(e) => e.stopPropagation()}
->
+          <div className="w-full md:w-1/2 h-auto md:h-full order-2 md:order-2 flex justify-center items-center mt-8 md:mt-0 ">
+            <img src={logo11} alt="Why Choose Us" className="w-[90%] md:w-[60%] h-auto md:h-[70%] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700" />
+          </div>
+        </div>
 
+        <FAQ />
 
-      <h3 className="text-2xl font-bold text-cyan-900 mb-4" style={{ fontFamily: "Playwrite NZ Basic, cursive" }}>
-        Enquiry Now
-      </h3>
-
-      <SimpleEnquiryForm
-        popupType={popupType}
-        onClose={() => {
-          setShowPopup(false);
-          setPopupType(null);
-        }}
-      />
+        <Footer />
+      </div>
     </div>
-  </>
-)}
-
-       </div>
-  
-</div>
-     
-    )
-}
-
-// Simple form component with validation on submit only
-const SimpleEnquiryForm = ({ onClose, popupType }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    course: '',
-    message: '',
-  });
-
-  const [errors, setErrors] = useState({});
-  const [showErrors, setShowErrors] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-    setErrors((prev) => ({ ...prev, [id]: '' }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!/^[0-9]{10}$/.test(formData.phone.replace(/[-\s]/g, ''))) {
-      newErrors.phone = 'Please enter 10 digits';
-    }
-
-    if (!formData.course) {
-      newErrors.course = 'Course is required';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    }
-
-    return newErrors;
-  };
-
- const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  const newErrors = validateForm();
-
-  if (Object.keys(newErrors).length !== 0) {
-    setErrors(newErrors);
-    setShowErrors(true);
-    return;
-  }
-
-  try {
-    const response = await fetch("http://localhost:5000/users/enquiry", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) {
-      throw new Error("Enquiry submit failed");
-    }
-
-    if (popupType === "auto") {
-      sessionStorage.setItem("autoPopupClosed", "true");
-    }
-
-    setIsSubmitted(true);
-  } catch (error) {
-    console.error("Enquiry error:", error);
-    alert("Something went wrong. Please try again.");
-  }
-};
-
-  if (isSubmitted) {
-    return (
-      <div className="py-6 text-center">
-        <h2 className="mb-3 text-2xl font-bold text-green-600">
-          Enquiry Submitted Successfully!
-        </h2>
-        <p className="mb-5 text-gray-600">Thank you. Our team will contact you soon.</p>
-        <button
-          onClick={onClose}
-          className="rounded-lg bg-red-600 px-5 py-2 text-white transition hover:bg-red-700"
-        >
-          Close
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit} noValidate>
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="name">
-          Name <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          id="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Your full name"
-          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
-            showErrors && errors.name ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
-          }`}
-        />
-        {showErrors && errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
-      </div>
-
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="email">
-          Email <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="email"
-          id="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="your@email.com"
-          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
-            showErrors && errors.email ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
-          }`}
-        />
-        {showErrors && errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
-      </div>
-
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="phone">
-          Phone <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="tel"
-          id="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          placeholder="Your contact number"
-          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
-            showErrors && errors.phone ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
-          }`}
-        />
-        {showErrors && errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
-      </div>
-
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="course">
-          Course <span className="text-red-500">*</span>
-        </label>
-        <select
-          id="course"
-          value={formData.course}
-          onChange={handleChange}
-          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
-            showErrors && errors.course ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
-          }`}
-        >
-          <option value="">Select a course</option>
-          <option value="Graphic Design">Graphic Design</option>
-          <option value="UI/UX Design">UI / UX Design</option>
-          <option value="Digital Marketing">Digital Marketing</option>
-          <option value="Graphic + UI/UX Design">Graphic Design + UI / UX Design</option>
-          <option value="Video Editing">Video Editing</option>
-        </select>
-        {showErrors && errors.course && <p className="mt-1 text-sm text-red-500">{errors.course}</p>}
-      </div>
-
-      <div className="mb-6">
-        <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="message">
-          Message <span className="text-red-500">*</span>
-        </label>
-        <textarea
-          id="message"
-          rows="3"
-          value={formData.message}
-          onChange={handleChange}
-          placeholder="I'm interested in..."
-          className={`w-full rounded-lg border px-3 py-2 focus:outline-none ${
-            showErrors && errors.message ? 'border-red-500' : 'border-gray-300 focus:border-red-500'
-          }`}
-        />
-        {showErrors && errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
-      </div>
-
-      <div className="mt-4 flex justify-end gap-4">
-        <button
-          type="button"
-          onClick={() => {
-            if (popupType === 'auto') {
-              sessionStorage.setItem('autoPopupClosed', 'true');
-            }
-            onClose();
-          }}
-          className="rounded-lg bg-gray-300 px-4 py-2 text-gray-800 transition hover:bg-gray-400"
-        >
-          Cancel
-        </button>
-
-        <button type="submit" className="rounded-lg bg-red-600 px-6 py-2 text-white">
-          Submit
-        </button>
-      </div>
-
-      <p className="mt-4 text-center text-xs text-gray-500">
-        <span className="text-red-500">*</span> Required fields
-      </p>
-    </form>
   );
-};
+}
 export default Index;
+
+
+
+
 
 

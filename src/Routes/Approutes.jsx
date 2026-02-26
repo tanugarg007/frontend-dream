@@ -14,7 +14,7 @@ import GraphicDesign from '../Component/GraphicDesign';
 import VideoEditing from '../Component/VideoEditing';
 import UIUXDesign from '../Component/UIUXDesign';
 import DigitalMarketing from '../Component/DigitalMarketing';
-import GraphicandUIUX from '../Component/GraphicandUIUX';
+import GraphicandVideoEditing from '../Component/GraphicandVideoEditing';
 
 // Admin Pages
 import AdminLayout from '../Pages/Admin/AdminLayout';
@@ -39,7 +39,7 @@ function AppRoutes() {
         <Route path="/video-editing" element={<VideoEditing />} />
         <Route path="/ui&ux-design" element={<UIUXDesign />} />
         <Route path="/digital-marketing" element={<DigitalMarketing />} />
-        <Route path="/graphic&uiux" element={<GraphicandUIUX />} />
+        <Route path="/graphic&videoediting" element={<GraphicandVideoEditing />} />
 
         {/* Protected Admin Routes */}
         <Route path="/admin" element={
