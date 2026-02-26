@@ -27,7 +27,11 @@ const Navbar = ({ onEnquiryClick }) => {
           <ul className='text-lg text-cyan-900 flex justify-evenly items-center mt-5 font-bold'>
             <li><Link to='/' className="hover:text-red-600">Home</Link></li>
             <li><Link to='/about' className="hover:text-red-600">About Us</Link></li>
-            <li className="relative cursor-pointer" onMouseLeave={() => setOpenCourses(false)}>
+            <li
+              className="relative cursor-pointer"
+              onMouseEnter={() => setOpenCourses(true)}
+              onMouseLeave={() => setOpenCourses(false)}
+            >
               <Link
                 to="/our-courses"
                 onClick={() => setOpenCourses(false)}
@@ -47,7 +51,7 @@ const Navbar = ({ onEnquiryClick }) => {
                   <i className={`fa-solid fa-caret-down transition-transform duration-300 ${openCourses ? 'rotate-180' : ''}`}></i>
                 </button>
               </Link>
-              <ul className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-white rounded-xl shadow-xl transition-all duration-200 border border-gray-200 z-50 ${openCourses ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'}`}>
+              <ul className={`absolute top-full left-1/2 -translate-x-1/2 mt-0 w-56 bg-white rounded-xl shadow-xl transition-all duration-200 border border-gray-200 z-50 ${openCourses ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'}`}>
                 <li className="hover:bg-red-50 transition"><Link to="/graphic-design" onClick={() => setOpenCourses(false)} className="block px-5 py-3 text-black hover:text-red-600">Graphic Design</Link></li>
                 <li className="hover:bg-red-50 transition"><Link to="/ui&ux-design" onClick={() => setOpenCourses(false)} className="block px-5 py-3 text-black hover:text-red-600">UI/UX Design</Link></li>
                 <li className="hover:bg-red-50 transition"><Link to="/video-editing" onClick={() => setOpenCourses(false)} className="block px-5 py-3 text-black hover:text-red-600">Video Editing</Link></li>

@@ -63,7 +63,7 @@ const UIUXDesign = () => { const [showPopup, setShowPopup] = useState(false);
       <div className="w-full flex flex-wrap gap-3 pl-4 md:pl-8 mt-4 md:mt-auto pb-4">
       <button 
                 onClick={() => setShowPopup(true)}
-                className='bg-red-600 text-white text-lg px-5 py-2 rounded hover:bg-red-700 transition-all duration-300 transform hover:scale-105'
+                className='bg-red-800 text-white text-lg px-5 py-2 rounded hover:bg-red-500 transition-all duration-300 transform hover:scale-105'
               >
                Get Enquiry
               </button>
@@ -133,7 +133,7 @@ const UIUXDesign = () => { const [showPopup, setShowPopup] = useState(false);
          {["Figma", "FigJam", "Adobe Illustrator(Basic)", "Adobe Photoshop(Basic)", "Google Forms", "Notion"].map((tool, i) => (
           <span
             key={i}
-            className="px-4 py-2 text-sm font-semibold text-white rounded-lg shadow-md bg-gradient-to-r from-purple-500 to-indigo-500 hover:-translate-y-0.5 transition"
+            className="px-4 py-2 text-sm font-semibold text-white rounded-lg shadow-md bg-red-800 hover:-translate-y-0.5 transition"
           >
             {tool}
           </span>
