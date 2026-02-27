@@ -62,25 +62,25 @@ const ContactUs = () => {
         <div className="absolute inset-0 bg-slate-900/35 pointer-events-none" />
         <div className="relative z-10 pt-[52px] pb-0">
           <div
-            className="w-full h-[340px] md:h-[440px] overflow-hidden rounded-b-[44px] md:rounded-b-[64px] border-b border-white/10 shadow-2xl bg-cover bg-center"
+            className="w-full h-[380px] lg:h-[440px] overflow-hidden rounded-b-[36px] lg:rounded-b-[64px] border-b border-white/10 shadow-2xl bg-cover bg-center"
             style={{
               backgroundImage: `linear-gradient(rgba(90, 10, 10, 0.68), rgba(55, 10, 10, 0.72)), url(${contactBg})`,
             }}
           >
             <div className="absolute inset-x-0 top-0 h-[3px] bg-cyan-300/70" />
-            <div className="h-full max-w-6xl mx-auto px-6 md:px-10 flex flex-col justify-start items-center text-center relative pt-14 md:pt-16">
+            <div className="h-full max-w-6xl mx-auto px-4 lg:px-10 flex flex-col justify-start items-center text-center relative pt-[72px] lg:pt-16">
               <div className="absolute -top-10 -left-10 w-44 h-44 bg-red-400/20 blur-3xl rounded-full" />
               <div className="absolute bottom-4 right-0 w-52 h-52 bg-red-300/20 blur-3xl rounded-full" />
-              <h2 className="text-white text-4xl md:text-5xl font-bold tracking-[0.06em] mt-2 md:mb-2 relative">
+              <h2 className="text-white text-3xl lg:text-5xl font-bold tracking-[0.04em] mt-1 lg:mb-2 relative">
                 CONTACT US
               </h2>
 
-              <p className="text-white/90 text-base md:text-lg mb-6 max-w-3xl leading-relaxed relative">
+              <p className="text-white/95 text-sm lg:text-lg mb-5 lg:mb-6 max-w-[22rem] lg:max-w-3xl leading-6 lg:leading-relaxed relative">
                 Have questions about our courses? Fill out the contact form below
                 or call us directly. Our team is here to guide you toward the
                 right creative career path.
               </p>
-              {/* <div className="hidden md:flex items-center gap-4 relative">
+              {/* <div className="hidden lg:flex items-center gap-4 relative">
                 <span className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm">
                   Career Guidance
                 </span>
@@ -95,7 +95,7 @@ const ContactUs = () => {
           </div>
 
           {isSubmitted ? (
-            <div className="relative z-20 w-[92%] md:w-[62%] lg:w-[52%] mx-auto mt-[-170px] md:mt-[-220px] bg-white rounded-3xl shadow-2xl border border-slate-200 p-10 text-center">
+            <div className="relative z-20 w-[92%] lg:w-[62%] lg:w-[52%] mx-auto mt-[-170px] lg:mt-[-220px] bg-white rounded-3xl shadow-2xl border border-slate-200 p-10 text-center">
               <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-800 text-xs font-bold flex items-center justify-center mx-auto mb-4">
                 DONE
               </div>
@@ -116,10 +116,10 @@ const ContactUs = () => {
               </button>
             </div>
           ) : (
-            <div className="relative z-20 w-[92%] lg:w-[78%] xl:w-[72%] mx-auto mt-[-170px] md:mt-[-220px] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="relative z-20 w-[92%] lg:w-[78%] xl:w-[72%] mx-auto mt-[-190px] lg:mt-[-220px] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-5">
                 <div
-                  className="lg:col-span-2 relative overflow-hidden text-white p-8 md:p-10 bg-cover bg-center"
+                  className="lg:col-span-2 relative overflow-hidden text-white p-8 lg:p-10 bg-cover bg-center"
                   style={{
                     backgroundImage: `url(${logo9})`,
                   }}
@@ -153,16 +153,16 @@ const ContactUs = () => {
 
                 <form
                   onSubmit={handleSubmit}
-                  className="lg:col-span-3 p-6 md:p-10"
+                  className="lg:col-span-3 p-6 lg:p-10"
                 >
-                  <h3 className="text-2xl md:text-3xl font-bold text-slate-800">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-slate-800">
                     Let's Connect
                   </h3>
                   <p className="text-slate-600 mt-2 mb-6">
                     Fill out this form, and our team will contact you shortly.
                   </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div className="w-full">
                       <label className="font-semibold text-slate-700">
                         Full Name
@@ -266,3 +266,4 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
+

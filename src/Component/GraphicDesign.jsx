@@ -14,57 +14,57 @@ const GraphicDesign = () => { const [showPopup, setShowPopup] = useState(false);
     <div className="w-full">
       {/* Background */}
       <div
-        className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat md:min-h-screen"
+        className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen"
         style={{ backgroundImage: `url(${logo9})` }}
       >
                 <Navbar onEnquiryClick={() => setShowPopup(true)} />
 
         {/* Hero Section */}
      <div
-  className="w-full h-auto md:h-[500px] flex flex-col md:flex-row justify-center items-center
-             mt-20 md:mt-0
-             rounded-br-[20px] md:rounded-br-[200px]"
+  className="w-full h-auto lg:h-[500px] flex flex-col lg:flex-row justify-center items-center
+             mt-20 lg:mt-0
+             rounded-br-[20px] lg:rounded-br-[200px]"
   style={{
     backgroundImage: `url(${logo4})`,
   }}
 >
 
   <div className="
-  w-[90%] md:w-[75%] 
-  h-auto md:h-[70%] 
+  w-[90%] lg:w-[75%] 
+  h-auto lg:h-[70%] 
   bg-white 
-  flex flex-col md:flex-row 
+  flex flex-col lg:flex-row 
   rounded-xl shadow-2xl 
-  py-2 md:py-0
-  mt-4 md:mt-20 mb-3
+  py-2 lg:py-0
+  mt-4 lg:mt-20 mb-3
 ">
 
     {/* Left */}
-    <div className="w-full md:w-[60%] h-auto md:h-full flex flex-col">
+    <div className="w-full lg:w-[60%] h-auto lg:h-full flex flex-col order-2 lg:order-1">
 
       {/* Title */}
-      <div className="w-full pl-4 md:pl-8 pt-4 md:pt-6">
-        <h2 className="text-3xl md:text-3xl text-gray-800 tracking-tight">
+      <div className="w-full pl-4 lg:pl-8 pt-4 lg:pt-6">
+        <h2 className="text-3xl lg:text-3xl text-gray-800 tracking-tight">
             Graphic Design
         </h2>
       </div>
 
       {/* Content */}
-      <div className="w-full px-4 md:px-0 pl-0 md:pl-8 pt-3 md:pt-5 pr-0 md:pr-6">
-        <p className="text-sm md:text-lg text-gray-600 leading-relaxed px-5 md:px-0">
+      <div className="w-full px-4 lg:px-0 pl-0 lg:pl-8 pt-3 lg:pt-5 pr-0 lg:pr-6">
+        <p className="text-sm lg:text-lg text-gray-600 leading-relaxed px-5 lg:px-0">
         This course builds a strong foundation in visual design, typography, 
           color theory, and branding. Students learn to create professional 
           designs for print and digital media while developing a creative mindset 
           and a practical design workflow. By the end of the course, students are 
           able to create industry-ready designs and a strong portfolio.
         </p>
-         <p className="text-sm md:text-lg font-semibold text-gray-700 mt-1 px-5 md:px-0">
+         <p className="text-sm lg:text-lg font-semibold text-gray-700 mt-1 px-5 lg:px-0">
           Duration: 4 Months
         </p>
       </div>
 
       {/* Buttons */}
-      <div className="w-full flex flex-wrap gap-3 pl-4 md:pl-8 mt-4 md:mt-auto pb-4">
+      <div className="w-full flex flex-wrap gap-3 pl-4 lg:pl-8 mt-4 lg:mt-auto pb-4">
        <button 
                 onClick={() => setShowPopup(true)}
                 className='bg-red-800 text-white text-lg px-5 py-2 rounded hover:bg-red-500 transition-all duration-300 transform hover:scale-105'
@@ -77,18 +77,19 @@ const GraphicDesign = () => { const [showPopup, setShowPopup] = useState(false);
           href="https://wa.me/919888695595"
           target="_blank"
           rel="noopener noreferrer"
-          className="border-2 border-green-500 text-green-500 text-sm md:text-lg rounded-lg px-4 py-2 md:px-5 md:py-3 font-medium hover:bg-green-50 transition-all flex items-center gap-2"
+          className="border-2 border-green-500 text-green-500 text-sm lg:text-lg rounded-lg px-4 py-2 lg:px-5 lg:py-3 font-medium hover:bg-green-50 transition-all flex items-center gap-2"
         >
-          <img src={whatsappImg} alt="WhatsApp" className="w-5 h-5 md:w-6 md:h-6 object-contain" />
+          <img src={whatsappImg} alt="WhatsApp" className="w-5 h-5 lg:w-6 lg:h-6 object-contain" />
           WhatsApp
         </a>
       </div>
     </div>
 
     {/* Right Image */}
-    <div className="w-full md:w-[40%] h-auto md:h-full flex justify-center items-center mt-6 md:mt-0 pb-4 md:pb-0">
-      <div className="w-[260px] md:w-[350px] h-[220px] md:h-[320px] rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-        <img src={logo5} alt="" className="w-full h-full object-cover  scale-[1.40]" />
+    <div className="w-full lg:w-[40%] h-auto lg:h-full flex justify-center items-center mt-4 lg:mt-0 pb-2 lg:pb-0 order-1 lg:order-2">
+      <div className="relative w-[290px] lg:w-[350px] h-[290px] lg:h-[320px] rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
+        <img src={logo5} alt="" className="w-full h-full object-cover object-top scale-[1.16] lg:scale-[1.40]" />
+        <div className="lg:hidden absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#2f1b36] via-[#2f1b36]/95 to-transparent" />
       </div>
     </div>
 
@@ -97,11 +98,11 @@ const GraphicDesign = () => { const [showPopup, setShowPopup] = useState(false);
 
 
         {/* Why Choose Section */}
-       <div className="w-[90%] md:w-[75%] h-auto bg-gradient-to-br from-white to-gray-50 mt-8 md:mt-10 rounded-xl shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300 flex flex-col md:ml-48 ml-5">
+       <div className="w-[90%] lg:w-[75%] h-auto bg-gradient-to-br from-white to-gray-50 mt-8 lg:mt-10 rounded-xl shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300 flex flex-col lg:ml-48 ml-5">
 
   {/* Header */}
-  <div className="w-full border-b border-gray-100 flex items-center px-4 md:px-5 py-3">
-    <h2 className="text-xl md:text-3xl font-bold  tracking-tight bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+  <div className="w-full border-b border-gray-100 flex items-center px-4 lg:px-5 py-3">
+    <h2 className="text-xl lg:text-3xl font-bold  tracking-tight bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
       Why Choose Our Graphic Design Course?
     </h2>
   </div>
@@ -119,7 +120,7 @@ const GraphicDesign = () => { const [showPopup, setShowPopup] = useState(false);
     ].map(([color, text], index) => (
       <p
         key={index}
-        className={`text-gray-700 text-sm md:text-lg px-3 py-2 leading-relaxed border-l-4 border-${color}-500 bg-gradient-to-r from-${color}-50 to-transparent`}
+        className={`text-gray-700 text-sm lg:text-lg px-3 py-2 leading-relaxed border-l-4 border-${color}-500 bg-gradient-to-r from-${color}-50 to-transparent`}
       >
         <span className={`font-semibold text-${color}-600`}>✦</span> {text}
       </p>
@@ -155,7 +156,7 @@ const GraphicDesign = () => { const [showPopup, setShowPopup] = useState(false);
       <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
         Certification
       </h3>
-      <p className="text-gray-700 text-sm md:text-lg leading-relaxed">
+      <p className="text-gray-700 text-sm lg:text-lg leading-relaxed">
         Students receive a{" "}
         <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink-600">
           course completion certificate
@@ -180,6 +181,7 @@ const GraphicDesign = () => { const [showPopup, setShowPopup] = useState(false);
 };
 
 export default GraphicDesign;
+
 
 
 

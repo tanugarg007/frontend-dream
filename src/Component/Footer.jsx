@@ -68,7 +68,7 @@ const Footer = () => {
           <h3 className="text-white text-2xl md:text-3xl font-bold mb-4">Contact Us</h3>
           <div className="flex items-start mb-3 ml-2">
             <i className="fa-solid fa-envelope text-2xl text-white mt-1"></i>
-            <p className="text-white ml-5 break-all"><a href="mailto:info.dreamanimex@gmail.com" className="hover:text-red-400 transition-colors underline">info.dreamanimex@gmail.com</a></p>
+            <p className="text-white ml-5 break-all mt-1"><a href="https://mail.google.com/mail/?view=cm&fs=1&to=info.dreamanimex@gmail.com" className="hover:text-red-400 transition-colors underline">info.dreamanimex@gmail.com</a></p>
           </div>
           <div className="flex items-start mb-3 ml-2">
             <i className="fa-brands fa-instagram text-2xl text-white mt-1"></i>
@@ -76,7 +76,7 @@ const Footer = () => {
           </div>
           <div className="flex items-start mb-3 ml-2">
             <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
-            <p className="text-white ml-5 mt-2"><a href="https://www.linkedin.com/company/dreamanimex/" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors underline whitespace-nowrap inline-block">linkedin.com/company/dreamanimex</a></p>
+            <p className="text-white ml-5 mt-2 break-all"><a href="https://www.linkedin.com/company/dreamanimex/" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors underline">linkedin.com/company/dreamanimex</a></p>
           </div>
           <div className="flex items-start mb-3 ml-2">
             <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
