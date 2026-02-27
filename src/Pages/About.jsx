@@ -83,11 +83,11 @@ const About = () => {
     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent rounded-3xl"></div>
     <div className="relative z-10 h-full w-full flex flex-col md:flex-row items-center justify-between gap-8">
       <div className="w-full md:w-[70%] text-center md:text-left">
-        <p className="inline-block px-5 py-1 rounded-full bg-[#1a525e]/10 text-[#1a525e] text-xs md:text-sm font-semibold tracking-wide ml-10">
+        <p className="inline-block px-14 py-1 rounded-full bg-[#1a525e]/10 text-[#1a525e] text-[24px] md:text-[28px] font-semibold tracking-wide ml-10">
           ABOUT DREAM ANIMEX
         </p>
-        <h2 className="text-[#133f48] text-3xl md:text-3xl font-extrabold mt-3 leading-tight ml-10">Dream Animex</h2>
-        <p className="text-[#24707f] text-lg md:text-lg font-semibold mt-2 ml-10">Where Skill Meet Creativity</p>
+        <h2 className="text-[#133f48] text-[60px] md:text-[60px] font-extrabold mt-3 leading-tight ml-10">Dream Animex</h2>
+        <p className="text-[#24707f] text-[36px] md:text-[36px] font-semibold mt-2 ml-10">Where Skill Meet Creativity</p>
         
       </div>
       <div className="w-full md:w-[30%] flex justify-center md:justify-end">
@@ -95,7 +95,7 @@ const About = () => {
           <img
             src={logo}
             alt="Dream Animex Logo"
-            className="w-[90px] h-[110px] md:w-[130px] md:h-[160px] object-contain opacity-60"
+            className="w-[180px] h-[220px] md:w-[260px] md:h-[320px] object-contain opacity-60"
           />
         </div>
       </div>

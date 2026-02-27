@@ -16,7 +16,7 @@ const Navbar = ({ onEnquiryClick }) => {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">
-      <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center ml-5">
+      <div className="fixed top-0 left-0 w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center mr-1 md:ml-10">
         <img src={logo} alt="logo" className="w-[70px] h-[90px] md:w-[90px] md:h-[110px]" />
       </div>
 

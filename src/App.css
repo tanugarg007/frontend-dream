@@ -39,3 +39,17 @@
     transform: rotate(360deg);
   }
 }
+
+.course-image-mobile-crop {
+  clip-path: none;
+  -webkit-clip-path: none;
+}
+
+@media (max-width: 767px) {
+  .course-image-mobile-crop {
+    clip-path: inset(0 0 14% 0);
+    -webkit-clip-path: inset(0 0 14% 0);
+    transform: translateY(-10px);
+  }
+}
+

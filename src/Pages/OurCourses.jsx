@@ -32,7 +32,7 @@ const OurCourses =()=>{
     {/* CARD 1 */}
     <div className="group w-full md:w-1/3 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl hover:shadow-white hover:shadow-lg transition-all duration-300 hover:-translate-y-2 overflow-hidden border border-gray-700/50 flex flex-col">
       <div className="w-full overflow-hidden relative bg-gray-900/40">
-        <img src={logo8} alt='' className="block w-full h-auto object-contain object-center group-hover:scale-105 transition-transform duration-700" />
+        <img src={logo8} alt='' className="block w-full h-auto object-contain object-center -mb-px group-hover:scale-105 transition-transform duration-700" />
       </div>
 
       <div className="w-full px-6 py-1 min-h-[56px] flex items-center bg-gradient-to-r from-gray-900 to-gray-800">
@@ -54,7 +54,7 @@ const OurCourses =()=>{
     {/* CARD 2 */}
     <div className="group w-full md:w-1/3 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl hover:shadow-white hover:shadow-lg transition-all duration-300 hover:-translate-y-2 overflow-hidden border border-gray-700/50 flex flex-col">
       <div className="w-full overflow-hidden relative bg-gray-900/40">
-        <img src={logo7} alt='' className="block w-full h-auto object-contain object-center group-hover:scale-105 transition-transform duration-700" />
+        <img src={logo7} alt='' className="block w-full h-auto object-contain object-center -mb-px group-hover:scale-105 transition-transform duration-700" />
       </div>
 
       <div className="w-full px-6 py-1 min-h-[56px] flex items-center">
@@ -76,7 +76,7 @@ const OurCourses =()=>{
     {/* CARD 3 */}
     <div className="group w-full md:w-1/3 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl hover:shadow-white hover:shadow-lg transition-all duration-300 hover:-translate-y-2 overflow-hidden border border-gray-700/50 flex flex-col">
       <div className="w-full overflow-hidden relative bg-gray-900/40">
-        <img src={logo6} alt='' className="block w-full h-auto object-contain object-center group-hover:scale-105 transition-transform duration-700" />
+        <img src={logo6} alt='' className="block w-full h-auto object-contain object-center -mb-px group-hover:scale-105 transition-transform duration-700" />
       </div>
 
       <div className="w-full px-6 py-1 min-h-[56px] flex items-center">
@@ -120,7 +120,7 @@ const OurCourses =()=>{
     </div>
      <div className="group w-full md:w-1/3 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl hover:shadow-white hover:shadow-lg transition-all duration-300 hover:-translate-y-2 overflow-hidden border border-gray-700/50 flex flex-col">
       <div className="w-full overflow-hidden relative bg-gray-900/40">
-        <img src={logo11} alt='' className="block w-full h-auto object-contain object-center group-hover:scale-105 transition-transform duration-700" />
+        <img src={logo11} alt='' className="block w-full h-auto object-contain object-center -mb-px group-hover:scale-105 transition-transform duration-700" />
       </div>
 
       <div className="w-full px-6 py-1 min-h-[56px] flex items-center">
