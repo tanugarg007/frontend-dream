@@ -56,12 +56,12 @@ const Index = () => {
 
             <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-                <img src={logo3} alt="video editing" className="w-full h-full object-cover rounded-xl -mb-px course-mobile-crop" style={{ aspectRatio: '1/1' }} />
+                <img src={logo3} alt="video editing" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
               </div>
               <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:mt-4 px-3">
                 <h3 className="text-white text-lg md:text-2xl font-bold text-center">Video Editing</h3>
               </div>
-              <div className="w-full flex-1 md:h-[20%] -mt-1 md:mt-3">
+              <div className="w-full flex-1 md:h-[20%] mt-1 md:mt-3">
                 <p className="text-white text-center px-3 md:px-5 text-base leading-5 md:leading-normal">Video editing involves manipulating video and audio to create a compelling narrative, utilizing techniques like B-roll for context, color correction for consistency, and cutting to pacing.</p>
               </div>
               <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3 md:mt-3">
@@ -73,12 +73,12 @@ const Index = () => {
 
             <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white  rounded-2xl p-3 flex flex-col">
               <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-                <img src={logo4} alt="ui/ux design" className="w-full h-full object-cover  rounded-xl -mb-px course-mobile-crop" style={{ aspectRatio: '1/1' }} />
+                <img src={logo4} alt="ui/ux design" className="w-full h-full object-cover  rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
               </div>
               <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:mt-4 px-3">
                 <h3 className="text-white text-lg md:text-2xl font-bold text-center">UI & UX Design</h3>
               </div>
-              <div className="w-full flex-1 md:h-[20%] -mt-1 md:mt-3">
+              <div className="w-full flex-1 md:h-[20%] mt-1 md:mt-3">
                 <p className="text-white text-center px-3 md:px-5 text-base leading-5 md:leading-normal">UI/UX design focuses on creating intuitive, user-centered digital experiences where functionality meets aesthetics.</p>
               </div>
               <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-3 md:mt-3">
@@ -93,15 +93,15 @@ const Index = () => {
           <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center md:flex-row md:gap-14 md:p-2 '>
             <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-                <img src={logo5} alt="digital marketing" className="w-full h-full object-cover rounded-xl -mb-px" style={{ aspectRatio: '1/1' }} />
+                <img src={logo5} alt="digital marketing" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
               </div>
-              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-1 md:mt-4 px-3">
+              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:mt-4 px-3">
                 <h3 className="text-white text-lg md:text-2xl font-bold text-center">Digital Marketing</h3>
               </div>
-              <div className="w-full flex-1 md:h-[20%] -mt-1 md:mt-3">
-                <p className="text-white text-center px-3 md:px-5 text-base leading-normal">Digital marketing combines creativity with technology, using data-driven strategies—SEO, social media, and content—to connect directly with audiences.</p>
+              <div className="w-full flex-1 md:h-[20%] mt-1 md:mt-3">
+                <p className="text-white text-center px-3 md:px-5 text-base leading-5 md:leading-normal">Digital marketing combines creativity with technology, using data-driven strategies—SEO, social media, and content—to connect directly with audiences.</p>
               </div>
-              <div className="w-full h-auto md:h-[8%] flex justify-center items-center -mt-1 md:mt-3">
+              <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-2 md:mt-3">
                 <Link to="/digital-marketing">
                   <button className="text-white bg-red-800 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">Read More</button>
                 </Link>
@@ -110,15 +110,15 @@ const Index = () => {
 
             <div className="w-full md:w-[24%] h-auto md:h-[520px] mb-4 md:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] md:min-h-[230px] md:h-[30%] rounded-xl overflow-hidden">
-                <img src={logo6} alt="graphic&videoediting" className="w-full h-full object-cover rounded-xl -mb-px" style={{ aspectRatio: '1/1' }} />
+                <img src={logo6} alt="graphic&videoediting" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop  " style={{ aspectRatio: '1/1' }} />
               </div>
-              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-1 md:mt-4 px-3">
+              <div className="w-full h-auto md:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:mt-4 px-3">
                 <h3 className="text-white text-lg md:text-2xl font-bold text-center">Graphic & Video Editing</h3>
               </div>
-              <div className="w-full flex-1 md:h-[20%] -mt-1 md:mt-3">
-                <p className="text-white text-center px-3 md:px-5 text-base leading-normal">Graphic design and video editing are complementary creative fields focused on visual storytelling, with high demand for professionals in both fields.</p>
+              <div className="w-full flex-1 md:h-[20%] mt-1 md:mt-3">
+                <p className="text-white text-center px-3 md:px-5 text-base leading-5 md:leading-normal">Graphic design and video editing are complementary creative fields focused on visual storytelling, with high demand for professionals in both fields.</p>
               </div>
-              <div className="w-full h-auto md:h-[8%] flex justify-center items-center -mt-1 md:mt-3">
+              <div className="w-full h-auto md:h-[8%] flex justify-center items-center mt-1 md:mt-3">
                 <Link to="/graphic&videoediting">
                   <button className="text-white bg-red-800 px-10 py-2 text-base md:text-lg rounded-full hover:bg-yellow-600 transition-all">Read More</button>
                 </Link>
