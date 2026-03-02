@@ -8,10 +8,10 @@ const FAQ = () => {
 
   return (
     <div className='w-[92%] mx-auto mt-5 lg:mt-0 h-auto lg:h-[520px] flex flex-col lg:flex-row gap-4 lg:gap-6'>
-      <div className='w-full lg:w-[39%] h-auto lg:h-full order-2 lg:order-1 flex justify-center lg:justify-start items-center py-4 lg:py-0 lg:pl-20 '>
+      <div className='w-full lg:w-[39%] h-auto lg:h-full order-1 lg:order-1 flex justify-center lg:justify-start items-center py-4 lg:py-0 lg:pl-20 '>
         <img src={logo13} alt='' className='w-[290px] h-[315px] lg:w-[400px] lg:h-[410px] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700' />
       </div>
-      <div className='w-full lg:w-[61%] h-auto lg:h-full order-1 lg:order-2'>
+      <div className='w-full lg:w-[61%] h-auto lg:h-full order-2 lg:order-2'>
         <div className='w-full h-auto lg:h-[24%]'>
           <div className="bg-white text-black w-[50px] h-[45px] rounded-lg flex justify-center items-center text-lg ml-4 lg:ml-16 mt-2 ">
             FAQ

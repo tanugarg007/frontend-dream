@@ -1,7 +1,11 @@
 import React from 'react';
 import whatsappImg from '../Assets/whatsapp.png';
-
+import { useLocation } from 'react-router-dom';
 const WhatsAppFloat = () => {
+  const location = useLocation();
+   if (location.pathname.startsWith('/admin')) {
+    return null;
+  }
   return (
     <div className="fixed bottom-1 right-1 z-50">
       <a

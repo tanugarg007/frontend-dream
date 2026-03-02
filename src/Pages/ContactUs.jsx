@@ -5,11 +5,12 @@ import Footer from "../Component/Footer";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
-    fullName: "",
-    mail: "",
-    contactNumber: "",
+    name: "",
+    email: "",
+    phone: "",
     city: "",
     course: "",
+    message:""
   });
 
   const [errors, setErrors] = useState({});
@@ -21,31 +22,53 @@ const ContactUs = () => {
     setErrors({ ...errors, [name]: "" });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const newErrors = {};
-    if (!formData.fullName) newErrors.fullName = "Full name is required";
-    if (!formData.mail) newErrors.mail = "Email is required";
-    if (!formData.contactNumber) {
-      newErrors.contactNumber = "Contact number is required";
+  const newErrors = {};
+  if (!formData.name) newErrors.name = "Full name is required";
+  if (!formData.email) newErrors.email = "Email is required";
+  if (!formData.phone)
+    newErrors.phone = "Contact number is required";
+  if (!formData.city) newErrors.city = "City is required";
+  if (!formData.course) newErrors.course = "Please select a course";
+  if (!formData.message) newErrors.message = "Message is required";
+  setErrors(newErrors);
+  if (Object.keys(newErrors).length > 0) return;
+
+  try {
+    const response = await fetch(
+      "http://localhost:5000/users/enquiry",   // 👈 direct laga do test ke liye
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+
+    if (!response.ok) {
+      throw new Error("Failed to submit");
     }
-    if (!formData.city) newErrors.city = "City is required";
-    if (!formData.course) newErrors.course = "Please select a course";
-
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
 
     setIsSubmitted(true);
     setFormData({
-      fullName: "",
-      mail: "",
-      contactNumber: "",
+      name: "",
+      email: "",
+      phone: "",
       city: "",
       course: "",
+      message:"",
     });
-  };
-
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  }
+};
   const fieldClass = (hasError) =>
     `w-full mt-2 border-2 bg-white/95 px-4 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-100 ${
       hasError
@@ -168,15 +191,15 @@ const ContactUs = () => {
                         Full Name
                       </label>
                       <input
-                        name="fullName"
-                        value={formData.fullName}
+                        name="name"
+                        value={formData.name}
                         placeholder="Full Name"
                         onChange={handleChange}
-                        className={fieldClass(errors.fullName)}
+                        className={fieldClass(errors.name)}
                       />
-                      {errors.fullName && (
+                      {errors.name && (
                         <p className="text-red-500 text-sm mt-1">
-                          {errors.fullName}
+                          {errors.name}
                         </p>
                       )}
                     </div>
@@ -184,14 +207,14 @@ const ContactUs = () => {
                     <div className="w-full">
                       <label className="font-semibold text-slate-700">Email</label>
                       <input
-                        name="mail"
-                        value={formData.mail}
+                        name="email"
+                        value={formData.email}
                         placeholder="Email"
                         onChange={handleChange}
-                        className={fieldClass(errors.mail)}
+                        className={fieldClass(errors.email)}
                       />
-                      {errors.mail && (
-                        <p className="text-red-500 text-sm mt-1">{errors.mail}</p>
+                      {errors.email && (
+                        <p className="text-red-500 text-sm mt-1">{errors.email}</p>
                       )}
                     </div>
 
@@ -200,15 +223,15 @@ const ContactUs = () => {
                         Contact Number
                       </label>
                       <input
-                        name="contactNumber"
-                        value={formData.contactNumber}
+                        name="phone"
+                        value={formData.phone}
                         onChange={handleChange}
                         placeholder="Contact number"
-                        className={fieldClass(errors.contactNumber)}
+                        className={fieldClass(errors.phone)}
                       />
-                      {errors.contactNumber && (
+                      {errors.phone && (
                         <p className="text-red-500 text-sm mt-1">
-                          {errors.contactNumber}
+                          {errors.phone}
                         </p>
                       )}
                     </div>
@@ -249,7 +272,19 @@ const ContactUs = () => {
                       <p className="text-red-500 text-sm mt-1">{errors.course}</p>
                     )}
                   </div>
-
+                    <div className="mt-4">
+  <label className="font-semibold text-slate-700">Message</label>
+  <textarea
+    name="message"   // 👈 YE ADD KARNA THA
+    value={formData.message}
+    onChange={handleChange}
+    rows="3"
+    className="w-full px-3 py-2 border rounded"
+  />
+  {errors.message && (
+    <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+  )}
+</div>
                   <button className="w-full mt-6 bg-red-800 text-white py-3 rounded-xl text-lg font-semibold hover:bg-blue-800 transition">
                     Submit
                   </button>

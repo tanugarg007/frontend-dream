@@ -24,6 +24,23 @@ import { BrowserRouter as Router, useLocation } from "react-router-dom";
     return null;
   }
 
+function AppContent({ showEnquiry, setShowEnquiry }) {
+  const location = useLocation();
+  const hideNavbarPaths = ['/login'];
+  const isAdminRoute = location.pathname.startsWith('/admin');
+  const shouldShowNavbar = !hideNavbarPaths.includes(location.pathname) && !isAdminRoute;
+
+  return (
+    <>
+      {shouldShowNavbar && <Navbar onEnquiryClick={() => setShowEnquiry(true)} />}
+      <RouteWatcher onOpen={() => setShowEnquiry(true)} />
+      <Approutes />
+      <WhatsAppFloat />
+      <EnquiryModal isOpen={showEnquiry} onClose={() => setShowEnquiry(false)} />
+    </>
+  );
+}
+
 function App() {
   const [showEnquiry, setShowEnquiry] = useState(false);
 
@@ -41,11 +58,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-            <Navbar onEnquiryClick={() => setShowEnquiry(true)} />
-            <RouteWatcher onOpen={() => setShowEnquiry(true)} />
-            <Approutes/>
-            <WhatsAppFloat />
-            <EnquiryModal isOpen={showEnquiry} onClose={() => setShowEnquiry(false)} />
+        <AppContent showEnquiry={showEnquiry} setShowEnquiry={setShowEnquiry} />
       </Router>
     </AuthProvider>
   );

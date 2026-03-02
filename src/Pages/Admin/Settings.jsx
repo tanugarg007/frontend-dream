@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+// Settings.jsx (complete updated code)
+
+import React, { useState, useEffect } from 'react';
+import { FiGlobe, FiKey, FiSave, FiUpload, FiUser } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
@@ -10,62 +13,138 @@ const joinUrl = (base, endpoint) => {
   return `${base.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
 };
 
+const inputClasses =
+  'w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm text-slate-800 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-100';
+
 const Settings = () => {
   const { token } = useAuth();
-  const [profile, setProfile] = useState({
-    name: '',
-    email: '',
-  });
+
+  // Profile state
+  const [profile, setProfile] = useState({ name: '', email: '' });
   const [profileErrors, setProfileErrors] = useState({});
   const [avatarPreview, setAvatarPreview] = useState('');
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [isProfileLoading, setIsProfileLoading] = useState(false);
 
-  const [password, setPassword] = useState({
-    current: '',
-    new: '',
-    confirm: '',
-  });
+  // Password state
+  const [password, setPassword] = useState({ current: '', new: '', confirm: '' });
   const [passwordErrors, setPasswordErrors] = useState({});
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const [passwordApiError, setPasswordApiError] = useState(''); // API error message
 
-  const handleProfileUpdate = (e) => {
+  // Site settings state
+  const [siteSettings, setSiteSettings] = useState({ siteTitle: '', contactEmail: '' });
+  const [isSiteSettingsLoading, setIsSiteSettingsLoading] = useState(false);
+  const [siteSettingsError, setSiteSettingsError] = useState('');
+
+  // Fetch profile
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/users/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (res.ok) {
+          setProfile({
+            name: data.profile.name,
+            email: data.profile.email,
+          });
+          if (data.profile.avatar) {
+            setAvatarPreview(`${API_BASE_URL}${data.profile.avatar}`);
+          }
+        }
+      } catch (error) {
+        console.error('Profile fetch error:', error);
+      }
+    };
+    if (token) fetchProfile();
+  }, [token]);
+
+  // Fetch site settings
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/users/site-settings`);
+        const data = await res.json();
+        if (res.ok && data.settings) {
+          setSiteSettings(data.settings);
+        }
+      } catch (error) {
+        console.error('Fetch site settings error:', error);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  // Clean up object URL
+  useEffect(() => {
+    return () => {
+      if (avatarPreview && avatarPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(avatarPreview);
+      }
+    };
+  }, [avatarPreview]);
+
+  // Profile update handler
+  const handleProfileUpdate = async (e) => {
     e.preventDefault();
     const nextErrors = {};
-
     if (!profile.name?.trim()) nextErrors.name = 'Name is required.';
-    if (!profile.email?.trim()) {
-      nextErrors.email = 'Email is required.';
-    } else if (!/\S+@\S+\.\S+/.test(profile.email.trim())) {
+    if (!profile.email?.trim()) nextErrors.email = 'Email is required.';
+    else if (!/\S+@\S+\.\S+/.test(profile.email.trim()))
       nextErrors.email = 'Enter a valid email address.';
-    }
-
     if (Object.keys(nextErrors).length > 0) {
       setProfileErrors(nextErrors);
       return;
     }
-
     setProfileErrors({});
-    // API call to update profile
-    alert('Profile updated successfully!');
+    setIsProfileLoading(true);
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', profile.name);
+      formDataToSend.append('email', profile.email);
+      if (avatarFile) formDataToSend.append('avatar', avatarFile);
+
+      const response = await fetch(`${API_BASE_URL}/users/profiles`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formDataToSend,
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.message || 'Failed to update profile');
+      setProfile({
+        name: data.profile.name,
+        email: data.profile.email,
+      });
+      setAvatarPreview(data.profile.avatar ? `${API_BASE_URL}${data.profile.avatar}` : '');
+      alert(data.message || 'Profile updated successfully ✅');
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    } finally {
+      setIsProfileLoading(false);
+    }
   };
 
+  // Avatar change handler
   const handleAvatarChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!allowedTypes.includes(file.type)) {
-      alert('Please select JPG, PNG or WEBP image.');
-      return;
+    if (avatarPreview && avatarPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(avatarPreview);
     }
-
-    const previewUrl = URL.createObjectURL(file);
-    setAvatarPreview(previewUrl);
+    setAvatarFile(file);
+    setAvatarPreview(URL.createObjectURL(file));
   };
 
+  // ---------- FIXED PASSWORD UPDATE HANDLER ----------
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
-    const nextErrors = {};
+    setPasswordApiError(''); // clear previous error
 
+    // Client-side validation
+    const nextErrors = {};
     if (!password.current.trim()) nextErrors.current = 'Current password is required.';
     if (!password.new.trim()) nextErrors.new = 'New password is required.';
     if (!password.confirm.trim()) nextErrors.confirm = 'Confirm password is required.';
@@ -75,19 +154,26 @@ const Settings = () => {
     if (password.new && password.confirm && password.new !== password.confirm) {
       nextErrors.confirm = 'Passwords do not match.';
     }
-
     if (Object.keys(nextErrors).length > 0) {
       setPasswordErrors(nextErrors);
       return;
     }
     setPasswordErrors({});
+
     if (!token) {
-      alert('Please login again. Token not found.');
+      setPasswordApiError('Please login again. Token not found.');
+      return;
+    }
+
+    // Get email from profile state (must be available)
+    if (!profile.email) {
+      setPasswordApiError('Profile email not loaded. Please refresh.');
       return;
     }
 
     setIsPasswordLoading(true);
     try {
+      // Include email in the request because endpoint is /forgot-password
       const response = await fetch(joinUrl(API_BASE_URL, ADMIN_CHANGE_PASSWORD_ENDPOINT), {
         method: 'POST',
         headers: {
@@ -95,179 +181,278 @@ const Settings = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
+          email: profile.email,           // 👈 ADDED
           currentPassword: password.current,
           newPassword: password.new,
         }),
       });
 
       const responseBody = await response.json().catch(() => ({}));
+      console.log('Password change response:', response.status, responseBody);
+
       if (!response.ok) {
-        alert(responseBody?.error || responseBody?.message || 'Password update failed');
+        // If 401, token might be expired – show message but don't redirect automatically
+        if (response.status === 401) {
+          setPasswordApiError('Session expired. Please login again.');
+        } else {
+          setPasswordApiError(responseBody?.message || 'Password update failed');
+        }
         return;
       }
 
+      // Success
       alert(responseBody?.message || 'Password changed successfully!');
       setPassword({ current: '', new: '', confirm: '' });
     } catch (error) {
-      alert('Unable to connect to server. Please try again.');
+      console.error('Password update error:', error);
+      setPasswordApiError('Unable to connect to server. Please try again.');
     } finally {
       setIsPasswordLoading(false);
     }
   };
 
-  return (
-    <div>
-      <h1 className="text-3xl font-bold text-dark mb-6">Settings</h1>
+  // Site settings save handler
+  const handleSaveSettings = async () => {
+    setSiteSettingsError('');
+    setIsSiteSettingsLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/site-settings`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ settings: siteSettings }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || 'Failed to save settings');
+      alert('Settings saved successfully ✅');
+    } catch (error) {
+      console.error('Save settings error:', error);
+      setSiteSettingsError(error.message);
+    } finally {
+      setIsSiteSettingsLoading(false);
+    }
+  };
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Profile Settings */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
-          <form onSubmit={handleProfileUpdate} noValidate>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Name</label>
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <section className="rounded-2xl border border-slate-200/80 bg-white/95 p-5 shadow-sm sm:p-6">
+        <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">Settings</h1>
+        <p className="mt-1 text-sm text-slate-500">Manage your profile, security and site configuration.</p>
+      </section>
+
+      {/* Profile & Password */}
+      <section className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+        {/* Profile Information */}
+        <div className="rounded-2xl border border-slate-200/80 bg-white/95 p-5 shadow-sm sm:p-6">
+          <div className="mb-5 flex items-center gap-2">
+            <span className="rounded-lg bg-cyan-100 p-2 text-cyan-700">
+              <FiUser />
+            </span>
+            <h2 className="text-lg font-semibold text-slate-900">Profile Information</h2>
+          </div>
+
+          <form onSubmit={handleProfileUpdate} noValidate className="space-y-4">
+            {/* Name field */}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Name</label>
               <input
                 type="text"
                 value={profile.name}
                 onChange={(e) => {
                   setProfile({ ...profile, name: e.target.value });
-                  if (profileErrors.name) {
-                    setProfileErrors((prev) => ({ ...prev, name: '' }));
-                  }
+                  if (profileErrors.name) setProfileErrors((prev) => ({ ...prev, name: '' }));
                 }}
-                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                className={inputClasses}
                 required
               />
-              {profileErrors.name && <p className="mt-1 text-sm text-red-600">{profileErrors.name}</p>}
+              {profileErrors.name && <p className="mt-1 text-xs text-red-600">{profileErrors.name}</p>}
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Email</label>
+
+            {/* Email field */}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
               <input
                 type="email"
                 value={profile.email}
                 onChange={(e) => {
                   setProfile({ ...profile, email: e.target.value });
-                  if (profileErrors.email) {
-                    setProfileErrors((prev) => ({ ...prev, email: '' }));
-                  }
+                  if (profileErrors.email) setProfileErrors((prev) => ({ ...prev, email: '' }));
                 }}
-                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                className={inputClasses}
                 required
               />
-              {profileErrors.email && <p className="mt-1 text-sm text-red-600">{profileErrors.email}</p>}
+              {profileErrors.email && <p className="mt-1 text-xs text-red-600">{profileErrors.email}</p>}
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Avatar</label>
-              {avatarPreview && (
-                <img
-                  src={avatarPreview}
-                  alt="Avatar preview"
-                  className="mb-3 h-20 w-20 rounded-full border border-gray-200 object-cover"
-                />
-              )}
-              <input
-                id="avatar-upload"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleAvatarChange}
-              />
-              <label
-                htmlFor="avatar-upload"
-                className="inline-flex cursor-pointer items-center rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200"
-              >
-                Choose Avatar
-              </label>
+
+            {/* Avatar upload */}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Avatar</label>
+              <div className="flex items-center gap-4">
+                {avatarPreview ? (
+                  <img
+                    src={avatarPreview}
+                    alt="Avatar preview"
+                    className="h-16 w-16 rounded-full border border-slate-200 object-cover"
+                  />
+                ) : (
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-500">
+                    <FiUser />
+                  </div>
+                )}
+                <div>
+                  <input
+                    id="avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleAvatarChange}
+                  />
+                  <label
+                    htmlFor="avatar-upload"
+                    className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                  >
+                    <FiUpload />
+                    Upload Avatar
+                  </label>
+                </div>
+              </div>
             </div>
-            <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-              Update Profile
+
+            <button
+              type="submit"
+              disabled={isProfileLoading}
+              className={`inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition ${
+                isProfileLoading ? 'cursor-not-allowed opacity-70' : 'hover:bg-slate-800'
+              }`}
+            >
+              <FiSave />
+              {isProfileLoading ? 'Updating...' : 'Update Profile'}
             </button>
           </form>
         </div>
 
         {/* Change Password */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Change Password</h2>
-          <form onSubmit={handlePasswordUpdate}>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Current Password</label>
+        <div className="rounded-2xl border border-slate-200/80 bg-white/95 p-5 shadow-sm sm:p-6">
+          <div className="mb-5 flex items-center gap-2">
+            <span className="rounded-lg bg-amber-100 p-2 text-amber-700">
+              <FiKey />
+            </span>
+            <h2 className="text-lg font-semibold text-slate-900">Change Password</h2>
+          </div>
+
+          <form onSubmit={handlePasswordUpdate} className="space-y-4">
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Current Password</label>
               <input
                 type="password"
                 value={password.current}
                 onChange={(e) => {
                   setPassword({ ...password, current: e.target.value });
-                  if (passwordErrors.current) {
-                    setPasswordErrors((prev) => ({ ...prev, current: '' }));
-                  }
+                  if (passwordErrors.current) setPasswordErrors((prev) => ({ ...prev, current: '' }));
+                  setPasswordApiError('');
                 }}
-                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                className={inputClasses}
               />
-              {passwordErrors.current && (
-                <p className="mt-1 text-sm text-red-600">{passwordErrors.current}</p>
-              )}
+              {passwordErrors.current && <p className="mt-1 text-xs text-red-600">{passwordErrors.current}</p>}
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">New Password</label>
+
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">New Password</label>
               <input
                 type="password"
                 value={password.new}
                 onChange={(e) => {
                   setPassword({ ...password, new: e.target.value });
-                  if (passwordErrors.new) {
-                    setPasswordErrors((prev) => ({ ...prev, new: '' }));
-                  }
+                  if (passwordErrors.new) setPasswordErrors((prev) => ({ ...prev, new: '' }));
+                  setPasswordApiError('');
                 }}
-                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                className={inputClasses}
               />
-              {passwordErrors.new && (
-                <p className="mt-1 text-sm text-red-600">{passwordErrors.new}</p>
-              )}
+              {passwordErrors.new && <p className="mt-1 text-xs text-red-600">{passwordErrors.new}</p>}
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Confirm New Password</label>
+
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Confirm New Password</label>
               <input
                 type="password"
                 value={password.confirm}
                 onChange={(e) => {
                   setPassword({ ...password, confirm: e.target.value });
-                  if (passwordErrors.confirm) {
-                    setPasswordErrors((prev) => ({ ...prev, confirm: '' }));
-                  }
+                  if (passwordErrors.confirm) setPasswordErrors((prev) => ({ ...prev, confirm: '' }));
+                  setPasswordApiError('');
                 }}
-                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                className={inputClasses}
               />
-              {passwordErrors.confirm && (
-                <p className="mt-1 text-sm text-red-600">{passwordErrors.confirm}</p>
-              )}
+              {passwordErrors.confirm && <p className="mt-1 text-xs text-red-600">{passwordErrors.confirm}</p>}
             </div>
+
+            {/* API error message */}
+            {passwordApiError && (
+              <div className="rounded-lg border border-red-200 bg-red-50 p-2 text-sm text-red-600">
+                {passwordApiError}
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={isPasswordLoading}
-              className={`w-full sm:w-auto bg-red-600 text-white px-5 py-2.5 rounded-lg font-semibold shadow-md transition ${
-                isPasswordLoading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-red-700'
+              className={`inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition ${
+                isPasswordLoading ? 'cursor-not-allowed opacity-70' : 'hover:bg-slate-800'
               }`}
             >
+              <FiKey />
               {isPasswordLoading ? 'Updating...' : 'Change Password'}
             </button>
           </form>
         </div>
-      </div>
+      </section>
 
-      {/* Site Settings (Optional) */}
-      <div className="mt-8 bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold mb-4">Site Settings</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Site Settings */}
+      <section className="rounded-2xl border border-slate-200/80 bg-white/95 p-5 shadow-sm sm:p-6">
+        <div className="mb-5 flex items-center gap-2">
+          <span className="rounded-lg bg-indigo-100 p-2 text-indigo-700">
+            <FiGlobe />
+          </span>
+          <h2 className="text-lg font-semibold text-slate-900">Site Settings</h2>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <label className="block text-gray-700 mb-2">Site Title</label>
-            <input type="text" defaultValue="ANIMEX" className="w-full border rounded px-3 py-2" />
+            <label className="mb-1.5 block text-sm font-medium text-slate-700">Site Title</label>
+            <input
+              type="text"
+              value={siteSettings.siteTitle}
+              onChange={(e) => setSiteSettings({ ...siteSettings, siteTitle: e.target.value })}
+              className={inputClasses}
+            />
           </div>
           <div>
-            <label className="block text-gray-700 mb-2">Contact Email</label>
-            <input type="email" defaultValue="info@animex.com" className="w-full border rounded px-3 py-2" />
+            <label className="mb-1.5 block text-sm font-medium text-slate-700">Contact Email</label>
+            <input
+              type="email"
+              value={siteSettings.contactEmail}
+              onChange={(e) => setSiteSettings({ ...siteSettings, contactEmail: e.target.value })}
+              className={inputClasses}
+            />
           </div>
         </div>
-        <button className="mt-4 bg-dark text-white px-4 py-2 rounded hover:bg-dark/90">Save Settings</button>
-      </div>
+
+        {siteSettingsError && <p className="mt-2 text-sm text-red-600">{siteSettingsError}</p>}
+
+        <button
+          onClick={handleSaveSettings}
+          disabled={isSiteSettingsLoading}
+          className={`mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition ${
+            isSiteSettingsLoading ? 'cursor-not-allowed opacity-70' : 'hover:bg-slate-800'
+          }`}
+        >
+          <FiSave />
+          {isSiteSettingsLoading ? 'Saving...' : 'Save Settings'}
+        </button>
+      </section>
     </div>
   );
 };

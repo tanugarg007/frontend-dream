@@ -1,31 +1,19 @@
-import React, { useEffect, useState } from 'react';
-
-const initialFormData = {
-  name: '',
-  duration: '',
-  description: '',
-};
+import React, { useEffect, useMemo, useState } from 'react';
+import { FiBookOpen, FiClock, FiEdit2, FiPlus, FiTrash2 } from 'react-icons/fi';
+import CoursesModal from './CoursesModal';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
-const COURSES_API = `${API_BASE_URL}/users/courses`;
-const ENQUIRY_COURSE_OPTIONS = [
-  'Graphic Design',
-  'UI/UX Design',
-  'Digital Marketing',
-  'Graphic + UI/UX Design',
-  'Video Editing',
-];
+const COURSES_API = `${API_BASE_URL}/users/courses`; // for GET and DELETE
+const COURSE_API = `${API_BASE_URL}/users/course`;   // for POST and PUT (singular, adjust if needed)
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState(initialFormData);
-  const [errors, setErrors] = useState({});
+  const [editingCourse, setEditingCourse] = useState(null); // null = add mode, object = edit mode
   const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
   const [isDeletingId, setIsDeletingId] = useState(null);
   const [apiError, setApiError] = useState('');
-
+  const [successMessage, setSuccessMessage] = useState("");
   const getAuthHeaders = () => {
     const token = localStorage.getItem('adminToken') || localStorage.getItem('token') || '';
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -35,9 +23,7 @@ const Courses = () => {
     try {
       setApiError('');
       const response = await fetch(COURSES_API, {
-        headers: {
-          ...getAuthHeaders(),
-        },
+        headers: { ...getAuthHeaders() },
       });
       const data = await response.json().catch(() => []);
 
@@ -45,15 +31,10 @@ const Courses = () => {
         throw new Error(data?.error || data?.message || 'Failed to load courses');
       }
 
-      const parsedCourses = Array.isArray(data)
-        ? data
-        : Array.isArray(data?.data)
-          ? data.data
-          : [];
-
+      const parsedCourses = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
       setCourses(parsedCourses);
     } catch (error) {
-      setApiError(error.message || 'Failed to load courses');
+      setApiError(error.message);
       setCourses([]);
     } finally {
       setIsLoading(false);
@@ -72,242 +53,187 @@ const Courses = () => {
       setIsDeletingId(id);
       const response = await fetch(`${COURSES_API}/${id}`, {
         method: 'DELETE',
-        headers: {
-          ...getAuthHeaders(),
-        },
+        headers: { ...getAuthHeaders() },
       });
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
         throw new Error(data?.error || data?.message || 'Failed to delete course');
       }
-
+         setSuccessMessage("Course deleted successfully ✅");
+    
       await loadCourses();
     } catch (error) {
-      setApiError(error.message || 'Failed to delete course');
+      setApiError(error.message);
     } finally {
       setIsDeletingId(null);
     }
   };
+useEffect(() => {
+  if (successMessage) {
+    const timer = setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: '' }));
+    return () => clearTimeout(timer);
+  }
+}, [successMessage]);
+  const handleAddClick = () => {
+    setEditingCourse(null); // null means add mode
+    setIsModalOpen(true);
   };
 
-  const resetForm = () => {
-    setFormData(initialFormData);
-    setErrors({});
+  const handleEditClick = (course) => {
+    setEditingCourse(course); // set the course to edit
+    setIsModalOpen(true);
   };
 
-  const validateForm = () => {
-    const nextErrors = {};
-
-    if (!formData.name.trim()) nextErrors.name = 'Course name is required';
-    if (!formData.duration.trim()) nextErrors.duration = 'Duration is required';
-
-    return nextErrors;
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setEditingCourse(null);
   };
 
-  const toPayload = () => ({
-    title: formData.name.trim(),
-    description: formData.description.trim(),
-    duration: formData.duration.trim() || undefined,
-  });
+ const handleCourseSaved = (updatedCourse) => {
+  if (editingCourse) {
+    setCourses((prev) =>
+      prev.map((c) => (c.id === updatedCourse.id ? updatedCourse : c))
+    );
+    setSuccessMessage("Course updated successfully ✅");
+  } else {
+    setCourses((prev) => [updatedCourse, ...prev]);
+    setSuccessMessage("Course added successfully ✅");
+  }
+};
 
-  const handleSubmitCourse = async (e) => {
-    e.preventDefault();
-    const nextErrors = validateForm();
-
-    if (Object.keys(nextErrors).length > 0) {
-      setErrors(nextErrors);
-      return;
-    }
-
-    try {
-      setApiError('');
-      setIsSaving(true);
-
-      const response = await fetch(COURSES_API, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...getAuthHeaders(),
-        },
-        body: JSON.stringify(toPayload()),
-      });
-
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(data?.error || data?.message || 'Failed to save course');
-      }
-
-      setCourses((prev) => [data, ...prev]);
-
-      setIsModalOpen(false);
-      resetForm();
-    } catch (error) {
-      setApiError(error.message || 'Failed to save course');
-    } finally {
-      setIsSaving(false);
-    }
-  };
+  const activeCount = useMemo(
+    () =>
+      courses.filter((course) => {
+        const status = String(course?.status || '').toLowerCase();
+        return !status || status === 'active';
+      }).length,
+    [courses]
+  );
 
   return (
-    <div className="relative">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-slate-900">Courses Management</h1>
-        <button
-          onClick={() => {
-            resetForm();
-            setIsModalOpen(true);
-          }}
-          className="rounded bg-sky-600 px-4 py-2 text-white transition hover:bg-sky-700"
-        >
-          Add New Course
-        </button>
-      </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <section className="rounded-2xl border border-slate-200/80 bg-white/95 p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">Courses Management</h1>
+            <p className="mt-1 text-sm text-slate-500">Create and manage all published course offerings.</p>
+          </div>
+          <button
+            onClick={handleAddClick}
+            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
+            <FiPlus />
+            Add New Course
+          </button>
+        </div>
 
-      {apiError && <p className="mb-4 rounded bg-red-50 px-3 py-2 text-sm text-red-600">{apiError}</p>}
-
-      <div className="overflow-hidden rounded-lg bg-white shadow-md">
-        <table className="w-full text-left">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-3">ID</th>
-              <th className="px-4 py-3">Course Name</th>
-              <th className="px-4 py-3">Duration</th>
-              <th className="px-4 py-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {courses.map((course) => (
-              <tr key={course.id} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-3">{course.id}</td>
-                <td className="px-4 py-3 font-medium">{course.title || course.name}</td>
-                <td className="px-4 py-3">{course.duration || 'N/A'}</td>
-                <td className="px-4 py-3">
-                  <button
-                    className="ml-5 text-gray-600 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-50"
-                    title="Delete"
-                    disabled={isDeletingId === course.id}
-                    onClick={() => handleDelete(course.id)}
-                  >
-                    {isDeletingId === course.id ? '...' : '🗑️'}
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {!isLoading && courses.length === 0 && (
-              <tr>
-                <td colSpan="4" className="py-4 text-center text-gray-500">
-                  No courses found.
-                </td>
-              </tr>
-            )}
-            {isLoading && (
-              <tr>
-                <td colSpan="4" className="py-4 text-center text-gray-500">
-                  Loading courses...
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
-          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white p-6 shadow-xl">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-semibold text-slate-900">Add New Course</h2>
-              <button
-                onClick={() => {
-                  setIsModalOpen(false);
-                  resetForm();
-                }}
-                className="rounded border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-100"
-              >
-                Close
-              </button>
-            </div>
-
-            <form onSubmit={handleSubmitCourse} className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="md:col-span-2">
-                <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="name">
-                  Course Name
-                </label>
-                <select
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                >
-                  <option value="">Select course</option>
-                  {ENQUIRY_COURSE_OPTIONS.map((course) => (
-                    <option key={course} value={course}>
-                      {course}
-                    </option>
-                  ))}
-                </select>
-                {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
-              </div>
-
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="duration">
-                  Duration
-                </label>
-                <input
-                  id="duration"
-                  name="duration"
-                  value={formData.duration}
-                  onChange={handleInputChange}
-                  placeholder="Ex: 3 months"
-                  className="w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                />
-                {errors.duration && <p className="mt-1 text-xs text-red-600">{errors.duration}</p>}
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="description">
-                  Description (optional)
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  rows="3"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  placeholder="Short course summary"
-                  className="w-full rounded border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                />
-              </div>
-
-              <div className="mt-2 flex justify-end gap-3 md:col-span-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsModalOpen(false);
-                    resetForm();
-                  }}
-                  className="rounded border border-slate-300 px-4 py-2 text-slate-700 hover:bg-slate-100"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSaving}
-                  className="rounded bg-sky-600 px-5 py-2 font-medium text-white transition hover:bg-sky-700 disabled:cursor-not-allowed disabled:bg-sky-300"
-                >
-                  {isSaving ? 'Saving...' : 'Save Course'}
-                </button>
-              </div>
-            </form>
+        {/* Stats */}
+        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Total Courses</p>
+            <p className="mt-2 text-2xl font-bold text-slate-900">{isLoading ? '...' : courses.length}</p>
+          </div>
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Active Courses</p>
+            <p className="mt-2 text-2xl font-bold text-slate-900">{isLoading ? '...' : activeCount}</p>
           </div>
         </div>
+      </section>
+
+      {/* API Error */}
+      {apiError && (
+        <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          {apiError}
+        </p>
       )}
+       {successMessage && (
+  <p className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
+    {successMessage}
+  </p>
+)}
+      {/* Courses Table */}
+      <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/95 shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-left">
+            <thead className="bg-slate-100/90">
+              <tr className="text-xs uppercase tracking-[0.12em] text-slate-500">
+                <th className="px-5 py-3.5 font-semibold">Course</th>
+                <th className="px-5 py-3.5 font-semibold">Duration</th>
+                <th className="px-5 py-3.5 text-right font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {!isLoading &&
+                courses.map((course) => (
+                  <tr key={course.id} className="border-t border-slate-100">
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-3">
+                        <span className="rounded-lg bg-cyan-100 p-2 text-cyan-700">
+                          <FiBookOpen />
+                        </span>
+                        <p className="font-semibold text-slate-800">{course.title || course.name}</p>
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 text-sm text-slate-700">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 font-medium">
+                        <FiClock className="text-slate-500" />
+                        {course.duration || 'N/A'}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <div className="flex justify-end gap-2">
+                        <button
+                          className="inline-flex items-center justify-center rounded-lg border border-amber-200 px-3 py-1.5 text-xs font-semibold text-amber-600 transition hover:bg-amber-50"
+                          title="Edit"
+                          onClick={() => handleEditClick(course)}
+                        >
+                          <FiEdit2 size={14} />
+                        </button>
+                        <button
+                          className="inline-flex items-center justify-center rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+                          title="Delete"
+                          disabled={isDeletingId === course.id}
+                          onClick={() => handleDelete(course.id)}
+                        >
+                          <FiTrash2 size={14} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+
+              {!isLoading && courses.length === 0 && (
+                <tr>
+                  <td colSpan="3" className="px-5 py-10 text-center text-sm text-slate-500">
+                    No courses found.
+                  </td>
+                </tr>
+              )}
+
+              {isLoading && (
+                <tr>
+                  <td colSpan="3" className="px-5 py-10 text-center text-sm text-slate-500">
+                    Loading courses...
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Modal */}
+      <CoursesModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onCourseSaved={handleCourseSaved}
+        editingCourse={editingCourse}
+      />
     </div>
   );
 };

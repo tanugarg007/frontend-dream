@@ -128,7 +128,7 @@ const Index = () => {
         </div>
 
         <div className="w-full h-auto lg:h-[580px] flex flex-col lg:flex-row mb-8 lg:mb-0">
-          <div className="w-full lg:w-1/2 h-auto lg:h-full order-1 lg:order-1 px-4 lg:px-0 lg:pl-16">
+          <div className="w-full lg:w-1/2 h-auto lg:h-full order-2 lg:order-1 px-4 lg:px-0 lg:pl-16">
             <h2 className="text-white text-3xl lg:text-5xl mt-5 lg:mt-14 ml-0 lg:ml-16 font-bold text-center lg:text-left">Why Choose Us</h2>
             <p className="text-white text-base lg:text-base mt-4 lg:mt-6 ml-0 lg:ml-16 text-center lg:text-left leading-relaxed">Dream Animex enables you to learn from industry experts with hands-on training, cutting-edge tools, and real-world projects. We offer career-focused programs in Graphic Design, Video Editing, UI/UX Design, and Digital Marketing for a successful creative future.</p>
             <ul className="text-white text-base lg:text-lg mt-4 lg:mt-6 ml-10 lg:ml-20 list-disc space-y-2">
@@ -146,7 +146,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="w-full lg:w-1/2 h-auto lg:h-full order-2 lg:order-2 flex justify-center items-center mt-5 lg:mt-0 ">
+          <div className="w-full lg:w-1/2 h-auto lg:h-full order-1 lg:order-2 flex justify-center items-center mt-5 lg:mt-0 ">
             <img src={logo11} alt="Why Choose Us" className="w-[82%] lg:w-[60%] h-auto lg:h-[70%] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700" />
           </div>
         </div>

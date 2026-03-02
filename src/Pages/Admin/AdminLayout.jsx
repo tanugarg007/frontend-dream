@@ -7,10 +7,14 @@ import {
   FiMenu,
   FiMessageSquare,
   FiSettings,
+  FiShield,
   FiUser,
   FiX,
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
+
+// Base URL for API – needed to build absolute avatar URLs
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 
 const AdminLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -40,15 +44,26 @@ const AdminLayout = () => {
       item.end ? location.pathname === item.path : location.pathname.startsWith(item.path)
     )?.label || 'Admin Portal';
 
+  // Helper to get the correct avatar URL (absolute if relative)
+  const getAvatarUrl = (avatarPath) => {
+    if (!avatarPath) return null;
+    if (avatarPath.startsWith('http')) return avatarPath;
+    return `${API_BASE_URL}${avatarPath}`;
+  };
+
   const sidebarContent = (
     <>
-      <div className="border-b border-slate-800 px-6 py-6">
-        <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Control Panel</p>
+      <div className="relative border-b border-slate-700/70 px-6 py-6">
+        <div className="absolute right-6 top-5 rounded-lg bg-cyan-400/20 p-2 text-cyan-200">
+          <FiShield />
+        </div>
+        <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Control Panel</p>
         <h1 className="mt-2 text-xl font-semibold text-white">Animex Admin</h1>
+        <p className="mt-1 text-xs text-slate-400">Professional management workspace</p>
       </div>
 
       <nav className="px-4 py-6">
-        <ul className="space-y-1">
+        <ul className="space-y-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -58,14 +73,16 @@ const AdminLayout = () => {
                   onClick={closeMobileMenu}
                   to={item.path}
                   className={({ isActive }) =>
-                    `group flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition ${
+                    `group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${
                       isActive
-                        ? 'bg-cyan-500/15 text-cyan-300 ring-1 ring-cyan-400/40'
-                        : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                        ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/10 text-cyan-200 ring-1 ring-cyan-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]'
+                        : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
                     }`
                   }
                 >
-                  <Icon className="text-base" />
+                  <span className="rounded-lg bg-slate-800/70 p-1.5 text-slate-300 transition group-hover:text-white">
+                    <Icon className="text-base" />
+                  </span>
                   <span>{item.label}</span>
                 </NavLink>
               </li>
@@ -74,10 +91,10 @@ const AdminLayout = () => {
         </ul>
       </nav>
 
-      <div className="mt-auto border-t border-slate-800 p-4">
+      <div className="mt-auto border-t border-slate-700/70 p-4">
         <button
           onClick={handleLogout}
-          className="flex w-full items-center justify-center gap-2 rounded-lg border border-rose-400/40 bg-rose-500/10 px-4 py-2.5 text-sm font-semibold text-rose-300 transition hover:bg-rose-500/20"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-rose-400/40 bg-rose-500/10 px-4 py-2.5 text-sm font-semibold text-rose-300 transition hover:bg-rose-500/20"
         >
           <FiLogOut />
           <span>Logout</span>
@@ -87,8 +104,8 @@ const AdminLayout = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <div className="fixed inset-y-0 left-0 z-40 hidden w-72 flex-col bg-slate-900 shadow-xl lg:flex">
+    <div className="min-h-screen bg-gradient-to-b from-slate-100 via-sky-50/40 to-slate-100">
+      <div className="fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-slate-700/70 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-900 shadow-2xl lg:flex">
         {sidebarContent}
       </div>
 
@@ -99,8 +116,8 @@ const AdminLayout = () => {
             className="absolute inset-0 bg-slate-950/50"
             onClick={closeMobileMenu}
           />
-          <aside className="relative z-10 flex h-full w-72 flex-col bg-slate-900 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-800 px-4 py-4">
+          <aside className="relative z-10 flex h-full w-72 flex-col border-r border-slate-700/70 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-900 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-700/70 px-4 py-4">
               <span className="text-sm font-semibold text-slate-200">Menu</span>
               <button
                 onClick={closeMobileMenu}
@@ -116,29 +133,38 @@ const AdminLayout = () => {
       )}
 
       <div className="lg:ml-72">
-        <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
+        <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/80 px-4 py-4 backdrop-blur-xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="rounded-md border border-slate-300 p-2 text-slate-700 transition hover:bg-slate-50 lg:hidden"
+                className="rounded-lg border border-slate-300 p-2 text-slate-700 transition hover:bg-slate-50 lg:hidden"
                 aria-label="Open menu"
               >
                 <FiMenu />
               </button>
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Admin Portal</p>
-                <h2 className="text-lg font-semibold text-slate-900">{pageTitle}</h2>
+                <h2 className="text-xl font-semibold text-slate-900">{pageTitle}</h2>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
               <div className="hidden text-right sm:block">
                 <p className="text-sm font-semibold text-slate-800">{adminUser?.name || 'Admin'}</p>
                 <p className="text-xs text-slate-500">{adminUser?.email || 'admin@animex.local'}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                {adminUser?.name ? adminUser.name.charAt(0).toUpperCase() : <FiUser />}
+              {/* Avatar / User Icon */}
+              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-slate-900 to-cyan-700 text-sm font-semibold text-white">
+                {adminUser?.avatar ? (
+                  <img
+                    src={getAvatarUrl(adminUser.avatar)}
+                    alt={adminUser.name || 'User'}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  adminUser?.name ? adminUser.name.charAt(0).toUpperCase() : <FiUser />
+                )}
               </div>
             </div>
           </div>

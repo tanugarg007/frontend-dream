@@ -66,7 +66,7 @@ const About = () => {
   <div
     className="
       relative
-      w-[92%] lg:w-[85%] max-w-[1100px]
+      w-[92%] lg:w-[85%] max-w-[1145px]
       bg-white/5 backdrop-blur-sm
       rounded-2xl lg:rounded-3xl shadow-2xl
       border-l-4 lg:border-l-8 border-red-800
