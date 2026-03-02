@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiGlobe, FiKey, FiSave, FiUpload, FiUser } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
-
+import { useNavigate } from 'react-router-dom';
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 const ADMIN_CHANGE_PASSWORD_ENDPOINT =
   process.env.REACT_APP_ADMIN_CHANGE_PASSWORD_ENDPOINT || '/users/forgot-password';
@@ -18,7 +18,7 @@ const inputClasses =
 
 const Settings = () => {
   const { token } = useAuth();
-
+   console.log('Token from localStorage:', localStorage.getItem('token'));
   // Profile state
   const [profile, setProfile] = useState({ name: '', email: '' });
   const [profileErrors, setProfileErrors] = useState({});
@@ -36,7 +36,7 @@ const Settings = () => {
   const [siteSettings, setSiteSettings] = useState({ siteTitle: '', contactEmail: '' });
   const [isSiteSettingsLoading, setIsSiteSettingsLoading] = useState(false);
   const [siteSettingsError, setSiteSettingsError] = useState('');
-
+  const navigate = useNavigate();
   // Fetch profile
   useEffect(() => {
     const fetchProfile = async () => {
@@ -212,28 +212,70 @@ const Settings = () => {
   };
 
   // Site settings save handler
-  const handleSaveSettings = async () => {
-    setSiteSettingsError('');
-    setIsSiteSettingsLoading(true);
-    try {
-      const response = await fetch(`${API_BASE_URL}/users/site-settings`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ settings: siteSettings }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Failed to save settings');
-      alert('Settings saved successfully ✅');
-    } catch (error) {
-      console.error('Save settings error:', error);
-      setSiteSettingsError(error.message);
-    } finally {
-      setIsSiteSettingsLoading(false);
+  // ---------- Site settings save handler (improved) ----------
+const handleSaveSettings = async () => {
+  setSiteSettingsError('');
+  setIsSiteSettingsLoading(true);
+
+  if (!token) {
+  setSiteSettingsError('No authentication token. Please login again.');
+  setIsSiteSettingsLoading(false);
+  return;
+}
+
+  const url = `${API_BASE_URL}/users/site-settings`; // same as GET
+  const methods = ['PATCH']; // try common update methods
+  const payloads = [
+    { settings: siteSettings }, // wrapped as GET returns data.settings
+    siteSettings,               // unwrapped
+  ];
+
+  let success = false;
+  for (const method of methods) {
+    for (const payload of payloads) {
+      try {
+        console.log(`🔁 Trying ${method} ${url}`);
+        console.log('📦 Payload:', payload);
+
+        const response = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(() => ({}));
+        console.log(`📥 Response (${method}):`, response.status, data);
+
+        if (response.ok) {
+          alert(`✅ Settings saved successfully using ${method}`);
+          success = true;
+          break;
+        } else {
+          // Agar 401/403 aave, token expired ho sakda hai
+         if (response.status === 401 || response.status === 403) {
+  setSiteSettingsError('Session expired. Please login again.');
+  // Optionally redirect to login after a few seconds
+  setTimeout(() => navigate('/login'), 2000);
+} else {
+            // Pehla attempt fail, continue
+          }
+        }
+      } catch (error) {
+        console.error(`❌ Network error with ${method}:`, error);
+      }
     }
-  };
+    if (success) break;
+  }
+
+  if (!success) {
+    setSiteSettingsError('All save attempts failed. Check browser console for details.');
+  }
+
+  setIsSiteSettingsLoading(false);
+};
 
   return (
     <div className="space-y-6">

@@ -195,7 +195,7 @@ const Login = () => {
             <FiShield />
             Secure Admin Access
           </p>
-          <h1 className="mt-5 text-4xl font-bold leading-tight">Welcome to Animex Admin Portal</h1>
+          <h1 className="mt-5 text-4xl font-bold leading-tight">Welcome to Dream Animex</h1>
           <p className="mt-4 max-w-md text-sm text-slate-200">
             Manage courses, enquiries and settings from a secure professional dashboard designed for daily operations.
           </p>
