@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import logo9 from "../Images/page-background.JPG";
 import contactBg from "../Images/contact-bg.JPG.jpeg";
 import Footer from "../Component/Footer";
-
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -218,23 +219,28 @@ const ContactUs = () => {
                       )}
                     </div>
 
-                    <div className="w-full">
-                      <label className="font-semibold text-slate-700">
-                        Contact Number
-                      </label>
-                      <input
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="Contact number"
-                        className={fieldClass(errors.phone)}
-                      />
-                      {errors.phone && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.phone}
-                        </p>
-                      )}
-                    </div>
+                  <div className="w-full">
+  <label className="font-semibold text-slate-700">
+    Contact Number
+  </label>
+
+  <PhoneInput
+    country={"in"} // default India
+    enableSearch
+    value={formData.phone}
+    onChange={(phone) =>
+      setFormData({ ...formData, phone })
+    }
+    inputClass="!w-full !py-2 !pl-14 !rounded-xl !border"
+    containerClass="!w-full"
+  />
+
+  {errors.phone && (
+    <p className="text-red-500 text-sm mt-1">
+      {errors.phone}
+    </p>
+  )}
+</div>
 
                     <div className="w-full">
                       <label className="font-semibold text-slate-700">City</label>
