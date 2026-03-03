@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
 const EnquiryModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', course: '', message: '' });
   const [errors, setErrors] = useState({});
@@ -29,7 +31,7 @@ const EnquiryModal = ({ isOpen, onClose }) => {
     const newErrors = validateForm();
     if (Object.keys(newErrors).length !== 0) { setErrors(newErrors); setShowErrors(true); return; }
     try {
-      const response = await fetch('http://localhost:5000/users/enquiry', {
+      const response = await fetch(`${API_BASE_URL}/users/enquiry`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData)
       });
       if (!response.ok) throw new Error('Enquiry submit failed');

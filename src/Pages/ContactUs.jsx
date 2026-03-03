@@ -4,6 +4,7 @@ import contactBg from "../Images/contact-bg.JPG.jpeg";
 import Footer from "../Component/Footer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -39,7 +40,7 @@ const ContactUs = () => {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/users/enquiry",   // 👈 direct laga do test ke liye
+      `${API_BASE_URL}/users/enquiry`,
       {
         method: "POST",
         headers: {
@@ -307,4 +308,5 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
+
 
