@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FiBookOpen, FiClock, FiEdit2, FiPlus, FiTrash2 } from 'react-icons/fi';
 import CoursesModal from './CoursesModal';
+import { serverUrl } from '../../url/url';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl; // fallback to serverUrl from url.js if env var is not set
 const COURSES_API = `${API_BASE_URL}/users/courses`; // for GET and DELETE
 const COURSE_API = `${API_BASE_URL}/users/course`;   // for POST and PUT (singular, adjust if needed)
 

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+import { serverUrl } from '../../url/url';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl; // fallback to serverUrl from url.js if env var is not set
 const COURSE_API = `${API_BASE_URL}/users/course`;      // singular – for POST (create)
 const COURSES_API = `${API_BASE_URL}/users/courses`;    // plural – for PUT (update) and DELETE
 
 const CoursesModal = ({ isOpen, onClose, onCourseSaved, editingCourse }) => {
-  const [formData, setFormData] = useState({ name: '', duration: '', description: '', heading: '' });
+  const [formData, setFormData] = useState({ name: '', duration: '', });
   const [errors, setErrors] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [apiError, setApiError] = useState('');
@@ -22,7 +22,7 @@ const CoursesModal = ({ isOpen, onClose, onCourseSaved, editingCourse }) => {
         // heading: editingCourse.heading || '',
       });
     } else {
-      setFormData({ name: '', duration: '', description: '',heading:'' });
+      setFormData({ name: '', duration: '', });
     }
     setErrors({});
     setApiError('');
@@ -70,13 +70,13 @@ const CoursesModal = ({ isOpen, onClose, onCourseSaved, editingCourse }) => {
     let url;
     let method;
 
-    if (isEditMode && editingCourse?.id) {
-      url = `${COURSES_API}/${editingCourse.id}`;
-      method = "PATCH";
-    } else {
-      url = COURSES_API;
-      method = "POST";
-    }
+ if (isEditMode && editingCourse?.id) {
+  url = `${COURSES_API}/${editingCourse.id}`;
+  method = "PATCH";
+} else {
+  url = COURSE_API;   // ✅ correct (singular)
+  method = "POST";
+}
 
     const response = await fetch(url, {
       method,

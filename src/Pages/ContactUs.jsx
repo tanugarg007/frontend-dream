@@ -4,7 +4,7 @@ import contactBg from "../Images/contact-bg.JPG.jpeg";
 import Footer from "../Component/Footer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+import { serverUrl } from "../url/url";
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -40,7 +40,7 @@ const ContactUs = () => {
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/users/enquiry`,
+      `${serverUrl}/users/enquiry`,
       {
         method: "POST",
         headers: {
@@ -188,7 +188,7 @@ const ContactUs = () => {
                   </p>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="w-full">
+<div className="w-full">
                       <label className="font-semibold text-slate-700">
                         Full Name
                       </label>
@@ -232,8 +232,26 @@ const ContactUs = () => {
     onChange={(phone) =>
       setFormData({ ...formData, phone })
     }
-    inputClass="!w-full !py-2 !pl-14 !rounded-xl !border"
-    containerClass="!w-full"
+    inputStyle={{
+      width: "100%",
+      height: "50px",
+      borderRadius: "12px",
+      borderWidth: "2px",
+      borderColor: errors.phone ? "#ef4444" : "#e2e8f0",
+      paddingLeft: "52px",
+      fontSize: "14px",
+    
+    }}
+    buttonStyle={{
+      height: "50px",
+      borderTopLeftRadius: "12px",
+      borderBottomLeftRadius: "12px",
+      borderWidth: "2px",
+      borderColor: errors.phone ? "#ef4444" : "#e2e8f0",
+      backgroundColor: "#fff",
+    }}
+    containerClass="contact-phone !w-full"
+    containerStyle={{ width: "100%", marginTop: "8px" }}
   />
 
   {errors.phone && (
@@ -308,5 +326,3 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
-
-

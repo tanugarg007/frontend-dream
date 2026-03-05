@@ -12,16 +12,14 @@ import {
   FiX,
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
-
-// Base URL for API – needed to build absolute avatar URLs
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+import { serverUrl } from '../../url/url';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl; // fallback to serverUrl from url.js if env var is not set
 
 const AdminLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user: adminUser, logout } = useAuth();
-
   const navItems = useMemo(
     () => [
       { label: 'Dashboard', path: '/admin', icon: FiGrid, end: true },
@@ -44,7 +42,6 @@ const AdminLayout = () => {
       item.end ? location.pathname === item.path : location.pathname.startsWith(item.path)
     )?.label || 'Admin Portal';
 
-  // Helper to get the correct avatar URL (absolute if relative)
   const getAvatarUrl = (avatarPath) => {
     if (!avatarPath) return null;
     if (avatarPath.startsWith('http')) return avatarPath;
@@ -148,25 +145,30 @@ const AdminLayout = () => {
                 <h2 className="text-xl font-semibold text-slate-900">{pageTitle}</h2>
               </div>
             </div>
+<div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
+  <div className="hidden text-right sm:block">
+    <p className="text-sm font-semibold text-slate-800">
+      {adminUser?.name || 'Admin'}
+    </p>
+    <p className="text-xs text-slate-500">
+      {adminUser?.email || 'admin@animex.local'}
+    </p>
+  </div>
 
-            <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
-              <div className="hidden text-right sm:block">
-                <p className="text-sm font-semibold text-slate-800">{adminUser?.name || 'Admin'}</p>
-                <p className="text-xs text-slate-500">{adminUser?.email || 'admin@animex.local'}</p>
-              </div>
-              {/* Avatar / User Icon */}
-              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-slate-900 to-cyan-700 text-sm font-semibold text-white">
-                {adminUser?.avatar ? (
-                  <img
-                    src={getAvatarUrl(adminUser.avatar)}
-                    alt={adminUser.name || 'User'}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  adminUser?.name ? adminUser.name.charAt(0).toUpperCase() : <FiUser />
-                )}
-              </div>
-            </div>
+  <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-slate-900 to-cyan-700 text-sm font-semibold text-white">
+    {adminUser?.avatar ? (
+      <img
+        src={getAvatarUrl(adminUser.avatar)}
+        alt={adminUser?.name || 'User'}
+        className="h-full w-full object-cover"
+      />
+    ) : (
+      adminUser?.name
+        ? adminUser.name.charAt(0).toUpperCase()
+        : <FiUser />
+    )}
+  </div>
+</div>
           </div>
         </header>
 

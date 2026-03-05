@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import { serverUrl } from '../url/url';
 
 const EnquiryModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', course: '', message: '' });
@@ -13,13 +14,18 @@ const EnquiryModal = ({ isOpen, onClose }) => {
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
+  const normalizePhone = (value) => {
+    const digitsOnly = String(value || '').replace(/\D/g, '');
+    return digitsOnly.length > 10 ? digitsOnly.slice(-10) : digitsOnly;
+  };
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Please enter a valid email';
     if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
-    else if (!/^[0-9]{10}$/.test(formData.phone.replace(/[-\s]/g, ''))) newErrors.phone = 'Please enter 10 digits';
+    else if (!/^[0-9]{10}$/.test(normalizePhone(formData.phone))) newErrors.phone = 'Please enter 10 digits';
     if(!formData.course.trim()) newErrors.course = 'Course is required';
     if(!formData.city.trim()) newErrors.city = 'City is required';
     if (!formData.message.trim()) newErrors.message = 'Message is required';
@@ -31,8 +37,10 @@ const EnquiryModal = ({ isOpen, onClose }) => {
     const newErrors = validateForm();
     if (Object.keys(newErrors).length !== 0) { setErrors(newErrors); setShowErrors(true); return; }
     try {
-      const response = await fetch(`${API_BASE_URL}/users/enquiry`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData)
+      const payload = { ...formData, phone: normalizePhone(formData.phone) };
+      const response = await fetch(`${serverUrl}/users/enquiry`
+        , {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Enquiry submit failed');
       setIsSubmitted(true);
@@ -72,7 +80,26 @@ const EnquiryModal = ({ isOpen, onClose }) => {
           </div>
           <div className="mb-3">
             <label className="block text-sm font-bold mb-1">Contact Number</label>
-            <input id="phone" value={formData.phone} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
+            <PhoneInput
+              country={'in'}
+              enableSearch
+              value={formData.phone}
+              onChange={(phone) => setFormData((prev) => ({ ...prev, phone }))}
+              inputStyle={{
+                width: '100%',
+                height: '42px',
+                borderRadius: '4px',
+                border: '1px solid #d1d1db',
+                
+              }}
+              buttonStyle={{
+                borderTopLeftRadius: '6px',
+                borderBottomLeftRadius: '6px',
+                border: '1px solid #d1d1db',
+              
+              }}
+              containerStyle={{ width: '100%' }}
+            />
             {showErrors && errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
           </div>
           <div className="mb-3">

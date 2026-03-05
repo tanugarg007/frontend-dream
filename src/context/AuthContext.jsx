@@ -28,6 +28,12 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  // 🔥 NEW FUNCTION
+  const updateUser = (updatedUser) => {
+    localStorage.setItem('adminUser', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
+
   const value = useMemo(
     () => ({
       token,
@@ -35,6 +41,7 @@ export const AuthProvider = ({ children }) => {
       isAuthenticated: Boolean(token),
       login,
       logout,
+      updateUser,   // 🔥 add here
     }),
     [token, user]
   );
@@ -49,4 +56,3 @@ export const useAuth = () => {
   }
   return context;
 };
-

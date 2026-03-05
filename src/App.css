@@ -45,6 +45,14 @@
   -webkit-clip-path: none;
 }
 
+.contact-phone.react-tel-input {
+  width: 100%;
+}
+
+.contact-phone.react-tel-input .form-control {
+  width: 100% !important;
+}
+
 @media (max-width: 1024px) {
   .course-image-mobile-crop {
     clip-path: inset(0 0 14% 0);

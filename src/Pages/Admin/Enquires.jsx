@@ -1,6 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
+import { serverUrl } from '../../url/url';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl; // fallback to serverUrl from url.js if env var is not set
+
+const formatPhoneForDisplay = (value) => {
+  const digits = String(value || '').replace(/\D/g, '');
+  if (!digits) return 'N/A';
+  if (digits.length === 10) return `+91 ${digits}`;
+  if (digits.length > 10) return `+${digits.slice(0, digits.length - 10)} ${digits.slice(-10)}`;
+  return digits;
+};
 
 const Enquires = () => {
   const [enquiries, setEnquiries] = useState([]);
@@ -120,7 +130,7 @@ const Enquires = () => {
                   <tr key={enq.id} className="border-t border-slate-100">
                     <td className="px-5 py-4 font-medium text-slate-800">{enq.name || 'N/A'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">{enq.email || 'N/A'}</td>
-                    <td className="px-5 py-4 text-sm text-slate-700">{enq.phone || 'N/A'}</td>
+                    <td className="px-5 py-4 text-sm text-slate-700">{formatPhoneForDisplay(enq.phone)}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">{enq.course || 'General'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">
                       {enq.createdAt ? new Date(enq.createdAt).toLocaleDateString() : 'N/A'}

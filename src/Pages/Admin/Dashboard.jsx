@@ -9,8 +9,8 @@ import {
   FiMail,
   FiTrendingUp,
 } from 'react-icons/fi';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+import { serverUrl } from '../../url/url';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl; // fallback to serverUrl from url.js if env var is not set
 
 const formatRelative = (dateValue) => {
   if (!dateValue) return 'Recently';

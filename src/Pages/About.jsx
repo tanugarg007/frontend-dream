@@ -83,11 +83,11 @@ const About = () => {
     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent rounded-3xl"></div>
     <div className="relative z-10 h-full w-full flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-8">
       <div className="w-full lg:w-[70%] text-center lg:text-left">
-        <p className="inline-block px-4 lg:px-14 py-1 rounded-full bg-[#1a525e]/10 text-[#1a525e] text-[10px] lg:text-[28px] font-semibold tracking-wider ml-0 lg:ml-10">
+        <p className="inline-block px-4 lg:px-14 py-1 rounded-full bg-[#1a525e]/10 text-white text-[10px] lg:text-[28px] font-semibold tracking-wider ml-0 lg:ml-10">
           ABOUT DREAM ANIMEX
         </p>
-        <h2 className="text-[#133f48] text-[34px] lg:text-[60px] font-extrabold mt-1 lg:-mt-1 leading-[1.06] ml-0 lg:ml-10">Dream Animex</h2>
-        <p className="text-[#24707f] text-[17px] lg:text-[36px] font-semibold mt-0 lg:-mt-1 ml-0 lg:ml-10">Where Skill Meet Creativity</p>
+        <h2 className="text-white text-[34px] lg:text-[50px] font-extrabold mt-1 lg:-mt-1 leading-[1.06] ml-0 lg:ml-20">Dream Animex</h2>
+        <p className="text-white text-[17px] lg:text-[30px] font-semibold mt-0 lg:-mt-1 ml-0 lg:ml-20">Where Skill Meet Creativity</p>
         
       </div>
       <div className="w-full lg:w-[30%] flex justify-center lg:justify-end">

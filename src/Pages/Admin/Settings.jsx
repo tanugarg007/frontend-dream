@@ -4,7 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { FiGlobe, FiKey, FiSave, FiUpload, FiUser } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
+import { serverUrl } from '../../url/url';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl; // fallback to serverUrl from url.js if env var is not set
 const ADMIN_CHANGE_PASSWORD_ENDPOINT =
   process.env.REACT_APP_ADMIN_CHANGE_PASSWORD_ENDPOINT || '/users/forgot-password';
 
@@ -17,7 +19,9 @@ const inputClasses =
   'w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm text-slate-800 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-100';
 
 const Settings = () => {
-  const { token } = useAuth();
+  const { token, updateUser } = useAuth();
+
+
    console.log('Token from localStorage:', localStorage.getItem('token'));
   // Profile state
   const [profile, setProfile] = useState({ name: '', email: '' });
@@ -25,7 +29,7 @@ const Settings = () => {
   const [avatarPreview, setAvatarPreview] = useState('');
   const [avatarFile, setAvatarFile] = useState(null);
   const [isProfileLoading, setIsProfileLoading] = useState(false);
-
+  const [removeAvatar, setRemoveAvatar] = useState(false);
   // Password state
   const [password, setPassword] = useState({ current: '', new: '', confirm: '' });
   const [passwordErrors, setPasswordErrors] = useState({});
@@ -50,16 +54,23 @@ const Settings = () => {
             name: data.profile.name,
             email: data.profile.email,
           });
-          if (data.profile.avatar) {
-            setAvatarPreview(`${API_BASE_URL}${data.profile.avatar}`);
-          }
+         const updatedUser = {
+  ...data.profile,
+  avatar: data.profile.avatar
+    ? `${API_BASE_URL}${data.profile.avatar}`
+    : '',
+};   setAvatarPreview(updatedUser.avatar);
+
+
+// 🔥 IMPORTANT LINE
+updateUser(updatedUser);
         }
       } catch (error) {
         console.error('Profile fetch error:', error);
       }
     };
     if (token) fetchProfile();
-  }, [token]);
+  }, [token, updateUser]);
 
   // Fetch site settings
   useEffect(() => {
@@ -105,7 +116,9 @@ const Settings = () => {
       formDataToSend.append('name', profile.name);
       formDataToSend.append('email', profile.email);
       if (avatarFile) formDataToSend.append('avatar', avatarFile);
-
+      if (removeAvatar) {
+  formDataToSend.append("removeAvatar", "true");
+}
       const response = await fetch(`${API_BASE_URL}/users/profiles`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` },
@@ -117,7 +130,14 @@ const Settings = () => {
         name: data.profile.name,
         email: data.profile.email,
       });
-      setAvatarPreview(data.profile.avatar ? `${API_BASE_URL}${data.profile.avatar}` : '');
+      const updatedUser = {
+        ...data.profile,
+        avatar: data.profile.avatar ? `${API_BASE_URL}${data.profile.avatar}` : '',
+      };
+      setAvatarFile(null);
+      setRemoveAvatar(false);
+      setAvatarPreview(updatedUser.avatar);
+      updateUser(updatedUser);
       alert(data.message || 'Profile updated successfully ✅');
     } catch (err) {
       console.error(err);
@@ -127,15 +147,96 @@ const Settings = () => {
     }
   };
 
-  // Avatar change handler
-  const handleAvatarChange = (e) => {
+  // Avatar upload handler (instant upload on file select)
+  const handleAvatarChange = async (e) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file || !token) return;
+
+    const previewUrl = URL.createObjectURL(file);
     if (avatarPreview && avatarPreview.startsWith('blob:')) {
       URL.revokeObjectURL(avatarPreview);
     }
     setAvatarFile(file);
-    setAvatarPreview(URL.createObjectURL(file));
+    setAvatarPreview(previewUrl);
+    setIsProfileLoading(true);
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', profile.name || '');
+      formDataToSend.append('email', profile.email || '');
+      formDataToSend.append('avatar', file);
+
+      const response = await fetch(`${API_BASE_URL}/users/profiles`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formDataToSend,
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.message || 'Failed to upload avatar');
+
+      setProfile({
+        name: data.profile.name,
+        email: data.profile.email,
+      });
+      const updatedUser = {
+        ...data.profile,
+        avatar: data.profile.avatar ? `${API_BASE_URL}${data.profile.avatar}` : '',
+      };
+      setAvatarFile(null);
+      setRemoveAvatar(false);
+      setAvatarPreview(updatedUser.avatar);
+      updateUser(updatedUser);
+      URL.revokeObjectURL(previewUrl);
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    } finally {
+      setIsProfileLoading(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleRemoveAvatar = async () => {
+    if (!token) return;
+    const previousAvatar = avatarPreview;
+    setAvatarPreview('');
+    setAvatarFile(null);
+    setRemoveAvatar(true);
+    setIsProfileLoading(true);
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', profile.name || '');
+      formDataToSend.append('email', profile.email || '');
+      formDataToSend.append('removeAvatar', 'true');
+
+      const response = await fetch(`${API_BASE_URL}/users/profiles`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formDataToSend,
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.message || 'Failed to remove avatar');
+
+      setProfile({
+        name: data.profile.name,
+        email: data.profile.email,
+      });
+      const updatedUser = {
+        ...data.profile,
+        avatar: data.profile.avatar ? `${API_BASE_URL}${data.profile.avatar}` : '',
+      };
+      setAvatarFile(null);
+      setRemoveAvatar(false);
+      setAvatarPreview(updatedUser.avatar);
+      updateUser(updatedUser);
+    } catch (err) {
+      console.error(err);
+      setAvatarPreview(previousAvatar);
+      alert(err.message);
+    } finally {
+      setIsProfileLoading(false);
+    }
   };
 
   // ---------- FIXED PASSWORD UPDATE HANDLER ----------
@@ -330,38 +431,61 @@ const handleSaveSettings = async () => {
             </div>
 
             {/* Avatar upload */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">Avatar</label>
-              <div className="flex items-center gap-4">
-                {avatarPreview ? (
-                  <img
-                    src={avatarPreview}
-                    alt="Avatar preview"
-                    className="h-16 w-16 rounded-full border border-slate-200 object-cover"
-                  />
-                ) : (
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-500">
-                    <FiUser />
-                  </div>
-                )}
-                <div>
-                  <input
-                    id="avatar-upload"
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleAvatarChange}
-                  />
-                  <label
-                    htmlFor="avatar-upload"
-                    className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-                  >
-                    <FiUpload />
-                    Upload Avatar
-                  </label>
-                </div>
-              </div>
-            </div>
+         <div>
+  <label className="mb-1.5 block text-sm font-medium text-slate-700">
+    Avatar
+  </label>
+
+  <div className="flex items-center gap-4">
+    {/* Avatar Preview */}
+    {avatarPreview ? (
+      <img
+        src={avatarPreview}
+        alt="Avatar preview"
+        className="h-16 w-16 rounded-full border border-slate-200 object-cover"
+      />
+    ) : (
+      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-500">
+        <FiUser />
+      </div>
+    )}
+
+    {/* Upload Button */}
+    <div>
+      <input
+        id="avatar-upload"
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => {
+          setRemoveAvatar(false); // 👈 important
+          handleAvatarChange(e);
+        }}
+      />
+      <label
+        htmlFor="avatar-upload"
+        className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+      >
+        <FiUpload />
+        Upload Avatar
+      </label>
+      {avatarPreview && (
+        <button
+          type="button"
+          onClick={handleRemoveAvatar}
+          disabled={isProfileLoading}
+          className={`mt-2 inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition ${
+            isProfileLoading
+              ? 'cursor-not-allowed border-rose-200 bg-rose-50 text-rose-400'
+              : 'border-rose-300 text-rose-700 hover:bg-rose-50'
+          }`}
+        >
+          Remove Avatar
+        </button>
+      )}
+    </div>
+  </div>
+</div>
 
             <button
               type="submit"
