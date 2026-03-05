@@ -1,1 +1,1 @@
-export const serverUrl ="https://animexbackend.onrender.com";
+export const serverUrl = "http://localhost:5000";
