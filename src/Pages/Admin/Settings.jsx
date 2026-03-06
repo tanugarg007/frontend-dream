@@ -43,34 +43,35 @@ const Settings = () => {
   const navigate = useNavigate();
   // Fetch profile
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await fetch(`${API_BASE_URL}/users/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setProfile({
-            name: data.profile.name,
-            email: data.profile.email,
-          });
-         const updatedUser = {
-  ...data.profile,
-  avatar: data.profile.avatar
-    ? `${API_BASE_URL}${data.profile.avatar}`
-    : '',
-};   setAvatarPreview(updatedUser.avatar);
+  const token = localStorage.getItem("token");
 
+  console.log("token localstorage:", token);
 
-// 🔥 IMPORTANT LINE
-updateUser(updatedUser);
+  if (!token) return;
+
+  const fetchProfile = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/users/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      } catch (error) {
-        console.error('Profile fetch error:', error);
+      });
+
+      const data = await res.json();
+
+      if (data) {
+        setProfile({
+          name: data.name || "",
+          email: data.email || ""
+        });
       }
-    };
-    if (token) fetchProfile();
-  }, [token, updateUser]);
+    } catch (error) {
+      console.error("Profile fetch error:", error);
+    }
+  };
+
+  fetchProfile();
+}, []);
 
   // Fetch site settings
   useEffect(() => {
@@ -399,34 +400,44 @@ const handleSaveSettings = async () => {
 
           <form onSubmit={handleProfileUpdate} noValidate className="space-y-4">
             {/* Name field */}
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">Name</label>
-              <input
-                type="text"
-                value={profile.name}
-                onChange={(e) => {
-                  setProfile({ ...profile, name: e.target.value });
-                  if (profileErrors.name) setProfileErrors((prev) => ({ ...prev, name: '' }));
-                }}
-                className={inputClasses}
-                required
-              />
-              {profileErrors.name && <p className="mt-1 text-xs text-red-600">{profileErrors.name}</p>}
-            </div>
+           <div>
+  <label className="mb-1.5 block text-sm font-medium text-slate-700">
+    Name
+  </label>
+
+  <input
+    type="text"
+    value={profile.name || ""}
+    onChange={(e) =>
+      setProfile((prev) => ({
+        ...prev,
+        name: e.target.value
+      }))
+    }
+    className={inputClasses}
+  />
+
+  {profileErrors.name && (
+    <p className="mt-1 text-xs text-red-600">
+      {profileErrors.name}
+    </p>
+  )}
+</div>
 
             {/* Email field */}
             <div>
               <label className="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
-              <input
-                type="email"
-                value={profile.email}
-                onChange={(e) => {
-                  setProfile({ ...profile, email: e.target.value });
-                  if (profileErrors.email) setProfileErrors((prev) => ({ ...prev, email: '' }));
-                }}
-                className={inputClasses}
-                required
-              />
+            <input
+  type="email"
+  value={profile.email || ""}
+  onChange={(e) =>
+    setProfile((prev) => ({
+      ...prev,
+      email: e.target.value
+    }))
+  }
+  className={inputClasses}
+/>
               {profileErrors.email && <p className="mt-1 text-xs text-red-600">{profileErrors.email}</p>}
             </div>
 

@@ -57,7 +57,7 @@ const Dashboard = () => {
 
         const coursesPromise = fetch(`${API_BASE_URL}/users/courses`);
         const enquiriesPromise = (async () => {
-          const adminResponse = await fetch(`${API_BASE_URL}/admin/enquiries`, {
+          const adminResponse = await fetch(`${API_BASE_URL}/users/enquiries`, {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
           }).catch(() => null);
 

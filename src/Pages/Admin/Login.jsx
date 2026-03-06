@@ -111,8 +111,9 @@ const Login = () => {
         return;
       }
 
-      login(data.token, data.user);
-      navigate('/admin');
+    localStorage.setItem("token", data.token);   // 👈 YEH LINE ADD KARO
+login(data.token, data.user);
+navigate('/admin');
     } catch (error) {
       setErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
     } finally {
