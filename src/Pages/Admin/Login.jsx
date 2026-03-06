@@ -337,7 +337,7 @@ const Login = () => {
 
         <section className="mx-auto w-full max-w-md rounded-3xl border border-white/20 bg-white/88 p-6 shadow-[0_25px_60px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:p-8">
           <div className="mb-7">
-            <h2 className="text-3xl font-bold text-slate-900">Admin Login</h2>
+            <h2 className="text-3xl font-bold text-white">Admin Login</h2>
             <p className="mt-2 text-sm text-slate-600">Sign in to continue to your dashboard.</p>
           </div>
 
