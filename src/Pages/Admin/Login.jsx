@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   FiArrowLeft,
@@ -10,11 +10,13 @@ import {
   FiKey,
   FiCheckCircle,
   FiX,
+  FiRefreshCw,
 } from 'react-icons/fi';
 import loginBg from '../../Images/page-background.JPG';
 import { useAuth } from '../../context/AuthContext';
 import { serverUrl } from '../../url/url';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl; // fallback to serverUrl from url.js if env var is not set
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
 const ADMIN_LOGIN_ENDPOINT = '/users/login';
 const ADMIN_FORGOT_PASSWORD_ENDPOINT = '/users/forgot-password';
 
@@ -22,6 +24,9 @@ const joinUrl = (base, endpoint) => `${base.replace(/\/+$/, '')}/${endpoint.repl
 
 const inputClasses =
   'w-full rounded-xl border border-slate-300 bg-white/90 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-100';
+
+const PASSWORD_POLICY_HELPER =
+  'At least 8 characters with uppercase, lowercase, number and special character.';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -39,11 +44,16 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
+  const [forgotStep, setForgotStep] = useState('request');
   const [forgotData, setForgotData] = useState({
+    email: '',
+    otp: '',
     newPassword: '',
     confirmPassword: '',
   });
   const [forgotErrors, setForgotErrors] = useState({
+    email: '',
+    otp: '',
     newPassword: '',
     confirmPassword: '',
     general: '',
@@ -52,9 +62,18 @@ const Login = () => {
   const [isForgotLoading, setIsForgotLoading] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [resendIn, setResendIn] = useState(0);
 
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  useEffect(() => {
+    if (!resendIn) return undefined;
+    const intervalId = setInterval(() => {
+      setResendIn((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [resendIn]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -111,30 +130,46 @@ const Login = () => {
         return;
       }
 
-    localStorage.setItem("token", data.token);   // 👈 YEH LINE ADD KARO
-login(data.token, data.user);
-navigate('/admin');
-    } catch (error) {
+      localStorage.setItem('token', data.token);
+      login(data.token, data.user);
+      navigate('/admin');
+    } catch (_error) {
       setErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
     } finally {
       setIsLoading(false);
     }
   };
 
-  const openForgotModal = () => {
-    setForgotData({ newPassword: '', confirmPassword: '' });
-    setForgotErrors({ newPassword: '', confirmPassword: '', general: '' });
+  const resetForgotState = () => {
+    setForgotStep('request');
+    setForgotData({
+      email: formData.email.trim(),
+      otp: '',
+      newPassword: '',
+      confirmPassword: '',
+    });
+    setForgotErrors({
+      email: '',
+      otp: '',
+      newPassword: '',
+      confirmPassword: '',
+      general: '',
+    });
     setForgotMessage('');
     setShowNewPassword(false);
     setShowConfirmPassword(false);
+    setResendIn(0);
+  };
+
+  const openForgotModal = () => {
+    resetForgotState();
     setIsForgotModalOpen(true);
   };
 
   const closeForgotModal = () => {
     setIsForgotModalOpen(false);
-    setForgotErrors({ newPassword: '', confirmPassword: '', general: '' });
-    setForgotMessage('');
     setIsForgotLoading(false);
+    setResendIn(0);
   };
 
   const handleForgotChange = (e) => {
@@ -144,60 +179,135 @@ navigate('/admin');
     setForgotMessage('');
   };
 
-  const validateForgot = () => {
-    const nextErrors = { newPassword: '', confirmPassword: '', general: '' };
+  const validateForgotRequest = () => {
+    const nextErrors = {
+      email: '',
+      otp: '',
+      newPassword: '',
+      confirmPassword: '',
+      general: '',
+    };
 
-    if (!formData.email.trim()) {
-      setErrors((prev) => ({ ...prev, email: 'Email is required for password reset' }));
-      return false;
+    if (!forgotData.email.trim()) {
+      nextErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(forgotData.email.trim())) {
+      nextErrors.email = 'Enter a valid email address';
     }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setErrors((prev) => ({ ...prev, email: 'Enter a valid email address for password reset' }));
-      return false;
-    }
+
+    setForgotErrors(nextErrors);
+    return !nextErrors.email;
+  };
+
+  const validateForgotVerify = () => {
+    const nextErrors = {
+      email: '',
+      otp: '',
+      newPassword: '',
+      confirmPassword: '',
+      general: '',
+    };
+
+    if (!forgotData.email.trim()) nextErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(forgotData.email.trim())) nextErrors.email = 'Enter a valid email address';
+
+    if (!forgotData.otp.trim()) nextErrors.otp = 'Verification code is required';
+    else if (!/^\d{6}$/.test(forgotData.otp.trim())) nextErrors.otp = 'Enter a valid 6-digit code';
 
     if (!forgotData.newPassword) nextErrors.newPassword = 'New password is required';
-    else if (forgotData.newPassword.length < 6) nextErrors.newPassword = 'Password must be at least 6 characters';
+    else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(forgotData.newPassword)) {
+      nextErrors.newPassword = PASSWORD_POLICY_HELPER;
+    }
 
     if (!forgotData.confirmPassword) nextErrors.confirmPassword = 'Confirm password is required';
     else if (forgotData.newPassword !== forgotData.confirmPassword) nextErrors.confirmPassword = 'Passwords do not match';
 
     setForgotErrors(nextErrors);
-    return !nextErrors.newPassword && !nextErrors.confirmPassword;
+    return !nextErrors.email && !nextErrors.otp && !nextErrors.newPassword && !nextErrors.confirmPassword;
   };
 
-  const handleForgotSubmit = async (e) => {
+  const requestVerificationCode = async (e) => {
     e.preventDefault();
-    if (!validateForgot()) return;
+    if (!validateForgotRequest()) return;
 
     setIsForgotLoading(true);
-    setForgotErrors((prev) => ({ ...prev, general: '' }));
     setForgotMessage('');
+    setForgotErrors((prev) => ({ ...prev, general: '' }));
 
     try {
       const res = await fetch(joinUrl(API_BASE_URL, ADMIN_FORGOT_PASSWORD_ENDPOINT), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: formData.email.trim(),
+          action: 'request',
+          email: forgotData.email.trim(),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setForgotErrors((prev) => ({ ...prev, general: data?.message || 'Unable to generate verification code' }));
+        if (Number.isFinite(data?.resendAfterSeconds)) setResendIn(data.resendAfterSeconds);
+        return;
+      }
+
+      setForgotStep('verify');
+      setForgotMessage(
+        data?.devOtp
+          ? `${data?.message || 'Verification code sent.'} Dev code: ${data.devOtp}`
+          : data?.message || 'Verification code sent.'
+      );
+      setResendIn(Number.isFinite(data?.resendAfterSeconds) ? data.resendAfterSeconds : 60);
+    } catch (_error) {
+      setForgotErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
+    } finally {
+      setIsForgotLoading(false);
+    }
+  };
+
+  const verifyAndResetPassword = async (e) => {
+    e.preventDefault();
+    if (!validateForgotVerify()) return;
+
+    setIsForgotLoading(true);
+    setForgotMessage('');
+    setForgotErrors((prev) => ({ ...prev, general: '' }));
+
+    try {
+      const res = await fetch(joinUrl(API_BASE_URL, ADMIN_FORGOT_PASSWORD_ENDPOINT), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'verify',
+          email: forgotData.email.trim(),
+          otp: forgotData.otp.trim(),
           newPassword: forgotData.newPassword,
         }),
       });
 
-      const data = await res.json();
-
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         setForgotErrors((prev) => ({ ...prev, general: data?.message || 'Password reset failed' }));
         return;
       }
 
-      setForgotMessage('Password updated successfully. You can now login with the new password.');
-      setForgotData({ newPassword: '', confirmPassword: '' });
-    } catch (error) {
+      setForgotMessage(data?.message || 'Password updated successfully. You can now login.');
+      setForgotData((prev) => ({
+        ...prev,
+        otp: '',
+        newPassword: '',
+        confirmPassword: '',
+      }));
+      setFormData((prev) => ({ ...prev, email: forgotData.email.trim() }));
+    } catch (_error) {
       setForgotErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
     } finally {
       setIsForgotLoading(false);
     }
+  };
+
+  const handleResendCode = async () => {
+    if (resendIn > 0 || isForgotLoading) return;
+    await requestVerificationCode({ preventDefault: () => {} });
   };
 
   return (
@@ -219,21 +329,15 @@ navigate('/admin');
             Manage courses, enquiries and settings from a secure professional dashboard designed for daily operations.
           </p>
           <div className="mt-8 space-y-3 text-sm text-slate-200">
-            <p className="rounded-xl border border-white/15 bg-white/5 px-4 py-3">
-              Centralized course and lead management
-            </p>
-            <p className="rounded-xl border border-white/15 bg-white/5 px-4 py-3">
-              Role-based protected admin routes
-            </p>
-            <p className="rounded-xl border border-white/15 bg-white/5 px-4 py-3">
-              Quick updates with clean control panel
-            </p>
+            <p className="rounded-xl border border-white/15 bg-white/5 px-4 py-3">Centralized course and lead management</p>
+            <p className="rounded-xl border border-white/15 bg-white/5 px-4 py-3">Role-based protected admin routes</p>
+            <p className="rounded-xl border border-white/15 bg-white/5 px-4 py-3">Quick updates with clean control panel</p>
           </div>
         </section>
 
         <section className="mx-auto w-full max-w-md rounded-3xl border border-white/20 bg-white/88 p-6 shadow-[0_25px_60px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:p-8">
           <div className="mb-7">
-            <h2 className="text-3xl font-bold text-white">Admin Login</h2>
+            <h2 className="text-3xl font-bold text-slate-900">Admin Login</h2>
             <p className="mt-2 text-sm text-slate-600">Sign in to continue to your dashboard.</p>
           </div>
 
@@ -305,7 +409,7 @@ navigate('/admin');
                 className="inline-flex items-center gap-1 text-sm font-medium text-cyan-700 hover:text-cyan-900"
               >
                 <FiKey />
-                Forgot Password?
+                Secure Password Reset
               </button>
             </div>
 
@@ -331,8 +435,8 @@ navigate('/admin');
             <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-cyan-900 px-6 py-5 text-white">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-2xl font-bold">Reset Password</h3>
-                  <p className="mt-1 text-sm text-slate-200">Email will be used from login field.</p>
+                  <h3 className="text-2xl font-bold">Secure Password Reset</h3>
+                  <p className="mt-1 text-sm text-slate-200">Step {forgotStep === 'request' ? '1 of 2' : '2 of 2'}: verification required.</p>
                 </div>
                 <button
                   type="button"
@@ -345,95 +449,199 @@ navigate('/admin');
               </div>
             </div>
 
-            <form onSubmit={handleForgotSubmit} className="space-y-4 px-6 py-6">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
-                Reset for: <span className="font-semibold text-slate-800">{formData.email || 'Enter email in login first'}</span>
-              </div>
+            {forgotStep === 'request' ? (
+              <form onSubmit={requestVerificationCode} className="space-y-4 px-6 py-6">
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">Admin Email</label>
+                  <div className="relative">
+                    <FiMail className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={forgotData.email}
+                      onChange={handleForgotChange}
+                      placeholder="admin@animex.com"
+                      className={`w-full rounded-xl border bg-white px-10 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-100 ${
+                        forgotErrors.email ? 'border-red-500' : 'border-slate-300 focus:border-cyan-500'
+                      }`}
+                    />
+                  </div>
+                  {forgotErrors.email && <p className="mt-1 text-xs text-red-600">{forgotErrors.email}</p>}
+                </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-slate-700">New Password</label>
-                <div className="relative">
-                  <FiKey className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type={showNewPassword ? 'text' : 'password'}
-                    name="newPassword"
-                    value={forgotData.newPassword}
-                    onChange={handleForgotChange}
-                    placeholder="Minimum 6 characters"
-                    className={`w-full rounded-xl border bg-white px-10 py-3 pr-11 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-100 ${
-                      forgotErrors.newPassword ? 'border-red-500' : 'border-slate-300 focus:border-cyan-500'
-                    }`}
-                  />
+                <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+                  A 6-digit verification code will be required before password update.
+                </div>
+
+                {forgotErrors.general && (
+                  <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+                    {forgotErrors.general}
+                  </div>
+                )}
+
+                {forgotMessage && (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
+                    {forgotMessage}
+                  </div>
+                )}
+
+                <div className="flex items-center justify-end gap-3 pt-2">
                   <button
                     type="button"
-                    onClick={() => setShowNewPassword((prev) => !prev)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-700"
+                    onClick={closeForgotModal}
+                    className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                   >
-                    {showNewPassword ? <FiEyeOff /> : <FiEye />}
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isForgotLoading}
+                    className={`inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition ${
+                      isForgotLoading
+                        ? 'cursor-not-allowed bg-slate-500'
+                        : 'bg-gradient-to-r from-slate-900 to-cyan-700 hover:from-slate-800 hover:to-cyan-600'
+                    }`}
+                  >
+                    <FiKey />
+                    {isForgotLoading ? 'Generating...' : 'Send Verification Code'}
                   </button>
                 </div>
-                {forgotErrors.newPassword && <p className="mt-1 text-xs text-red-600">{forgotErrors.newPassword}</p>}
-              </div>
+              </form>
+            ) : (
+              <form onSubmit={verifyAndResetPassword} className="space-y-4 px-6 py-6">
+                <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+                  Reset for: <span className="font-semibold text-slate-800">{forgotData.email}</span>
+                </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-slate-700">Confirm Password</label>
-                <div className="relative">
-                  <FiCheckCircle className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    name="confirmPassword"
-                    value={forgotData.confirmPassword}
-                    onChange={handleForgotChange}
-                    placeholder="Re-enter new password"
-                    className={`w-full rounded-xl border bg-white px-10 py-3 pr-11 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-100 ${
-                      forgotErrors.confirmPassword ? 'border-red-500' : 'border-slate-300 focus:border-cyan-500'
-                    }`}
-                  />
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">Verification Code</label>
+                  <div className="relative">
+                    <FiShield className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      name="otp"
+                      value={forgotData.otp}
+                      onChange={handleForgotChange}
+                      placeholder="Enter 6-digit code"
+                      maxLength={6}
+                      className={`w-full rounded-xl border bg-white px-10 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-100 ${
+                        forgotErrors.otp ? 'border-red-500' : 'border-slate-300 focus:border-cyan-500'
+                      }`}
+                    />
+                  </div>
+                  {forgotErrors.otp && <p className="mt-1 text-xs text-red-600">{forgotErrors.otp}</p>}
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">New Password</label>
+                  <div className="relative">
+                    <FiKey className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type={showNewPassword ? 'text' : 'password'}
+                      name="newPassword"
+                      value={forgotData.newPassword}
+                      onChange={handleForgotChange}
+                      placeholder="Create strong password"
+                      className={`w-full rounded-xl border bg-white px-10 py-3 pr-11 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-100 ${
+                        forgotErrors.newPassword ? 'border-red-500' : 'border-slate-300 focus:border-cyan-500'
+                      }`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowNewPassword((prev) => !prev)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-700"
+                    >
+                      {showNewPassword ? <FiEyeOff /> : <FiEye />}
+                    </button>
+                  </div>
+                  <p className="mt-1 text-xs text-slate-500">{PASSWORD_POLICY_HELPER}</p>
+                  {forgotErrors.newPassword && <p className="mt-1 text-xs text-red-600">{forgotErrors.newPassword}</p>}
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">Confirm Password</label>
+                  <div className="relative">
+                    <FiCheckCircle className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      name="confirmPassword"
+                      value={forgotData.confirmPassword}
+                      onChange={handleForgotChange}
+                      placeholder="Re-enter new password"
+                      className={`w-full rounded-xl border bg-white px-10 py-3 pr-11 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-100 ${
+                        forgotErrors.confirmPassword ? 'border-red-500' : 'border-slate-300 focus:border-cyan-500'
+                      }`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-700"
+                    >
+                      {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                    </button>
+                  </div>
+                  {forgotErrors.confirmPassword && <p className="mt-1 text-xs text-red-600">{forgotErrors.confirmPassword}</p>}
+                </div>
+
+                <div className="flex items-center justify-between">
                   <button
                     type="button"
-                    onClick={() => setShowConfirmPassword((prev) => !prev)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-700"
+                    onClick={handleResendCode}
+                    disabled={resendIn > 0 || isForgotLoading}
+                    className={`inline-flex items-center gap-1 text-xs font-semibold ${
+                      resendIn > 0 || isForgotLoading
+                        ? 'cursor-not-allowed text-slate-400'
+                        : 'text-cyan-700 hover:text-cyan-900'
+                    }`}
                   >
-                    {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                    <FiRefreshCw size={12} />
+                    {resendIn > 0 ? `Resend in ${resendIn}s` : 'Resend code'}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setForgotStep('request')}
+                    className="text-xs font-semibold text-slate-600 hover:text-slate-900"
+                  >
+                    Change email
                   </button>
                 </div>
-                {forgotErrors.confirmPassword && <p className="mt-1 text-xs text-red-600">{forgotErrors.confirmPassword}</p>}
-              </div>
 
-              {forgotErrors.general && (
-                <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
-                  {forgotErrors.general}
+                {forgotErrors.general && (
+                  <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+                    {forgotErrors.general}
+                  </div>
+                )}
+
+                {forgotMessage && (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
+                    {forgotMessage}
+                  </div>
+                )}
+
+                <div className="flex items-center justify-end gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={closeForgotModal}
+                    className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isForgotLoading}
+                    className={`inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition ${
+                      isForgotLoading
+                        ? 'cursor-not-allowed bg-slate-500'
+                        : 'bg-gradient-to-r from-slate-900 to-cyan-700 hover:from-slate-800 hover:to-cyan-600'
+                    }`}
+                  >
+                    <FiKey />
+                    {isForgotLoading ? 'Verifying...' : 'Verify & Reset Password'}
+                  </button>
                 </div>
-              )}
-
-              {forgotMessage && (
-                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
-                  {forgotMessage}
-                </div>
-              )}
-
-              <div className="flex items-center justify-end gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={closeForgotModal}
-                  className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isForgotLoading}
-                  className={`inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition ${
-                    isForgotLoading
-                      ? 'cursor-not-allowed bg-slate-500'
-                      : 'bg-gradient-to-r from-slate-900 to-cyan-700 hover:from-slate-800 hover:to-cyan-600'
-                  }`}
-                >
-                  <FiKey />
-                  {isForgotLoading ? 'Updating...' : 'Update Password'}
-                </button>
-              </div>
-            </form>
+              </form>
+            )}
           </div>
         </div>
       )}
