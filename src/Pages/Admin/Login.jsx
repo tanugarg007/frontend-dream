@@ -119,22 +119,30 @@ const Login = () => {
         const serverFieldErrors = data?.fieldErrors || {};
 
         if (serverFieldErrors.email || serverFieldErrors.password) {
+          if (serverFieldErrors.password) {
+            setErrors((prev) => ({
+              ...prev,
+              email: '',
+              password: 'Wrong password',
+              general: '',
+            }));
+            return;
+          }
+
           setErrors((prev) => ({
             ...prev,
-            email: serverFieldErrors.email || '',
-            password: serverFieldErrors.password || '',
-            general: '',
+            email: '',
+            password: '',
+            general: 'Invalid email or password',
           }));
           return;
         }
 
         if (res.status === 401) {
-          if (msg.includes('not found') || msg.includes('email') || msg.includes('user')) {
-            setErrors((prev) => ({ ...prev, email: 'Email not registered' }));
-          } else if (msg.includes('password') || msg.includes('invalid')) {
+          if (msg.includes('wrong password') || msg.includes('incorrect password')) {
             setErrors((prev) => ({ ...prev, password: 'Wrong password' }));
           } else {
-            setErrors((prev) => ({ ...prev, general: data?.message || 'Login failed' }));
+            setErrors((prev) => ({ ...prev, general: 'Invalid email or password' }));
           }
         } else {
           setErrors((prev) => ({ ...prev, general: data?.message || 'Login failed' }));
@@ -263,11 +271,7 @@ const Login = () => {
       }
 
       setForgotStep('verify');
-      setForgotMessage(
-        data?.devOtp
-          ? `${data?.message || 'Verification code sent.'} Dev code: ${data.devOtp}`
-          : data?.message || 'Verification code sent.'
-      );
+      setForgotMessage(data?.message || 'Verification code sent.');
       setResendIn(Number.isFinite(data?.resendAfterSeconds) ? data.resendAfterSeconds : 60);
     } catch (_error) {
       setForgotErrors((prev) => ({ ...prev, general: 'Server not reachable' }));

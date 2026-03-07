@@ -4,6 +4,7 @@ import 'react-phone-input-2/lib/style.css';
 import { serverUrl } from '../url/url';
 
 const EnquiryModal = ({ isOpen, onClose }) => {
+  const NAME_REGEX = /^[A-Za-z ]+$/;
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', course: '', message: '' });
   const [errors, setErrors] = useState({});
   const [showErrors, setShowErrors] = useState(false);
@@ -12,6 +13,7 @@ const EnquiryModal = ({ isOpen, onClose }) => {
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
+    setErrors((prev) => ({ ...prev, [id]: '' }));
   };
 
   const normalizePhone = (value) => {
@@ -22,6 +24,8 @@ const EnquiryModal = ({ isOpen, onClose }) => {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
+    else if (!NAME_REGEX.test(formData.name.trim()))
+      newErrors.name = 'Name can contain only letters and spaces';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Please enter a valid email';
     if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';

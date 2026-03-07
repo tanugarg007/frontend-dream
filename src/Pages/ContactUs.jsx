@@ -6,6 +6,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { serverUrl } from "../url/url";
 const ContactUs = () => {
+  const NAME_REGEX = /^[A-Za-z ]+$/;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,7 +29,9 @@ const ContactUs = () => {
   e.preventDefault();
 
   const newErrors = {};
-  if (!formData.name) newErrors.name = "Full name is required";
+  if (!formData.name.trim()) newErrors.name = "Full name is required";
+  else if (!NAME_REGEX.test(formData.name.trim()))
+    newErrors.name = "Full name can contain only letters and spaces";
   if (!formData.email) newErrors.email = "Email is required";
   if (!formData.phone)
     newErrors.phone = "Contact number is required";

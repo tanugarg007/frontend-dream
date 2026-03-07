@@ -1,7 +1,7 @@
 // Settings.jsx (complete updated code)
 
 import React, { useState, useEffect } from 'react';
-import { FiGlobe, FiKey, FiSave, FiUpload, FiUser } from 'react-icons/fi';
+import { FiAlertCircle, FiCheckCircle, FiGlobe, FiKey, FiSave, FiUpload, FiUser } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,16 +29,17 @@ const Settings = () => {
   const [avatarFile, setAvatarFile] = useState(null);
   const [isProfileLoading, setIsProfileLoading] = useState(false);
   const [removeAvatar, setRemoveAvatar] = useState(false);
+  const [profileStatus, setProfileStatus] = useState({ type: '', message: '' });
   // Password state
   const [password, setPassword] = useState({ current: '', new: '', confirm: '' });
   const [passwordErrors, setPasswordErrors] = useState({});
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
-  const [passwordApiError, setPasswordApiError] = useState(''); // API error message
+  const [passwordStatus, setPasswordStatus] = useState({ type: '', message: '' });
 
   // Site settings state
   const [siteSettings, setSiteSettings] = useState({ siteTitle: '', contactEmail: '' });
   const [isSiteSettingsLoading, setIsSiteSettingsLoading] = useState(false);
-  const [siteSettingsError, setSiteSettingsError] = useState('');
+  const [siteSettingsStatus, setSiteSettingsStatus] = useState({ type: '', message: '' });
   const navigate = useNavigate();
   // Fetch profile
   useEffect(() => {
@@ -101,9 +102,34 @@ const Settings = () => {
     };
   }, [avatarPreview]);
 
+  useEffect(() => {
+    if (!profileStatus.message) return undefined;
+    const timer = setTimeout(() => {
+      setProfileStatus({ type: '', message: '' });
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, [profileStatus.message]);
+
+  useEffect(() => {
+    if (!passwordStatus.message) return undefined;
+    const timer = setTimeout(() => {
+      setPasswordStatus({ type: '', message: '' });
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, [passwordStatus.message]);
+
+  useEffect(() => {
+    if (!siteSettingsStatus.message) return undefined;
+    const timer = setTimeout(() => {
+      setSiteSettingsStatus({ type: '', message: '' });
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, [siteSettingsStatus.message]);
+
   // Profile update handler
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
+    setProfileStatus({ type: '', message: '' });
     const nextErrors = {};
     if (!profile.name?.trim()) nextErrors.name = 'Name is required.';
     if (!profile.email?.trim()) nextErrors.email = 'Email is required.';
@@ -142,10 +168,16 @@ const Settings = () => {
       setRemoveAvatar(false);
       setAvatarPreview(updatedUser.avatar);
       updateUser(updatedUser);
-      alert(data.message || 'Profile updated successfully ✅');
+      setProfileStatus({
+        type: 'success',
+        message: 'Profile information has been updated successfully.',
+      });
     } catch (err) {
       console.error(err);
-      alert(err.message);
+      setProfileStatus({
+        type: 'error',
+        message: err?.message || 'Unable to update profile. Please try again.',
+      });
     } finally {
       setIsProfileLoading(false);
     }
@@ -246,7 +278,7 @@ const Settings = () => {
   // ---------- FIXED PASSWORD UPDATE HANDLER ----------
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
-    setPasswordApiError(''); // clear previous error
+    setPasswordStatus({ type: '', message: '' });
 
     // Client-side validation
     const nextErrors = {};
@@ -266,13 +298,13 @@ const Settings = () => {
     setPasswordErrors({});
 
     if (!authToken) {
-      setPasswordApiError('Please login again. Token not found.');
+      setPasswordStatus({ type: 'error', message: 'Please login again. Token not found.' });
       return;
     }
 
     // Get email from profile state (must be available)
     if (!profile.email) {
-      setPasswordApiError('Profile email not loaded. Please refresh.');
+      setPasswordStatus({ type: 'error', message: 'Profile email not loaded. Please refresh.' });
       return;
     }
 
@@ -298,19 +330,19 @@ const Settings = () => {
       if (!response.ok) {
         // If 401, token might be expired – show message but don't redirect automatically
         if (response.status === 401) {
-          setPasswordApiError('Session expired. Please login again.');
+          setPasswordStatus({ type: 'error', message: 'Session expired. Please login again.' });
         } else {
-          setPasswordApiError(responseBody?.message || 'Password update failed');
+          setPasswordStatus({ type: 'error', message: responseBody?.message || 'Password update failed' });
         }
         return;
       }
 
       // Success
-      alert(responseBody?.message || 'Password changed successfully!');
+      setPasswordStatus({ type: 'success', message: responseBody?.message || 'Password has been changed successfully.' });
       setPassword({ current: '', new: '', confirm: '' });
     } catch (error) {
       console.error('Password update error:', error);
-      setPasswordApiError('Unable to connect to server. Please try again.');
+      setPasswordStatus({ type: 'error', message: 'Unable to connect to server. Please try again.' });
     } finally {
       setIsPasswordLoading(false);
     }
@@ -319,11 +351,11 @@ const Settings = () => {
   // Site settings save handler
   // ---------- Site settings save handler (improved) ----------
 const handleSaveSettings = async () => {
-  setSiteSettingsError('');
+  setSiteSettingsStatus({ type: '', message: '' });
   setIsSiteSettingsLoading(true);
 
 if (!authToken) {
-  setSiteSettingsError('No authentication token. Please login again.');
+  setSiteSettingsStatus({ type: 'error', message: 'No authentication token. Please login again.' });
   setIsSiteSettingsLoading(false);
   return;
 }
@@ -336,6 +368,7 @@ if (!authToken) {
   ];
 
   let success = false;
+  let lastErrorMessage = '';
   for (const method of methods) {
     for (const payload of payloads) {
       try {
@@ -355,28 +388,40 @@ if (!authToken) {
         console.log(`📥 Response (${method}):`, response.status, data);
 
         if (response.ok) {
-          alert(`✅ Settings saved successfully using ${method}`);
+          setSiteSettingsStatus({
+            type: 'success',
+            message: 'Site settings have been saved successfully.',
+          });
           success = true;
           break;
         } else {
           // Agar 401/403 aave, token expired ho sakda hai
          if (response.status === 401 || response.status === 403) {
-  setSiteSettingsError('Session expired. Please login again.');
+  setSiteSettingsStatus({ type: 'error', message: 'Session expired. Please login again.' });
   // Optionally redirect to login after a few seconds
   setTimeout(() => navigate('/login'), 2000);
 } else {
             // Pehla attempt fail, continue
+            lastErrorMessage = data?.message || 'Unable to save site settings. Please try again.';
           }
         }
       } catch (error) {
-        console.error(`❌ Network error with ${method}:`, error);
+        console.error(`Network error with ${method}:`, error);
+        lastErrorMessage = 'Unable to connect to server. Please try again.';
       }
     }
     if (success) break;
   }
 
   if (!success) {
-    setSiteSettingsError('All save attempts failed. Check browser console for details.');
+    setSiteSettingsStatus((prev) =>
+      prev.message
+        ? prev
+        : {
+            type: 'error',
+            message: lastErrorMessage || 'All save attempts failed. Please try again.',
+          }
+    );
   }
 
   setIsSiteSettingsLoading(false);
@@ -511,6 +556,38 @@ if (!authToken) {
               <FiSave />
               {isProfileLoading ? 'Updating...' : 'Update Profile'}
             </button>
+            {profileStatus.message && (
+              <div
+                className={`relative overflow-hidden rounded-2xl border px-4 py-3 text-sm shadow-lg backdrop-blur-sm transition-all duration-500 animate-[fadeIn_.35s_ease-out] ${
+                  profileStatus.type === 'success'
+                    ? 'border-emerald-200/80 bg-gradient-to-r from-emerald-50 via-white to-teal-50 text-emerald-900'
+                    : 'border-rose-200/80 bg-gradient-to-r from-rose-50 via-white to-red-50 text-rose-900'
+                }`}
+              >
+                <span
+                  className={`absolute left-0 top-0 h-full w-1.5 ${
+                    profileStatus.type === 'success' ? 'bg-emerald-500' : 'bg-rose-500'
+                  }`}
+                />
+                <div className="ml-2 flex items-start gap-3">
+                  <span
+                    className={`mt-0.5 rounded-full p-1.5 shadow-sm ${
+                      profileStatus.type === 'success'
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : 'bg-rose-100 text-rose-700'
+                    }`}
+                  >
+                    {profileStatus.type === 'success' ? <FiCheckCircle size={14} /> : <FiAlertCircle size={14} />}
+                  </span>
+                  <div>
+                    <p className="font-semibold tracking-wide">
+                      {profileStatus.type === 'success' ? 'Profile Updated' : 'Update Failed'}
+                    </p>
+                    <p className="mt-0.5 text-[13px] leading-relaxed">{profileStatus.message}</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </form>
         </div>
 
@@ -532,7 +609,7 @@ if (!authToken) {
                 onChange={(e) => {
                   setPassword({ ...password, current: e.target.value });
                   if (passwordErrors.current) setPasswordErrors((prev) => ({ ...prev, current: '' }));
-                  setPasswordApiError('');
+                  setPasswordStatus({ type: '', message: '' });
                 }}
                 className={inputClasses}
               />
@@ -547,7 +624,7 @@ if (!authToken) {
                 onChange={(e) => {
                   setPassword({ ...password, new: e.target.value });
                   if (passwordErrors.new) setPasswordErrors((prev) => ({ ...prev, new: '' }));
-                  setPasswordApiError('');
+                  setPasswordStatus({ type: '', message: '' });
                 }}
                 className={inputClasses}
               />
@@ -562,19 +639,12 @@ if (!authToken) {
                 onChange={(e) => {
                   setPassword({ ...password, confirm: e.target.value });
                   if (passwordErrors.confirm) setPasswordErrors((prev) => ({ ...prev, confirm: '' }));
-                  setPasswordApiError('');
+                  setPasswordStatus({ type: '', message: '' });
                 }}
                 className={inputClasses}
               />
               {passwordErrors.confirm && <p className="mt-1 text-xs text-red-600">{passwordErrors.confirm}</p>}
             </div>
-
-            {/* API error message */}
-            {passwordApiError && (
-              <div className="rounded-lg border border-red-200 bg-red-50 p-2 text-sm text-red-600">
-                {passwordApiError}
-              </div>
-            )}
 
             <button
               type="submit"
@@ -586,6 +656,38 @@ if (!authToken) {
               <FiKey />
               {isPasswordLoading ? 'Updating...' : 'Change Password'}
             </button>
+            {passwordStatus.message && (
+              <div
+                className={`relative overflow-hidden rounded-2xl border px-4 py-3 text-sm shadow-lg backdrop-blur-sm transition-all duration-500 animate-[fadeIn_.35s_ease-out] ${
+                  passwordStatus.type === 'success'
+                    ? 'border-emerald-200/80 bg-gradient-to-r from-emerald-50 via-white to-teal-50 text-emerald-900'
+                    : 'border-rose-200/80 bg-gradient-to-r from-rose-50 via-white to-red-50 text-rose-900'
+                }`}
+              >
+                <span
+                  className={`absolute left-0 top-0 h-full w-1.5 ${
+                    passwordStatus.type === 'success' ? 'bg-emerald-500' : 'bg-rose-500'
+                  }`}
+                />
+                <div className="ml-2 flex items-start gap-3">
+                  <span
+                    className={`mt-0.5 rounded-full p-1.5 shadow-sm ${
+                      passwordStatus.type === 'success'
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : 'bg-rose-100 text-rose-700'
+                    }`}
+                  >
+                    {passwordStatus.type === 'success' ? <FiCheckCircle size={14} /> : <FiAlertCircle size={14} />}
+                  </span>
+                  <div>
+                    <p className="font-semibold tracking-wide">
+                      {passwordStatus.type === 'success' ? 'Password Updated' : 'Update Failed'}
+                    </p>
+                    <p className="mt-0.5 text-[13px] leading-relaxed">{passwordStatus.message}</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </form>
         </div>
       </section>
@@ -620,7 +722,38 @@ if (!authToken) {
           </div>
         </div>
 
-        {siteSettingsError && <p className="mt-2 text-sm text-red-600">{siteSettingsError}</p>}
+        {siteSettingsStatus.message && (
+          <div
+            className={`mt-4 relative overflow-hidden rounded-2xl border px-4 py-3 text-sm shadow-lg backdrop-blur-sm transition-all duration-500 animate-[fadeIn_.35s_ease-out] ${
+              siteSettingsStatus.type === 'success'
+                ? 'border-emerald-200/80 bg-gradient-to-r from-emerald-50 via-white to-teal-50 text-emerald-900'
+                : 'border-rose-200/80 bg-gradient-to-r from-rose-50 via-white to-red-50 text-rose-900'
+            }`}
+          >
+            <span
+              className={`absolute left-0 top-0 h-full w-1.5 ${
+                siteSettingsStatus.type === 'success' ? 'bg-emerald-500' : 'bg-rose-500'
+              }`}
+            />
+            <div className="ml-2 flex items-start gap-3">
+              <span
+                className={`mt-0.5 rounded-full p-1.5 shadow-sm ${
+                  siteSettingsStatus.type === 'success'
+                    ? 'bg-emerald-100 text-emerald-700'
+                    : 'bg-rose-100 text-rose-700'
+                }`}
+              >
+                {siteSettingsStatus.type === 'success' ? <FiCheckCircle size={14} /> : <FiAlertCircle size={14} />}
+              </span>
+              <div>
+                <p className="font-semibold tracking-wide">
+                  {siteSettingsStatus.type === 'success' ? 'Settings Saved' : 'Save Failed'}
+                </p>
+                <p className="mt-0.5 text-[13px] leading-relaxed">{siteSettingsStatus.message}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         <button
           onClick={handleSaveSettings}
@@ -638,3 +771,7 @@ if (!authToken) {
 };
 
 export default Settings;
+
+
+
+
