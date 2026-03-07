@@ -11,11 +11,14 @@ const getStoredUser = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(() => localStorage.getItem('adminToken') || '');
+  const [token, setToken] = useState(
+    () => localStorage.getItem('adminToken') || localStorage.getItem('token') || ''
+  );
   const [user, setUser] = useState(() => getStoredUser());
 
   const login = (nextToken, nextUser) => {
     localStorage.setItem('adminToken', nextToken);
+    localStorage.setItem('token', nextToken);
     localStorage.setItem('adminUser', JSON.stringify(nextUser));
     setToken(nextToken);
     setUser(nextUser);
@@ -23,6 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('adminUser');
     setToken('');
     setUser(null);

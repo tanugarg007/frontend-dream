@@ -20,9 +20,8 @@ const inputClasses =
 
 const Settings = () => {
   const { token, updateUser } = useAuth();
-
-
-   console.log('Token from localStorage:', localStorage.getItem('token'));
+  const authToken =
+    token || localStorage.getItem('adminToken') || localStorage.getItem('token') || '';
   // Profile state
   const [profile, setProfile] = useState({ name: '', email: '' });
   const [profileErrors, setProfileErrors] = useState({});
@@ -43,35 +42,39 @@ const Settings = () => {
   const navigate = useNavigate();
   // Fetch profile
   useEffect(() => {
-  const token = localStorage.getItem("token");
+    if (!authToken) return;
 
-  console.log("token localstorage:", token);
-
-  if (!token) return;
-
-  const fetchProfile = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/users/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      const data = await res.json();
-
-      if (data) {
-        setProfile({
-          name: data.name || "",
-          email: data.email || ""
+    const fetchProfile = async () => {
+      try {
+        const res = await fetch(joinUrl(API_BASE_URL, '/users/profile'), {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
         });
-      }
-    } catch (error) {
-      console.error("Profile fetch error:", error);
-    }
-  };
 
-  fetchProfile();
-}, []);
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) return;
+
+        const fetchedProfile = data?.profile || {};
+        const avatarUrl = fetchedProfile.avatar
+          ? fetchedProfile.avatar.startsWith('http')
+            ? fetchedProfile.avatar
+            : `${API_BASE_URL}${fetchedProfile.avatar}`
+          : '';
+
+        setProfile({
+          name: fetchedProfile.name || '',
+          email: fetchedProfile.email || '',
+        });
+        setAvatarPreview(avatarUrl);
+        updateUser({ ...fetchedProfile, avatar: avatarUrl });
+      } catch (error) {
+        console.error('Profile fetch error:', error);
+      }
+    };
+
+    fetchProfile();
+  }, [authToken, updateUser]);
 
   // Fetch site settings
   useEffect(() => {
@@ -122,7 +125,7 @@ const Settings = () => {
 }
       const response = await fetch(`${API_BASE_URL}/users/profiles`, {
         method: 'PATCH',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${authToken}` },
         body: formDataToSend,
       });
       const data = await response.json();
@@ -151,7 +154,7 @@ const Settings = () => {
   // Avatar upload handler (instant upload on file select)
   const handleAvatarChange = async (e) => {
     const file = e.target.files?.[0];
-    if (!file || !token) return;
+    if (!file || !authToken) return;
 
     const previewUrl = URL.createObjectURL(file);
     if (avatarPreview && avatarPreview.startsWith('blob:')) {
@@ -169,7 +172,7 @@ const Settings = () => {
 
       const response = await fetch(`${API_BASE_URL}/users/profiles`, {
         method: 'PATCH',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${authToken}` },
         body: formDataToSend,
       });
       const data = await response.json();
@@ -198,7 +201,7 @@ const Settings = () => {
   };
 
   const handleRemoveAvatar = async () => {
-    if (!token) return;
+    if (!authToken) return;
     const previousAvatar = avatarPreview;
     setAvatarPreview('');
     setAvatarFile(null);
@@ -212,7 +215,7 @@ const Settings = () => {
 
       const response = await fetch(`${API_BASE_URL}/users/profiles`, {
         method: 'PATCH',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${authToken}` },
         body: formDataToSend,
       });
 
@@ -262,7 +265,7 @@ const Settings = () => {
     }
     setPasswordErrors({});
 
-    if (!token) {
+    if (!authToken) {
       setPasswordApiError('Please login again. Token not found.');
       return;
     }
@@ -280,7 +283,7 @@ const Settings = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
           email: profile.email,           // 👈 ADDED
@@ -319,7 +322,7 @@ const handleSaveSettings = async () => {
   setSiteSettingsError('');
   setIsSiteSettingsLoading(true);
 
-  if (!token) {
+if (!authToken) {
   setSiteSettingsError('No authentication token. Please login again.');
   setIsSiteSettingsLoading(false);
   return;
@@ -343,7 +346,7 @@ const handleSaveSettings = async () => {
           method,
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify(payload),
         });
