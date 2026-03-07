@@ -23,7 +23,10 @@ const ADMIN_FORGOT_PASSWORD_ENDPOINT = '/users/forgot-password';
 const joinUrl = (base, endpoint) => `${base.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
 const apiFetch = async (endpoint, options = {}) => {
   const url = joinUrl(API_BASE_URL, endpoint);
-  const response = await fetch(url, options);
+  const response = await fetch(url, {
+    ...options,
+    credentials: 'include',
+  });
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
