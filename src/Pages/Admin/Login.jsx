@@ -21,6 +21,7 @@ const ADMIN_LOGIN_ENDPOINT = '/users/login';
 const ADMIN_FORGOT_PASSWORD_ENDPOINT = '/users/forgot-password';
 
 const joinUrl = (base, endpoint) => `${base.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
+const apiFetch = (endpoint, options = {}) => fetch(joinUrl(API_BASE_URL, endpoint), options);
 
 const inputClasses =
   'w-full rounded-xl border border-slate-300 bg-white/90 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-100';
@@ -103,7 +104,7 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      const res = await fetch(joinUrl(API_BASE_URL, ADMIN_LOGIN_ENDPOINT), {
+      const res = await apiFetch(ADMIN_LOGIN_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -254,7 +255,7 @@ const Login = () => {
     setForgotErrors((prev) => ({ ...prev, general: '' }));
 
     try {
-      const res = await fetch(joinUrl(API_BASE_URL, ADMIN_FORGOT_PASSWORD_ENDPOINT), {
+      const res = await apiFetch(ADMIN_FORGOT_PASSWORD_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -289,7 +290,7 @@ const Login = () => {
     setForgotErrors((prev) => ({ ...prev, general: '' }));
 
     try {
-      const res = await fetch(joinUrl(API_BASE_URL, ADMIN_FORGOT_PASSWORD_ENDPOINT), {
+      const res = await apiFetch(ADMIN_FORGOT_PASSWORD_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
