@@ -116,7 +116,29 @@ const Login = () => {
 
       if (!res.ok) {
         const msg = data?.message?.toLowerCase() || '';
+        const serverFieldErrors = data?.fieldErrors || {};
+
+        if (serverFieldErrors.email || serverFieldErrors.password) {
+          setErrors((prev) => ({
+            ...prev,
+            email: serverFieldErrors.email || '',
+            password: serverFieldErrors.password || '',
+            general: '',
+          }));
+          return;
+        }
+
         if (res.status === 401) {
+          if (msg.includes('invalid email or password')) {
+            setErrors((prev) => ({
+              ...prev,
+              email: 'Email not registered',
+              password: 'Wrong password',
+              general: '',
+            }));
+            return;
+          }
+
           if (msg.includes('not found') || msg.includes('email') || msg.includes('user')) {
             setErrors((prev) => ({ ...prev, email: 'Email not registered' }));
           } else if (msg.includes('password') || msg.includes('invalid')) {
