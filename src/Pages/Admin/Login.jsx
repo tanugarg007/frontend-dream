@@ -27,10 +27,8 @@ const apiFetch = async (endpoint, options = {}) => {
     ...options,
     credentials: 'include',
   });
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return response.json();
+  const data = await response.json().catch(() => ({}));
+  return { response, data };
 };
 
 const inputClasses =
@@ -114,7 +112,7 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      const res = await apiFetch(ADMIN_LOGIN_ENDPOINT, {
+      const { response, data } = await apiFetch(ADMIN_LOGIN_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -123,9 +121,7 @@ const Login = () => {
         }),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!response.ok) {
         const msg = data?.message?.toLowerCase() || '';
         const serverFieldErrors = data?.fieldErrors || {};
 
@@ -149,7 +145,7 @@ const Login = () => {
           return;
         }
 
-        if (res.status === 401) {
+        if (response.status === 401) {
           if (msg.includes('wrong password') || msg.includes('incorrect password')) {
             setErrors((prev) => ({ ...prev, password: 'Wrong password' }));
           } else {
@@ -265,7 +261,7 @@ const Login = () => {
     setForgotErrors((prev) => ({ ...prev, general: '' }));
 
     try {
-      const res = await apiFetch(ADMIN_FORGOT_PASSWORD_ENDPOINT, {
+      const { response, data } = await apiFetch(ADMIN_FORGOT_PASSWORD_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -273,9 +269,8 @@ const Login = () => {
           email: forgotData.email.trim(),
         }),
       });
-      const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
+      if (!response.ok) {
         setForgotErrors((prev) => ({ ...prev, general: data?.message || 'Unable to generate verification code' }));
         if (Number.isFinite(data?.resendAfterSeconds)) setResendIn(data.resendAfterSeconds);
         return;
@@ -300,7 +295,7 @@ const Login = () => {
     setForgotErrors((prev) => ({ ...prev, general: '' }));
 
     try {
-      const res = await apiFetch(ADMIN_FORGOT_PASSWORD_ENDPOINT, {
+      const { response, data } = await apiFetch(ADMIN_FORGOT_PASSWORD_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -311,8 +306,7 @@ const Login = () => {
         }),
       });
 
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
+      if (!response.ok) {
         setForgotErrors((prev) => ({ ...prev, general: data?.message || 'Password reset failed' }));
         return;
       }
