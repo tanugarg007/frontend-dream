@@ -280,7 +280,7 @@ const Login = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          // action: 'request',
+           action: 'request',
           email: forgotData.email.trim(),
         }),
       });
@@ -319,7 +319,7 @@ const Login = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          // action: 'verify',
+           action: 'verify',
           email: forgotData.email.trim(),
           otp: forgotData.otp.trim(),
           newPassword: forgotData.newPassword,
