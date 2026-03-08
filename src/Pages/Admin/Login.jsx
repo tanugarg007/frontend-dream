@@ -23,12 +23,27 @@ const ADMIN_FORGOT_PASSWORD_ENDPOINT = '/users/forgot-password';
 const joinUrl = (base, endpoint) => `${base.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
 const apiFetch = async (endpoint, options = {}) => {
   const url = joinUrl(API_BASE_URL, endpoint);
-  const response = await fetch(url, {
-    ...options,
-    credentials: 'include',
-  });
-  const data = await response.json().catch(() => ({}));
-  return { response, data };
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      credentials: "include",
+    });
+
+    let data = {};
+
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    }
+
+    return { response, data };
+  } catch (error) {
+    return {
+      response: { ok: false, status: 500 },
+      data: { message: "Network error" },
+    };
+  }
 };
 
 const inputClasses =
@@ -265,7 +280,7 @@ const Login = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'request',
+          // action: 'request',
           email: forgotData.email.trim(),
         }),
       });
@@ -304,7 +319,7 @@ const Login = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'verify',
+          // action: 'verify',
           email: forgotData.email.trim(),
           otp: forgotData.otp.trim(),
           newPassword: forgotData.newPassword,
