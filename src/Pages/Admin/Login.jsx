@@ -277,7 +277,12 @@ const Login = () => {
       }
 
       setForgotStep('verify');
-      setForgotMessage(data?.message || 'Verification code sent.');
+      if (data?.debugOtp) {
+        setForgotData((prev) => ({ ...prev, otp: String(data.debugOtp) }));
+        setForgotMessage((data?.message || 'Verification code sent.') + ' Debug OTP auto-filled.');
+      } else {
+        setForgotMessage(data?.message || 'Verification code sent.');
+      }
       setResendIn(Number.isFinite(data?.resendAfterSeconds) ? data.resendAfterSeconds : 60);
     } catch (_error) {
       setForgotErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
