@@ -271,8 +271,17 @@ const Login = () => {
     e.preventDefault();
     if (!validateForgotRequest()) return;
 
+    const normalizedEmail = forgotData.email.trim();
     setIsForgotLoading(true);
-    setForgotMessage('');
+    setForgotStep('verify');
+    setForgotData((prev) => ({
+      ...prev,
+      email: normalizedEmail,
+      otp: '',
+      newPassword: '',
+      confirmPassword: '',
+    }));
+    setForgotMessage('Generating verification code...');
     setForgotErrors((prev) => ({ ...prev, general: '' }));
 
     try {
@@ -281,7 +290,7 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
            action: 'request',
-          email: forgotData.email.trim(),
+          email: normalizedEmail,
         }),
       });
 
