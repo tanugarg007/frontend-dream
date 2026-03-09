@@ -76,7 +76,7 @@ const Footer = () => {
           </div>
           <div className="flex items-start mb-3 ml-2">
             <i className="fa-brands fa-linkedin-in text-2xl text-white mt-1"></i>
-            <p className="text-white ml-5 mt-2 break-all"><a href="https://www.linkedin.com/company/dreamanimex/" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors underline">linkedin.com/company/dreamanimex</a></p>
+            <p className="text-white ml-5 mt-2 whitespace-nowrap"><a href="https://www.linkedin.com/company/dreamanimex/" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors underline">linkedin.com/company/dreamanimex</a></p>
           </div>
           <div className="flex items-start mb-3 ml-2">
             <i className="fa-solid fa-phone text-2xl text-white mt-1"></i>
