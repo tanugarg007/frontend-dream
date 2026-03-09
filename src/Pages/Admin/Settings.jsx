@@ -1,7 +1,7 @@
 // Settings.jsx (complete updated code)
 
 import React, { useState, useEffect } from 'react';
-import { FiAlertCircle, FiCheckCircle, FiGlobe, FiKey, FiSave, FiUpload, FiUser } from 'react-icons/fi';
+import { FiAlertCircle, FiCheckCircle, FiGlobe, FiKey, FiSave, FiTrash2, FiUpload, FiUser } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -533,13 +533,14 @@ if (!authToken) {
           type="button"
           onClick={handleRemoveAvatar}
           disabled={isProfileLoading}
-          className={`mt-2 inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition ${
+          className={`mt-2 inline-flex items-center gap-2 rounded-lg border px-3.5 py-2 text-sm font-semibold shadow-sm transition ${
             isProfileLoading
               ? 'cursor-not-allowed border-rose-200 bg-rose-50 text-rose-400'
-              : 'border-rose-300 text-rose-700 hover:bg-rose-50'
+              : 'border-rose-200 bg-white text-rose-700 hover:border-rose-300 hover:bg-rose-50'
           }`}
         >
-          Remove Avatar
+          <FiTrash2 size={14} />
+          {isProfileLoading ? 'Removing...' : 'Remove Current Avatar'}
         </button>
       )}
     </div>
