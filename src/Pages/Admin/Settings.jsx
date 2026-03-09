@@ -509,8 +509,8 @@ if (!authToken) {
       </div>
     )}
 
-    {/* Upload Button */}
-    <div>
+    {/* Upload / Remove Actions */}
+    <div className="flex flex-wrap items-center gap-3">
       <input
         id="avatar-upload"
         type="file"
@@ -523,7 +523,7 @@ if (!authToken) {
       />
       <label
         htmlFor="avatar-upload"
-        className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+        className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-800"
       >
         <FiUpload />
         Upload Avatar
@@ -533,10 +533,10 @@ if (!authToken) {
           type="button"
           onClick={handleRemoveAvatar}
           disabled={isProfileLoading}
-          className={`mt-2 inline-flex items-center gap-2 rounded-lg border px-3.5 py-2 text-sm font-semibold shadow-sm transition ${
+          className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold shadow-sm transition ${
             isProfileLoading
               ? 'cursor-not-allowed border-rose-200 bg-rose-50 text-rose-400'
-              : 'border-rose-200 bg-white text-rose-700 hover:border-rose-300 hover:bg-rose-50'
+              : 'border-rose-200 bg-white text-rose-700 hover:-translate-y-0.5 hover:border-rose-300 hover:bg-rose-50'
           }`}
         >
           <FiTrash2 size={14} />
