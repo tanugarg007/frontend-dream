@@ -83,10 +83,13 @@ const Login = () => {
     general: '',
   });
   const [forgotMessage, setForgotMessage] = useState('');
-  const [isForgotLoading, setIsForgotLoading] = useState(false);
+  const [forgotLoadingAction, setForgotLoadingAction] = useState(null);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [resendIn, setResendIn] = useState(0);
+  const isForgotLoading = forgotLoadingAction !== null;
+  const isRequestingCode = forgotLoadingAction === 'request';
+  const isVerifyingPassword = forgotLoadingAction === 'verify';
 
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -210,7 +213,7 @@ const Login = () => {
 
   const closeForgotModal = () => {
     setIsForgotModalOpen(false);
-    setIsForgotLoading(false);
+    setForgotLoadingAction(null);
     setResendIn(0);
   };
 
@@ -272,7 +275,7 @@ const Login = () => {
     if (!validateForgotRequest()) return;
 
     const normalizedEmail = forgotData.email.trim();
-    setIsForgotLoading(true);
+    setForgotLoadingAction('request');
     setForgotStep('verify');
     setForgotData((prev) => ({
       ...prev,
@@ -311,7 +314,7 @@ const Login = () => {
     } catch (_error) {
       setForgotErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
     } finally {
-      setIsForgotLoading(false);
+      setForgotLoadingAction(null);
     }
   };
 
@@ -319,7 +322,7 @@ const Login = () => {
     e.preventDefault();
     if (!validateForgotVerify()) return;
 
-    setIsForgotLoading(true);
+    setForgotLoadingAction('verify');
     setForgotMessage('');
     setForgotErrors((prev) => ({ ...prev, general: '' }));
 
@@ -351,7 +354,7 @@ const Login = () => {
     } catch (_error) {
       setForgotErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
     } finally {
-      setIsForgotLoading(false);
+      setForgotLoadingAction(null);
     }
   };
 
@@ -553,7 +556,7 @@ const Login = () => {
                     }`}
                   >
                     <FiKey />
-                    {isForgotLoading ? 'Generating...' : 'Send Verification Code'}
+                    {isRequestingCode ? 'Generating...' : 'Send Verification Code'}
                   </button>
                 </div>
               </form>
@@ -687,7 +690,11 @@ const Login = () => {
                     }`}
                   >
                     <FiKey />
-                    {isForgotLoading ? 'Verifying...' : 'Verify & Reset Password'}
+                    {isVerifyingPassword
+                      ? 'Verifying...'
+                      : isRequestingCode
+                        ? 'Waiting for code...'
+                        : 'Verify & Reset Password'}
                   </button>
                 </div>
               </form>
