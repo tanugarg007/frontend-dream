@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 
@@ -15,6 +15,30 @@ const logo9 = process.env.PUBLIC_URL + '/Images/page-background.JPG';
 const logo10 = process.env.PUBLIC_URL + '/Images/slider.jpg.jpeg';
 
 const Index = () => {
+  useEffect(() => {
+    const prev = {
+      backgroundImage: document.body.style.backgroundImage,
+      backgroundSize: document.body.style.backgroundSize,
+      backgroundAttachment: document.body.style.backgroundAttachment,
+      backgroundRepeat: document.body.style.backgroundRepeat,
+      backgroundPosition: document.body.style.backgroundPosition,
+    };
+
+    document.body.style.backgroundImage = `url(${logo9})`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundAttachment = "fixed";
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundPosition = "center";
+
+    return () => {
+      document.body.style.backgroundImage = prev.backgroundImage;
+      document.body.style.backgroundSize = prev.backgroundSize;
+      document.body.style.backgroundAttachment = prev.backgroundAttachment;
+      document.body.style.backgroundRepeat = prev.backgroundRepeat;
+      document.body.style.backgroundPosition = prev.backgroundPosition;
+    };
+  }, []);
+
   
 
   return (
@@ -159,7 +183,6 @@ const Index = () => {
   );
 }
 export default Index;
-
 
 
 

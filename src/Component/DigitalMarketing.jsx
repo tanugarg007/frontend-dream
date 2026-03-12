@@ -13,10 +13,10 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
   return (
     <div className="w-full">
       {/* Background */}
-      <div
-        className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen"
-        style={{ backgroundImage: `url(${logo9})` }}
-      >
+     <div
+  className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen"
+  style={{ backgroundImage: "url(/Assets/page-background.JPG)" }}
+>
                 <Navbar onEnquiryClick={() => setShowPopup(true)} />
 
         {/* Hero Section */}
