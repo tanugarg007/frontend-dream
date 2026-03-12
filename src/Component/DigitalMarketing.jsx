@@ -24,9 +24,7 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
   className="w-full h-auto lg:h-[500px] flex flex-col lg:flex-row justify-center items-center
              mt-20 lg:mt-0
              rounded-br-[20px] lg:rounded-br-[200px]"
-  style={{
-    backgroundImage: `url(${logo4})`,
-  }}
+style={{ backgroundImage: "url(/Images/yellowback2.jpg)" }}
 >
 
   <div className="
@@ -86,7 +84,7 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
     {/* Right Image */}
     <div className="w-full lg:w-[40%] h-auto lg:h-full flex justify-center items-center mt-4 lg:mt-0 pb-2 lg:pb-0 order-1 lg:order-2">
       <div className="relative w-[290px] lg:w-[350px] h-[290px] lg:h-[320px] rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-        <img src={logo5} alt="" className="w-full h-full object-cover object-top scale-[1.16] lg:scale-[1.40]" />
+        <img src="/Images/digital.png" alt="" className="w-full h-full object-cover object-top scale-[1.16] lg:scale-[1.40]" />
         <div className="lg:hidden absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#2f1b36] via-[#2f1b36]/95 to-transparent" />
       </div>
     </div>
