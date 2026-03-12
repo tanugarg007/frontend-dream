@@ -93,7 +93,7 @@ const Index = () => {
           <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center lg:flex-row lg:gap-14 lg:p-2 '>
             <div className="w-full lg:w-[24%] h-auto lg:h-[520px] mb-4 lg:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] lg:min-h-[230px] lg:h-[30%] rounded-xl overflow-hidden">
-                <img src="/Images/digital-marketing.png" alt="digital marketing" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
+                <img src="/Images/digital.png" alt="digital marketing" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
               </div>
               <div className="w-full h-auto lg:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:-mt-[6rem] lg:mt-4 px-3">
                 <h3 className="text-white text-lg lg:text-2xl font-bold text-center">Digital Marketing</h3>
