@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-const logo = process.env.PUBLIC_URL + '/Images/dream-logo-ok.png';
+// import logo from '/Images/dream-logo-ok.png';
 
 const Navbar = ({ onEnquiryClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,7 +23,7 @@ const Navbar = ({ onEnquiryClick }) => {
   return (
     <header className="fixed top-0 left-0 w-full z-50">
       <div className="fixed top-0 left-0 w-[120px] lg:w-[100px] h-auto z-[9999] pointer-events-none flex items-center justify-center ml-1 lg:ml-6">
-        <img src={logo} alt="logo" className="w-[86px] h-[102px] lg:w-[90px] lg:h-[110px] object-contain" />
+        <img src="/Images/dream-logo-ok.png" alt="logo" className="w-[86px] h-[102px] lg:w-[90px] lg:h-[110px] object-contain" />
       </div>
 
       <nav className="fixed top-0 h-[70px] w-full bg-white flex items-center z-[40]">
