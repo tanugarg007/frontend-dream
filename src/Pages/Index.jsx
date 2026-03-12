@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from 'react-router-dom';
 
 import Navbar from "../Component/Navbar";
@@ -19,7 +19,7 @@ const Index = () => {
 
   return (
     <div className="w-full ">
-      <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen " style={{ backgroundImage: "url(/Assets/page-background.JPG)", backgroundAttachment: 'fixed' }}>
+      <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen " style={{ backgroundImage: "url(./Assets/page-background.JPG)", backgroundAttachment: 'fixed' }}>
          <Navbar />
         <div className="w-full  mt-[70px]">
           <img src="/Images/slider.jpg.jpeg" alt="animex" className="w-full" />
