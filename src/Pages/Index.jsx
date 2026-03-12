@@ -19,10 +19,10 @@ const Index = () => {
 
   return (
     <div className="w-full ">
-      <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen " style={{ backgroundImage: "url(/Assets/page-background.JPG)", backgroundAttachment: 'fixed' }}>
+      <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen " style={{ backgroundImage: "url(../Assets/page-background.JPG)", backgroundAttachment: 'fixed' }}>
          
         <div className="w-full  mt-[70px]">
-          <img src="/Images/slider.jpg.jpeg" alt="animex" className="w-full" />
+          <img src="../Images/slider.jpg.jpeg" alt="animex" className="w-full" />
         </div>
 
         <div className='w-full h-24  flex justify-center items-center'>
