@@ -147,7 +147,7 @@ const Index = () => {
           </div>
 
           <div className="w-full lg:w-1/2 h-auto lg:h-full order-1 lg:order-2 flex justify-center items-center mt-5 lg:mt-0 ">
-            <img src="/Images/whychooseus.png" alt="Why Choose Us" className="w-[82%] lg:w-[60%] h-auto lg:h-[70%] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700" />
+            <img src="/Images/choose.png" alt="Why Choose Us" className="w-[82%] lg:w-[60%] h-auto lg:h-[70%] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700" />
           </div>
         </div>
 
