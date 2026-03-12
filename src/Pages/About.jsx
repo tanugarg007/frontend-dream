@@ -4,12 +4,12 @@ import { useLocation } from 'react-router-dom';
 import FAQ from '../Component/FAQ';
 import Footer from '../Component/Footer';
 
-import logo14 from '../Images/aboutus.png';
-import logo9 from '../Assets/page-background.JPG';
-import logo11 from '../Images/aboutbackground.png';
-import logo16 from '../Images/imagestexture.jpg';
-import logo from '../Images/dream-anim-logo.png';
 import Navbar from '../Component/Navbar';
+const logo14 = process.env.PUBLIC_URL + '/Images/aboutus.png';
+const logo9 = process.env.PUBLIC_URL + '/Assets/page-background.JPG';
+const logo11 = process.env.PUBLIC_URL + '/Images/aboutbackground.png';
+const logo16 = process.env.PUBLIC_URL + '/Images/imagestexture.jpg';
+const logo = process.env.PUBLIC_URL + '/Images/dream-anim-logo.png';
 
 const About = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -164,6 +164,10 @@ export default About;
 
 
    
+
+
+
+
 
 
 

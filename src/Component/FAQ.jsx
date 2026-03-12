@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaPlus, FaMinus } from "react-icons/fa";
-import logo13 from '../Images/faqsc.png';
+const logo13 = process.env.PUBLIC_URL + '/Images/faqsc.png';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -262,4 +262,8 @@ const FAQ = () => {
 };
 
 export default FAQ;
+
+
+
+
 

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../Images/dream-logo-ok.png';
-import logo9 from '../Images/page-background.JPG';
-import logo5 from '../Images/gv.png'
-import logo4 from '../Images/yellowback2.jpg';
-import whatsappImg from '../Assets/whatsapp.png';
 import Navbar from '../Component/Navbar';
 import EnquiryModal from '../Component/EnquiryModal';
 import Footer from './Footer';
+const logo = process.env.PUBLIC_URL + '/Images/dream-logo-ok.png';
+const logo9 = process.env.PUBLIC_URL + '/Images/page-background.JPG';
+const logo5 = process.env.PUBLIC_URL + '/Images/gv.png';
+const logo4 = process.env.PUBLIC_URL + '/Images/yellowback2.jpg';
+const whatsappImg = process.env.PUBLIC_URL + '/Assets/whatsapp.png';
 
 const GraphicandVideoEditing = () => { const [showPopup, setShowPopup] = useState(false);
   return (
@@ -175,6 +175,10 @@ const GraphicandVideoEditing = () => { const [showPopup, setShowPopup] = useStat
 };
 
 export default GraphicandVideoEditing;
+
+
+
+
 
 
 

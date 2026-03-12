@@ -12,9 +12,9 @@ import {
   FiX,
   FiRefreshCw,
 } from 'react-icons/fi';
-import loginBg from '../../Images/page-background.JPG';
 import { useAuth } from '../../context/AuthContext';
 import { serverUrl } from '../../url/url';
+const loginBg = process.env.PUBLIC_URL + '/Images/page-background.JPG';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
 const ADMIN_LOGIN_ENDPOINT = '/users/login';
@@ -707,3 +707,7 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+

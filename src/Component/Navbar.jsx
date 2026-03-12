@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../Images/dream-logo-ok.png';
+const logo = process.env.PUBLIC_URL + '/Images/dream-logo-ok.png';
 
 const Navbar = ({ onEnquiryClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -136,4 +136,8 @@ const Navbar = ({ onEnquiryClick }) => {
 };
 
 export default Navbar;
+
+
+
+
 

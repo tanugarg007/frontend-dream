@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import logo7 from '../Images/graphic.png';
-import logo11 from '../Images/choose.png';
-import logo3 from '../Images/video.png';
-import logo4 from '../Images/uiandux.png';
-import logo5 from '../Images/digital.png';
-import logo6 from '../Images/gv.png';
-import logo9 from '../Images/page-background.JPG';
 
 
-import logo10 from '../Images/slider.jpg.jpeg';
 import Navbar from "../Component/Navbar";
 import FAQ from "../Component/FAQ";
 import Footer from "../Component/Footer";
+const logo7 = process.env.PUBLIC_URL + '/Images/graphic.png';
+const logo11 = process.env.PUBLIC_URL + '/Images/choose.png';
+const logo3 = process.env.PUBLIC_URL + '/Images/video.png';
+const logo4 = process.env.PUBLIC_URL + '/Images/uiandux.png';
+const logo5 = process.env.PUBLIC_URL + '/Images/digital.png';
+const logo6 = process.env.PUBLIC_URL + '/Images/gv.png';
+const logo9 = process.env.PUBLIC_URL + '/Images/page-background.JPG';
+const logo10 = process.env.PUBLIC_URL + '/Images/slider.jpg.jpeg';
 
 const Index = () => {
   
@@ -159,6 +159,10 @@ const Index = () => {
   );
 }
 export default Index;
+
+
+
+
 
 
 

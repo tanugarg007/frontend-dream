@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import logo9 from "../Images/page-background.JPG";
-import contactBg from "../Images/contact-bg.JPG.jpeg";
 import Footer from "../Component/Footer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { serverUrl } from "../url/url";
+const logo9 = process.env.PUBLIC_URL + '/Images/page-background.JPG';
+const contactBg = process.env.PUBLIC_URL + '/Images/contact-bg.JPG.jpeg';
 const ContactUs = () => {
   const NAME_REGEX = /^[A-Za-z ]+$/;
   const [formData, setFormData] = useState({
@@ -329,3 +329,7 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
+
+
+
+

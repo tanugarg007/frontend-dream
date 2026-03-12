@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import logo9 from '../Images/page-background.JPG';
 import Footer from '../Component/Footer';
+const logo9 = process.env.PUBLIC_URL + '/Images/page-background.JPG';
 
 const StudioDivision = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -84,6 +84,10 @@ opportunities.
                   
 
 export default StudioDivision;
+
+
+
+
 
 
 

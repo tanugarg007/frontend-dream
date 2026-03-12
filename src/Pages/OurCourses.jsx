@@ -1,14 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo9 from '../Images/page-background.JPG'
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
-import logo8 from '../Images/insidegraphic.png'
-import logo7 from '../Images/insidevideo.png'
-import logo6 from '../Images/insideuiux.png'
-import logo10 from '../Images/insidedigital.png'
-import logo11 from '../Images/insidegraphicvideo.png'
+const logo9 = process.env.PUBLIC_URL + '/Images/page-background.JPG';
+const logo8 = process.env.PUBLIC_URL + '/Images/insidegraphic.png';
+const logo7 = process.env.PUBLIC_URL + '/Images/insidevideo.png';
+const logo6 = process.env.PUBLIC_URL + '/Images/insideuiux.png';
+const logo10 = process.env.PUBLIC_URL + '/Images/insidedigital.png';
+const logo11 = process.env.PUBLIC_URL + '/Images/insidegraphicvideo.png';
 const OurCourses =()=>{
     const [showPopup, setShowPopup] = useState(false);
     return(
@@ -148,4 +148,8 @@ const OurCourses =()=>{
     )
 }
 export default OurCourses
+
+
+
+
 
