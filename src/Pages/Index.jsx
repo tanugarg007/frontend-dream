@@ -1,28 +1,28 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-
 import Navbar from "../Component/Navbar";
 import FAQ from "../Component/FAQ";
 import Footer from "../Component/Footer";
-// import  logo7 from  '/Images/graphic.png';
-// import logo11 from '/Images/choose.png';
-// import logo3 from '/Images/video.png';
-// import logo4 from '/Images/uiandux.png';
-// import logo5  from '/Images/digital.png';
-// import logo6 from'/Images/gv.png';
-// import logo9 from '/Images/page-background.JPG';
-// import logo10 from '/Images/slider.jpg.jpeg';
+ import  logo7 from  '/Images/graphic.png';
+ import logo11 from '/Images/choose.png';
+ import logo3 from '/Images/video.png';
+ import logo4 from '/Images/uiandux.png';
+ import logo5  from '/Images/digital.png';
+ import logo6 from'/Images/gv.png';
+ import logo9 from '/Images/page-background.JPG';
+ import logo10 from '/Images/slider.jpg.jpeg';
 
 const Index = () => {
- 
+ const [showPopup, setShowPopup] = React.useState(false);
+
  
 
   return (
     <div className="w-full ">
-      <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen " style={{ backgroundImage: "url(/Assets/page-background.JPG)", backgroundAttachment: 'fixed' }}>
-         <Navbar />
+      <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen " style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}>
+        <Navbar onEnquiryClick={() => setShowPopup(true)} />
         <div className="w-full  mt-[70px]">
-          <img src="/Images/slider.jpg.jpeg" alt="animex" className="w-full" />
+          <img src={logo10} alt="animex" className="w-full" />
         </div>
 
         <div className='w-full h-24  flex justify-center items-center'>
@@ -35,7 +35,7 @@ const Index = () => {
             <div className="w-full lg:w-[24%] h-auto lg:h-[520px] mb-4 lg:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] lg:min-h-[230px] lg:h-[30%] rounded-xl overflow-hidden">
                 <img
-                  src="/Images/graphic.png"
+                  src={logo7}
                   className="w-full h-full object-cover  rounded-xl -mb-px course-image-mobile-crop"
                   alt="Graphic Design "
                   style={{ aspectRatio: '1/1' }}
@@ -56,7 +56,7 @@ const Index = () => {
 
             <div className="w-full lg:w-[24%] h-auto lg:h-[520px] mb-4 lg:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] lg:min-h-[230px] lg:h-[30%] rounded-xl overflow-hidden">
-                <img src="/Images/video.png" alt="video editing" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
+                <img src={logo3} alt="video editing" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
               </div>
               <div className="w-full h-auto lg:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:-mt-[6rem] lg:mt-4 px-3">
                 <h3 className="text-white text-lg lg:text-2xl font-bold text-center">Video Editing</h3>
@@ -73,7 +73,7 @@ const Index = () => {
 
             <div className="w-full lg:w-[24%] h-auto lg:h-[520px] mb-4 lg:mb-0 border-[4px] border-white  rounded-2xl p-3 flex flex-col">
               <div className="w-full min-h-[240px] lg:min-h-[230px] lg:h-[30%] rounded-xl overflow-hidden">
-                <img src="/Images/uiandux.png" alt="ui/ux design" className="w-full h-full object-cover  rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
+                <img src={logo4} alt="ui/ux design" className="w-full h-full object-cover  rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
               </div>
               <div className="w-full h-auto lg:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:-mt-[6rem] lg:mt-4 px-3">
                 <h3 className="text-white text-lg lg:text-2xl font-bold text-center">UI & UX Design</h3>
@@ -93,7 +93,7 @@ const Index = () => {
           <div className='w-full h-auto  flex flex-col p-3 gap-8 justify-center items-center lg:flex-row lg:gap-14 lg:p-2 '>
             <div className="w-full lg:w-[24%] h-auto lg:h-[520px] mb-4 lg:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] lg:min-h-[230px] lg:h-[30%] rounded-xl overflow-hidden">
-                <img src="/Images/digital.png" alt="digital marketing" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
+                <img src={logo5} alt="digital marketing" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop" style={{ aspectRatio: '1/1' }} />
               </div>
               <div className="w-full h-auto lg:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:-mt-[6rem] lg:mt-4 px-3">
                 <h3 className="text-white text-lg lg:text-2xl font-bold text-center">Digital Marketing</h3>
@@ -110,7 +110,7 @@ const Index = () => {
 
             <div className="w-full lg:w-[24%] h-auto lg:h-[520px] mb-4 lg:mb-0 border-[4px] border-white rounded-2xl p-3 flex flex-col ">
               <div className="w-full min-h-[240px] lg:min-h-[230px] lg:h-[30%] rounded-xl overflow-hidden">
-                <img src="/Images/gv.png" alt="graphic&videoediting" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop  " style={{ aspectRatio: '1/1' }} />
+                <img src={logo6} alt="graphic&videoediting" className="w-full h-full object-cover rounded-xl -mb-px course-image-mobile-crop  " style={{ aspectRatio: '1/1' }} />
               </div>
               <div className="w-full h-auto lg:h-[12%] border border-yellow-500 rounded-full bg-[#6C757D] flex justify-center items-center -mt-12 md:-mt-[6rem] lg:mt-4 px-3">
                 <h3 className="text-white text-lg lg:text-2xl font-bold text-center">Graphic & Video Editing</h3>
@@ -147,7 +147,7 @@ const Index = () => {
           </div>
 
           <div className="w-full lg:w-1/2 h-auto lg:h-full order-1 lg:order-2 flex justify-center items-center mt-5 lg:mt-0 ">
-            <img src="/Images/choose.png" alt="Why Choose Us" className="w-[82%] lg:w-[60%] h-auto lg:h-[70%] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700" />
+            <img src={logo11} alt="Why Choose Us" className="w-[82%] lg:w-[60%] h-auto lg:h-[70%] rounded-2xl scale-105 hover:scale-110 transition-transform duration-700" />
           </div>
         </div>
 

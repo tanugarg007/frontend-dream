@@ -14,10 +14,10 @@ const OurCourses =()=>{
     return(
       <div>
         <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen  " style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}>
-         
+         <Navbar onEnquiryClick={() => setShowPopup(true)} />
 
        <div className="w-full h-[50px]  mt-20"></div>
-
+           
       <div className="w-full h-[60px] lg:h-[90px] border border-white mt-5 flex justify-center items-center bg-white">
          <h2 className=" text-3xl lg:text-5xl text-red-800 font-bold text-center ">
            Our Courses
