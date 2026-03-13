@@ -12,7 +12,7 @@ const logo4 = `${PUBLIC_URL}/Images/uiandux.png`;
 const logo5 = `${PUBLIC_URL}/Images/digital.png`;
 const logo6 = `${PUBLIC_URL}/Images/gv.png`;
 const logo9 = `${PUBLIC_URL}/Images/page-background.JPG`;
-const logo10 = `${PUBLIC_URL}/Images/slider.jpg.jpeg`;
+const logo10 = `${PUBLIC_URL}/Images/slider.jpg`;
 
 
 // const logo7 = "/Images/graphic.png";
