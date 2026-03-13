@@ -5,7 +5,7 @@ import EnquiryModal from '../Component/EnquiryModal';
 import Footer from './Footer';
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const logo = `${PUBLIC_URL}/Images/dream-logo-ok.png`;
-const logo9 = `${PUBLIC_URL}/Images/page-background.jpg`;
+const logo9 = `${PUBLIC_URL}/Images/background.jpg`;
 const logo5 = `${PUBLIC_URL}/Images/gv.png`;
 const logo4 = `${PUBLIC_URL}/Images/yellowback2.jpg`;
 const whatsappImg = `${PUBLIC_URL}/Assets/whatsapp.png`;
