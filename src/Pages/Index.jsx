@@ -3,24 +3,23 @@ import { Link } from 'react-router-dom';
 import Navbar from "../Component/Navbar";
 import FAQ from "../Component/FAQ";
 import Footer from "../Component/Footer";
- import  logo7 from  '/Images/graphic.png';
- import logo11 from '/Images/choose.png';
- import logo3 from '/Images/video.png';
- import logo4 from '/Images/uiandux.png';
- import logo5  from '/Images/digital.png';
- import logo6 from'/Images/gv.png';
- import logo9 from '/Images/page-background.JPG';
- import logo10 from '/Images/slider.jpg.jpeg';
+
+const logo7 = "/Images/graphic.png";
+const logo11 = "/Images/choose.png";
+const logo3 = "/Images/video.png";
+const logo4 = "/Images/uiandux.png";
+const logo5 = "/Images/digital.png";
+const logo6 = "/Images/gv.png";
+const logo9 = "/Images/page-background.JPG";
+const logo10 = "/Images/slider.jpg.jpeg";
 
 const Index = () => {
- const [showPopup, setShowPopup] = React.useState(false);
-
  
 
   return (
     <div className="w-full ">
       <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen " style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}>
-        <Navbar onEnquiryClick={() => setShowPopup(true)} />
+        <Navbar onEnquiryClick={() => window.openEnquiry?.()} />
         <div className="w-full  mt-[70px]">
           <img src={logo10} alt="animex" className="w-full" />
         </div>
@@ -159,8 +158,6 @@ const Index = () => {
   );
 }
 export default Index;
-
-
 
 
 

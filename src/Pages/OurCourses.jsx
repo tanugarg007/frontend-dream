@@ -3,18 +3,18 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
-import logo9 from '/Images/page-background.JPG';
-const logo8 = process.env.PUBLIC_URL + '/Images/insidegraphic.png';
-const logo7 = process.env.PUBLIC_URL + '/Images/insidevideo.png';
-const logo6 = process.env.PUBLIC_URL + '/Images/insideuiux.png';
-const logo10 = process.env.PUBLIC_URL + '/Images/insidedigital.png';
-const logo11 = process.env.PUBLIC_URL + '/Images/insidegraphicvideo.png';
+
+const logo9 = "/Images/page-background.JPG";
+const logo8 = "/Images/insidegraphic.png";
+const logo7 = "/Images/insidevideo.png";
+const logo6 = "/Images/insideuiux.png";
+const logo10 = "/Images/insidedigital.png";
+const logo11 = "/Images/insidegraphicvideo.png";
 const OurCourses =()=>{
-    const [showPopup, setShowPopup] = useState(false);
     return(
       <div>
         <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen  " style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}>
-         <Navbar onEnquiryClick={() => setShowPopup(true)} />
+         <Navbar onEnquiryClick={() => window.openEnquiry?.()} />
 
        <div className="w-full h-[50px]  mt-20"></div>
            
@@ -148,8 +148,6 @@ const OurCourses =()=>{
     )
 }
 export default OurCourses
-
-
 
 
 

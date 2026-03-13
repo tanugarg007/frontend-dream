@@ -4,17 +4,17 @@ import { useLocation } from 'react-router-dom';
 import FAQ from '../Component/FAQ';
 import Footer from '../Component/Footer';
 import Navbar from '../Component/Navbar';
-import logo14 from '/Images/aboutus.png';
-import logo9 from '/Assets/page-background.JPG';
-import logo11 from '/Images/aboutbackground.png';
-import logo16 from '/Images/imagestexture.jpg';
-import logo from '/Images/dream-anim-logo.png';
+
+const logo14 = "/Images/aboutus.png";
+const logo9 = "/Assets/page-background.JPG";
+const logo11 = "/Images/aboutbackground.png";
+const logo16 = "/Images/imagestexture.jpg";
+const logo = "/Images/dream-anim-logo.png";
 
 const About = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openCourses, setOpenCourses] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
   const [hoverIndex,setHoverIndex]= useState(null);
   const location = useLocation();
    const toggleAnswer = (index) => {
@@ -48,7 +48,7 @@ const About = () => {
           // backgroundColor: '#1a1a1a' // Fallback color while image loads
         }}
       >
-       <Navbar onEnquiryClick={() => setShowPopup(true)} />
+       <Navbar onEnquiryClick={() => window.openEnquiry?.()} />
              
    <div
   className="relative w-full min-h-[440px] lg:h-[530px]
@@ -163,8 +163,6 @@ export default About;
 
 
    
-
-
 
 
 
