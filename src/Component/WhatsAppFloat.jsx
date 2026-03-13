@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const whatsappImg = `${PUBLIC_URL}/Assets/whatsapp.png`;
 const WhatsAppFloat = () => {
   const location = useLocation();

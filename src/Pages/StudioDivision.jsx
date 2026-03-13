@@ -1,5 +1,6 @@
 ﻿import React, { useState } from 'react';
 import Footer from '../Component/Footer';
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const logo9 = `${PUBLIC_URL}/Images/background.jpg`;
 
 const StudioDivision = () => {

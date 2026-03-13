@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../Component/Navbar';
 import EnquiryModal from '../Component/EnquiryModal';
 import Footer from './Footer';
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const logo1 = `${PUBLIC_URL}/Images/dream-logo-ok.png`;
 const logo9 = `${PUBLIC_URL}/Images/background.jpg`;
 const logo5 = `${PUBLIC_URL}/Images/digital.png`;

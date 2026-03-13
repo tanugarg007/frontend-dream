@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
-
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const logo9 = `${PUBLIC_URL}/Images/background.jpg`;
 const logo8 = `${PUBLIC_URL}/Images/insidegraphic.png`;
 const logo7 = `${PUBLIC_URL}/Images/insidevideo.png`;
