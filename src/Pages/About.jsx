@@ -5,11 +5,7 @@ import FAQ from '../Component/FAQ';
 import Footer from '../Component/Footer';
 
 import Navbar from '../Component/Navbar';
-const logo14 = process.env.PUBLIC_URL + '/Images/aboutus.png';
-const logo9 = process.env.PUBLIC_URL + '/Assets/page-background.JPG';
-const logo11 = process.env.PUBLIC_URL + '/Images/aboutbackground.png';
-const logo16 = process.env.PUBLIC_URL + '/Images/imagestexture.jpg';
-const logo = process.env.PUBLIC_URL + '/Images/dream-anim-logo.png';
+
 
 const About = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -44,19 +40,16 @@ const About = () => {
       {/* Background Image - Applied Immediately */}
       <div
         className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:bg-fixed"
-        style={{ 
-          backgroundImage: `url(${logo9})`,
-          // backgroundColor: '#1a1a1a' // Fallback color while image loads
-        }}
+       style={{ backgroundImage: "url(/Assets/page-background.JPG)", backgroundAttachment: 'fixed' }}
       >
-       
+       <Navbar/>
              
    <div
   className="relative w-full min-h-[440px] lg:h-[530px]
   bg-no-repeat bg-cover bg-[center_top]
   lg:bg-[length:100%_auto]
   mt-[70px] lg:mt-20 py-4 lg:py-0 flex items-center justify-center"
-  style={{ backgroundImage: `url(${logo11})` }}
+  style={{ backgroundImage: "url(/Images/aboutbackground.png)" }}
 >
   {/* overlay optional */}
   <div className="absolute inset-0"></div>
@@ -76,7 +69,7 @@ const About = () => {
     "
   >
     <img
-      src={logo16}
+      src="/Images/imagestexture.jpg"
       alt=""
       className="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-10"
     />
@@ -93,7 +86,7 @@ const About = () => {
       <div className="w-full lg:w-[30%] flex justify-center lg:justify-end">
         <div className="rounded-2xl p-1 lg:p-4">
           <img
-            src={logo}
+            src="/Images/dream-anim-logo.png"
             alt="Dream Animex Logo"
             className="w-[126px] h-[154px] lg:w-[260px] lg:h-[320px] object-contain opacity-60"
           />
@@ -113,7 +106,7 @@ const About = () => {
         <div className="w-full min-h-[450px] flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/2 flex justify-center items-center py-6 order-1 lg:order-2">
             <img
-              src={logo14}
+              src="/Images/aboutus.png"
               alt="Dream Animex Institute"
               className="w-[300px] h-[300px] lg:w-[410px] lg:h-[400px] rounded-xl shadow-md shadow-white hover:shadow-xl transition-shadow duration-300"
             />

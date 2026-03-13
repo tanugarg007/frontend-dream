@@ -7,7 +7,7 @@ const logo1 = process.env.PUBLIC_URL + '/Images/dream-logo-ok.png';
 const logo9 = process.env.PUBLIC_URL + '/Assets/page-background.JPG';
 const logo5 = process.env.PUBLIC_URL + '/Images/digital.png';
 const logo4 = process.env.PUBLIC_URL + '/Images/yellowback2.jpg';
-const whatsappImg = process.env.PUBLIC_URL + '/Assets/whatsapp.png';
+const whatsappImg =  '/Assets/whatsapp.png';
 
 const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(false);
   return (
@@ -75,7 +75,7 @@ style={{ backgroundImage: "url(/Images/yellowback2.jpg)" }}
           rel="noopener noreferrer"
           className="border-2 border-green-500 text-green-500 text-sm lg:text-lg rounded-lg px-4 py-2 lg:px-5 lg:py-3 font-medium hover:bg-green-50 transition-all flex items-center gap-2"
         >
-          <img src={whatsappImg} alt="WhatsApp" className="w-5 h-5 lg:w-6 lg:h-6 object-contain" />
+          <img src="/Assets/whatsapp.png" alt="WhatsApp" className="w-5 h-5 lg:w-6 lg:h-6 object-contain" />
           WhatsApp
         </a>
       </div>

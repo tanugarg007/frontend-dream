@@ -11,7 +11,7 @@ const StudioDivision = () => {
       {/* BACKGROUND SECTION */}
       <div
         className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat pt-[140px]"
-        style={{ backgroundImage: `url(${logo9})` }}
+        style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}
       >
 
         {/* ================= HEADER ================= */}

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
-const logo9 = process.env.PUBLIC_URL + '/Images/page-background.JPG';
+import logo9 from '/Images/page-background.JPG';
 const logo8 = process.env.PUBLIC_URL + '/Images/insidegraphic.png';
 const logo7 = process.env.PUBLIC_URL + '/Images/insidevideo.png';
 const logo6 = process.env.PUBLIC_URL + '/Images/insideuiux.png';
@@ -13,7 +13,7 @@ const OurCourses =()=>{
     const [showPopup, setShowPopup] = useState(false);
     return(
       <div>
-        <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen  " style={{ backgroundImage: `url(${logo9})` }}>
+        <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen  " style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}>
          
 
        <div className="w-full h-[50px]  mt-20"></div>
