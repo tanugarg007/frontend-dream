@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaPlus, FaMinus } from "react-icons/fa";
-const logo13 = process.env.PUBLIC_URL + '/Images/faqsc.png';
+const logo13 = '/Images/faqsc.png';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);

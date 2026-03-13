@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import Navbar from '../Component/Navbar';
 import EnquiryModal from '../Component/EnquiryModal';
 import Footer from './Footer';
-const logo1 = process.env.PUBLIC_URL + '/Images/dream-logo-ok.png';
-const logo9 = process.env.PUBLIC_URL + '/Assets/page-background.JPG';
-const logo5 = process.env.PUBLIC_URL + '/Images/digital.png';
-const logo4 = process.env.PUBLIC_URL + '/Images/yellowback2.jpg';
+const logo1 = '/Images/dream-logo-ok.png';
+const logo9 = '/Assets/page-background.JPG';
+const logo5 = '/Images/digital.png';
+const logo4 = '/Images/yellowback2.jpg';
 const whatsappImg =  '/Assets/whatsapp.png';
 
 const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(false);
@@ -15,7 +15,7 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
       {/* Background */}
      <div
   className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen"
-  style={{ backgroundImage: "url(/Assets/page-background.JPG)" }}
+  style={{ backgroundImage: `url(${logo9})` }}
 >
                 <Navbar onEnquiryClick={() => setShowPopup(true)} />
 
@@ -24,7 +24,7 @@ const DigitalMarketing = () => { const [showPopup, setShowPopup] = useState(fals
   className="w-full h-auto lg:h-[500px] flex flex-col lg:flex-row justify-center items-center
              mt-20 lg:mt-0
              rounded-br-[20px] lg:rounded-br-[200px]"
-style={{ backgroundImage: "url(/Images/yellowback2.jpg)" }}
+style={{ backgroundImage: `url(${logo4})` }}
 >
 
   <div className="
@@ -75,7 +75,7 @@ style={{ backgroundImage: "url(/Images/yellowback2.jpg)" }}
           rel="noopener noreferrer"
           className="border-2 border-green-500 text-green-500 text-sm lg:text-lg rounded-lg px-4 py-2 lg:px-5 lg:py-3 font-medium hover:bg-green-50 transition-all flex items-center gap-2"
         >
-          <img src="/Assets/whatsapp.png" alt="WhatsApp" className="w-5 h-5 lg:w-6 lg:h-6 object-contain" />
+          <img src={whatsappImg} alt="WhatsApp" className="w-5 h-5 lg:w-6 lg:h-6 object-contain" />
           WhatsApp
         </a>
       </div>
@@ -84,7 +84,7 @@ style={{ backgroundImage: "url(/Images/yellowback2.jpg)" }}
     {/* Right Image */}
     <div className="w-full lg:w-[40%] h-auto lg:h-full flex justify-center items-center mt-4 lg:mt-0 pb-2 lg:pb-0 order-1 lg:order-2">
       <div className="relative w-[290px] lg:w-[350px] h-[290px] lg:h-[320px] rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-        <img src="/Images/digital.png" alt="" className="w-full h-full object-cover object-top scale-[1.16] lg:scale-[1.40]" />
+        <img src={logo5} alt="" className="w-full h-full object-cover object-top scale-[1.16] lg:scale-[1.40]" />
         <div className="lg:hidden absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#2f1b36] via-[#2f1b36]/95 to-transparent" />
       </div>
     </div>

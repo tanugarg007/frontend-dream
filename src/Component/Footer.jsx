@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-const logo1 = process.env.PUBLIC_URL + '/Images/dream-logo-ok.png';
+const logo1 = '/Images/dream-logo-ok.png';
 
 const Footer = () => {
   return (
