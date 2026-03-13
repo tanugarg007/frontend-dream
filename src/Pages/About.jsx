@@ -1,10 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import FAQ from '../Component/FAQ';
 import Footer from '../Component/Footer';
 import Navbar from '../Component/Navbar';
 
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const logo14 = `${PUBLIC_URL}/Images/aboutus.png`;
 const logo9 = `${PUBLIC_URL}/Images/page-background.jpg`;
 const logo11 = "/Images/aboutbackground.png";
@@ -60,7 +61,7 @@ const About = () => {
   {/* overlay optional */}
   <div className="absolute inset-0"></div>
 
-  {/* ✅ SAME STUDIO DIVISION BOX */}
+  {/* âœ… SAME STUDIO DIVISION BOX */}
  <div className="w-full flex justify-center relative z-40 mt-0">
   <div
     className="
@@ -163,6 +164,7 @@ export default About;
 
 
    
+
 
 
 

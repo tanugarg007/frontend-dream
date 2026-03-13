@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   FiArrowLeft,
@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import { serverUrl } from '../../url/url';
-const loginBg = 'Images/page-background.JPG';
+const loginBg = '/Images/page-background.jpg';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
 const ADMIN_LOGIN_ENDPOINT = '/users/login';
@@ -707,6 +707,8 @@ const Login = () => {
 };
 
 export default Login;
+
+
 
 
 

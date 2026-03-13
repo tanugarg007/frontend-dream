@@ -1,10 +1,10 @@
-import React from "react";
+﻿import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
 
-const logo9 = "/Images/page-background.JPG";
+const logo9 = "/Images/page-background.jpg";
 const logo8 = "/Images/insidegraphic.png";
 const logo7 = "/Images/insidevideo.png";
 const logo6 = "/Images/insideuiux.png";
@@ -148,6 +148,8 @@ const OurCourses =()=>{
     )
 }
 export default OurCourses
+
+
 
 
 

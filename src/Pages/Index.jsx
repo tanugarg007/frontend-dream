@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Link } from 'react-router-dom';
 import Navbar from "../Component/Navbar";
 import FAQ from "../Component/FAQ";
@@ -21,7 +21,7 @@ const logo10 = `${PUBLIC_URL}/Images/slider.jpg`;
 // const logo4 = "/Images/uiandux.png";
 // const logo5 = "/Images/digital.png";
 // const logo6 = "/Images/gv.png";
-// const logo9 = "./Images/page-background.JPG";
+// const logo9 = "/Images/page-background.jpg";
 // const logo10 = "/Images/slider.jpg.jpeg";
 
 const Index = () => {
@@ -109,7 +109,7 @@ const Index = () => {
                 <h3 className="text-white text-lg lg:text-2xl font-bold text-center">Digital Marketing</h3>
               </div>
               <div className="w-full flex-1 lg:h-[20%] mt-1 md:mt-1 lg:mt-3">
-                <p className="text-white text-center px-3 lg:px-5 text-base leading-5 lg:leading-normal">Digital marketing combines creativity with technology, using data-driven strategies—SEO, social media, and content—to connect directly with audiences.</p>
+                <p className="text-white text-center px-3 lg:px-5 text-base leading-5 lg:leading-normal">Digital marketing combines creativity with technology, using data-driven strategiesâ€”SEO, social media, and contentâ€”to connect directly with audiences.</p>
               </div>
               <div className="w-full h-auto lg:h-[8%] flex justify-center items-center mt-2 md:mt-1 lg:mt-3">
                 <Link to="/digital-marketing">
@@ -169,6 +169,7 @@ const Index = () => {
   );
 }
 export default Index;
+
 
 
 

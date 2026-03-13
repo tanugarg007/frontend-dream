@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Component/Navbar';
 import EnquiryModal from '../Component/EnquiryModal';
 import Footer from '../Component/Footer';
 const logo1 = '/Images/dream-logo-ok.png';
-const logo9 = '/Images/page-background.JPG';
+const logo9 = '/Images/page-background.jpg';
 const logo5 = '/Images/uiandux.png';
 const logo4 = '/Images/yellowback2.jpg';
 const whatsappImg = '/Assets/whatsapp.png';
@@ -118,7 +118,7 @@ const UIUXDesign = () => { const [showPopup, setShowPopup] = useState(false);
         key={index}
         className={`text-gray-700 text-sm lg:text-lg px-3 py-2 leading-relaxed border-l-4 border-${color}-500 bg-gradient-to-r from-${color}-50 to-transparent`}
       >
-        <span className={`font-semibold text-${color}-600`}>✦</span> {text}
+        <span className={`font-semibold text-${color}-600`}>âœ¦</span> {text}
       </p>
     ))}
 
@@ -178,6 +178,8 @@ const UIUXDesign = () => { const [showPopup, setShowPopup] = useState(false);
 };
 
 export default UIUXDesign;
+
+
 
 
 

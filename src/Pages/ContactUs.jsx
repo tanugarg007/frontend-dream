@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import Footer from "../Component/Footer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { serverUrl } from "../url/url";
-const logo9 = 'Images/page-background.JPG';
+const logo9 = '/Images/page-background.jpg';
 const contactBg = 'Images/contact-bg.JPG.jpeg';
 const ContactUs = () => {
   const NAME_REGEX = /^[A-Za-z ]+$/;
@@ -303,7 +303,7 @@ const ContactUs = () => {
                     <div className="mt-4">
   <label className="font-semibold text-slate-700">Message</label>
   <textarea
-    name="message"   // 👈 YE ADD KARNA THA
+    name="message"   // ðŸ‘ˆ YE ADD KARNA THA
     value={formData.message}
     onChange={handleChange}
     rows="3"
@@ -329,6 +329,8 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
+
+
 
 
 
