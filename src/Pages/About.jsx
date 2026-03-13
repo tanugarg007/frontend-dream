@@ -5,8 +5,8 @@ import FAQ from '../Component/FAQ';
 import Footer from '../Component/Footer';
 import Navbar from '../Component/Navbar';
 
-const logo14 = "/Images/aboutus.png";
-const logo9 = "/Assets/page-background.JPG";
+const logo14 = `${PUBLIC_URL}/Images/aboutus.png`;
+const logo9 = `${PUBLIC_URL}/Images/page-background.jpg`;
 const logo11 = "/Images/aboutbackground.png";
 const logo16 = "/Images/imagestexture.jpg";
 const logo = "/Images/dream-anim-logo.png";
