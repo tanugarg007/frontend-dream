@@ -22,10 +22,7 @@ const Index = () => {
 
   return (
     <div className="w-full ">
-    <div
-  className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen"
-  style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}
->
+      <div className="relative w-full min-h-screen bg-fixed bg-cover bg-center bg-no-repeat lg:min-h-screen " style={{ backgroundImage: `url(${logo9})`, backgroundAttachment: 'fixed' }}>
         <Navbar onEnquiryClick={() => window.openEnquiry?.()} />
         <div className="w-full  mt-[70px]">
           <img src={logo10} alt="animex" className="w-full" />
