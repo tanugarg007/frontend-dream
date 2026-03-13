@@ -4,14 +4,25 @@ import Navbar from "../Component/Navbar";
 import FAQ from "../Component/FAQ";
 import Footer from "../Component/Footer";
 
-const logo7 = "/Images/graphic.png";
-const logo11 = "/Images/choose.png";
-const logo3 = "/Images/video.png";
-const logo4 = "/Images/uiandux.png";
-const logo5 = "/Images/digital.png";
-const logo6 = "/Images/gv.png";
-const logo9 = "./Images/page-background.JPG";
-const logo10 = "/Images/slider.jpg.jpeg";
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
+const logo7 = `${PUBLIC_URL}/Images/graphic.png`;
+const logo11 = `${PUBLIC_URL}/Images/choose.png`;
+const logo3 = `${PUBLIC_URL}/Images/video.png`;
+const logo4 = `${PUBLIC_URL}/Images/uiandux.png`;
+const logo5 = `${PUBLIC_URL}/Images/digital.png`;
+const logo6 = `${PUBLIC_URL}/Images/gv.png`;
+const logo9 = `${PUBLIC_URL}/Images/page-background.JPG`;
+const logo10 = `${PUBLIC_URL}/Images/slider.jpg.jpeg`;
+
+
+// const logo7 = "/Images/graphic.png";
+// const logo11 = "/Images/choose.png";
+// const logo3 = "/Images/video.png";
+// const logo4 = "/Images/uiandux.png";
+// const logo5 = "/Images/digital.png";
+// const logo6 = "/Images/gv.png";
+// const logo9 = "./Images/page-background.JPG";
+// const logo10 = "/Images/slider.jpg.jpeg";
 
 const Index = () => {
  
