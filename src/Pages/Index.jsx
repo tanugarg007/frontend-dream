@@ -15,7 +15,14 @@ const logo9 = `${PUBLIC_URL}/Images/page-background.jpg`;
 const logo10 = `${PUBLIC_URL}/Images/slider.jpg`;
 
 
-
+// const logo7 = "/Images/graphic.png";
+// const logo11 = "/Images/choose.png";
+// const logo3 = "/Images/video.png";
+// const logo4 = "/Images/uiandux.png";
+// const logo5 = "/Images/digital.png";
+// const logo6 = "/Images/gv.png";
+// const logo9 = "./Images/page-background.JPG";
+// const logo10 = "/Images/slider.jpg.jpeg";
 
 const Index = () => {
  
