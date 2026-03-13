@@ -10,7 +10,7 @@ const logo3 = "/Images/video.png";
 const logo4 = "/Images/uiandux.png";
 const logo5 = "/Images/digital.png";
 const logo6 = "/Images/gv.png";
-const logo9 = "/Images/page-background.JPG";
+const logo9 = "./Images/page-background.JPG";
 const logo10 = "/Images/slider.jpg.jpeg";
 
 const Index = () => {
