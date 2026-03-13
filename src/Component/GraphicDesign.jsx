@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import Navbar from '../Component/Navbar';
 import EnquiryModal from '../Component/EnquiryModal';
 import Footer from './Footer';
-const logo1 = '/Images/dream-logo-ok.png';
-const logo9 = '/Images/page-background.jpg';
-const logo5 = '/Images/graphic.png';
-const logo4 = '/Images/yellowback2.jpg';
-const whatsappImg = '/Assets/whatsapp.png';
+const logo1 = `${PUBLIC_URL}/Images/dream-logo-ok.png`;
+const logo9 = `${PUBLIC_URL}/Images/background.jpg`;
+const logo5 = `${PUBLIC_URL}/Images/graphic.png`;
+const logo4 = `${PUBLIC_URL}/Images/yellowback2.jpg`;
+const whatsappImg = `${PUBLIC_URL}/Assets/whatsapp.png`;
 
 const GraphicDesign = () => { const [showPopup, setShowPopup] = useState(false);
   return (

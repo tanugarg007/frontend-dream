@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
 
-const logo9 = "/Images/page-background.jpg";
-const logo8 = "/Images/insidegraphic.png";
-const logo7 = "/Images/insidevideo.png";
-const logo6 = "/Images/insideuiux.png";
-const logo10 = "/Images/insidedigital.png";
-const logo11 = "/Images/insidegraphicvideo.png";
+const logo9 = `${PUBLIC_URL}/Images/background.jpg`;
+const logo8 = `${PUBLIC_URL}/Images/insidegraphic.png`;
+const logo7 = `${PUBLIC_URL}/Images/insidevideo.png`;
+const logo6 = `${PUBLIC_URL}/Images/insideuiux.png`;
+const logo10 = `${PUBLIC_URL}/Images/insidedigital.png`;
+const logo11 = `${PUBLIC_URL}/Images/insidegraphicvideo.png`;
 const OurCourses =()=>{
     return(
       <div>
