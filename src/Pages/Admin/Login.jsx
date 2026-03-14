@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import { serverUrl } from '../../url/url';
-const loginBg = '/Images/page-background.jpg';
+const loginBg = `${PUBLIC_URL}/Images/background.jpg`;
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
 const ADMIN_LOGIN_ENDPOINT = '/users/login';
