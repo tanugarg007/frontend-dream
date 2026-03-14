@@ -87,7 +87,7 @@ const Footer = () => {
 
       <div className="w-full mt-10">
         <hr className="border-slate-700 w-full" />
-        <p className="text-white text-center text-sm mt-3 py-4" style={{ fontFamily: 'Playwrite NZ Basic, cursive' }}>© Dream Animex 2026 All rights reserved. Site Developed by <Link to='https://www.rudrakshcreation.com'  className='hover:text-red-400 transition-colors'>Rudraksh Creation</Link></p>
+        <p className="text-white text-center text-sm mt-3 py-4" style={{ fontFamily: 'Playwrite NZ Basic, cursive' }}>© Dream Animex 2026 All rights reserved. </p>
       </div>
     </div>
   );
