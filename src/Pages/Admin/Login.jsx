@@ -14,6 +14,8 @@ import {
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import { serverUrl } from '../../url/url';
+
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const loginBg = `${PUBLIC_URL}/Images/background.jpg`;
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
