@@ -11,17 +11,25 @@ const getStoredUser = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(
-    () => localStorage.getItem('adminToken') || localStorage.getItem('token') || ''
-  );
+  const readStoredToken = () => {
+    const stored = localStorage.getItem('adminToken') || localStorage.getItem('token') || '';
+    // Treat literal "undefined"/"null" strings as empty.
+    if (stored === 'undefined' || stored === 'null') return '';
+    return stored;
+  };
+
+  const [token, setToken] = useState(readStoredToken);
   const [user, setUser] = useState(() => getStoredUser());
 
   const login = (nextToken, nextUser) => {
+    if (!nextToken || nextToken === 'undefined' || nextToken === 'null') {
+      return;
+    }
     localStorage.setItem('adminToken', nextToken);
     localStorage.setItem('token', nextToken);
-    localStorage.setItem('adminUser', JSON.stringify(nextUser));
+    localStorage.setItem('adminUser', JSON.stringify(nextUser || null));
     setToken(nextToken);
-    setUser(nextUser);
+    setUser(nextUser || null);
   };
 
   const logout = () => {

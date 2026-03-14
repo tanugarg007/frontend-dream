@@ -177,6 +177,11 @@ const Login = () => {
         return;
       }
 
+      if (!data?.token) {
+        setErrors((prev) => ({ ...prev, general: 'Login response missing token' }));
+        return;
+      }
+
       localStorage.setItem('token', data.token);
       login(data.token, data.user);
       navigate('/admin');
