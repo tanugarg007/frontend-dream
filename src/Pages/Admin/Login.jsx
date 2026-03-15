@@ -13,7 +13,8 @@ import {
   FiRefreshCw,
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
-import { serverUrl } from '../../url/url';
+// import { serverUrl } from '../../url/url';
+const serverUrl ="https://api.dreamanimex.com"
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const loginBg = `${PUBLIC_URL}/Images/background.jpg`;
