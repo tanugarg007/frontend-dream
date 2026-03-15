@@ -13,19 +13,24 @@ import {
   FiRefreshCw,
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
-// import { serverUrl } from '../../url/url';
+//  import { serverUrl } from '../../url/url';
+// const serverUrl = "http://127.0.0.1:5000";
 const serverUrl ="https://api.dreamanimex.com"
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const loginBg = `${PUBLIC_URL}/Images/background.jpg`;
-
+// 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
+// const API_BASE_URL = "http://localhost:5000";
+
 const ADMIN_LOGIN_ENDPOINT = '/users/login';
 const ADMIN_FORGOT_PASSWORD_ENDPOINT = '/users/forgot-password';
 
 const joinUrl = (base, endpoint) => `${base.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
 const apiFetch = async (endpoint, options = {}) => {
   const url = joinUrl(API_BASE_URL, endpoint);
+  // console.log(url);
+  console.log("API_BASE_URL:", API_BASE_URL);
 
   try {
     const response = await fetch(url, {
