@@ -453,17 +453,17 @@ if (!authToken) {
     Name
   </label>
 
-  <input
-    type="text"
-    value={profile.name || ""}
-    onChange={(e) =>
-      setProfile((prev) => ({
-        ...prev,
-        name: e.target.value
-      }))
-    }
-    className={inputClasses}
-  />
+ <input
+  type="text"
+  value={profile?.name || ""}
+  onChange={(e) =>
+    setProfile((prev) => ({
+      ...prev,
+      name: e.target.value,
+    }))
+  }
+  className={inputClasses}
+/>
 
   {profileErrors.name && (
     <p className="mt-1 text-xs text-red-600">
