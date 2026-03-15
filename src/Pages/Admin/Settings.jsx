@@ -42,8 +42,8 @@ const Settings = () => {
   const [siteSettingsStatus, setSiteSettingsStatus] = useState({ type: '', message: '' });
   const navigate = useNavigate();
   // Fetch profile
-  useEffect(() => {
-  if (!authToken || profile?.name) return;
+ useEffect(() => {
+  if (!authToken || profileLoaded) return;
 
   const fetchProfile = async () => {
     try {
@@ -69,15 +69,17 @@ const Settings = () => {
         email: fetchedProfile.email || "",
       });
 
-      setAvatarPreview(avatarUrl);   // 👈 avatar preview set
-      updateUser({ ...fetchedProfile, avatar: avatarUrl }); // 👈 context update
+      setAvatarPreview(avatarUrl);
+      updateUser({ ...fetchedProfile, avatar: avatarUrl });
+
+      setProfileLoaded(true); // 👈 important fix
     } catch (error) {
       console.error("Profile fetch error:", error);
     }
   };
 
   fetchProfile();
-}, [authToken]);
+}, [authToken, profileLoaded]);
 
   // Fetch site settings
   useEffect(() => {
