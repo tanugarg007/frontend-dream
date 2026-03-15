@@ -43,39 +43,41 @@ const Settings = () => {
   const navigate = useNavigate();
   // Fetch profile
   useEffect(() => {
-    if (!authToken) return;
+  if (!authToken || profile?.name) return;
 
-    const fetchProfile = async () => {
-      try {
-        const res = await fetch(joinUrl(API_BASE_URL, '/users/profile'), {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
+  const fetchProfile = async () => {
+    try {
+      const res = await fetch(joinUrl(API_BASE_URL, '/users/profile'), {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
 
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) return;
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) return;
 
-        const fetchedProfile = data?.profile || {};
-        const avatarUrl = fetchedProfile.avatar
-          ? fetchedProfile.avatar.startsWith('http')
-            ? fetchedProfile.avatar
-            : `${API_BASE_URL}${fetchedProfile.avatar}`
-          : '';
+      const fetchedProfile = data?.profile || {};
 
-        setProfile({
-          name: fetchedProfile.name || '',
-          email: fetchedProfile.email || '',
-        });
-        setAvatarPreview(avatarUrl);
-        updateUser({ ...fetchedProfile, avatar: avatarUrl });
-      } catch (error) {
-        console.error('Profile fetch error:', error);
-      }
-    };
+      const avatarUrl = fetchedProfile.avatar
+        ? fetchedProfile.avatar.startsWith("http")
+          ? fetchedProfile.avatar
+          : `${API_BASE_URL}${fetchedProfile.avatar}`
+        : "";
 
-    fetchProfile();
-  }, [authToken, updateUser]);
+      setProfile({
+        name: fetchedProfile.name || "",
+        email: fetchedProfile.email || "",
+      });
+
+      setAvatarPreview(avatarUrl);   // 👈 avatar preview set
+      updateUser({ ...fetchedProfile, avatar: avatarUrl }); // 👈 context update
+    } catch (error) {
+      console.error("Profile fetch error:", error);
+    }
+  };
+
+  fetchProfile();
+}, [authToken]);
 
   // Fetch site settings
   useEffect(() => {
