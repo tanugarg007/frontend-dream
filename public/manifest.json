@@ -3,17 +3,32 @@
   "name": "Dream Animex Website",
   "icons": [
     {
-      "src": "/Images/dream-logo-ok.png",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "/Images/dream-logo-ok-16x16.png",
+      "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "/Images/dream-logo-ok.png",
+      "src": "/Images/dream-logo-ok-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/dream-logo-ok-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/dream-logo-ok-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/dream-logo-ok-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/Images/dream-logo-ok.png",
+      "src": "/Images/dream-logo-ok-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
