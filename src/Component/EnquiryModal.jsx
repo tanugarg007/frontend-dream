@@ -1,14 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { serverUrl } from '../url/url';
 
 const EnquiryModal = ({ isOpen, onClose }) => {
   const NAME_REGEX = /^[A-Za-z ]+$/;
+  const FALLBACK_COURSES = [
+    'Graphic Design',
+    'UI/UX Design',
+    'Video Editing',
+    'Digital Marketing',
+    'Graphic Design & Video Editing',
+  ];
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', course: '', message: '' });
   const [errors, setErrors] = useState({});
   const [showErrors, setShowErrors] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [isCoursesLoading, setIsCoursesLoading] = useState(false);
+  const [coursesError, setCoursesError] = useState('');
+
+  useEffect(() => {
+    const loadCourses = async () => {
+      setIsCoursesLoading(true);
+      setCoursesError('');
+      try {
+        const response = await fetch(`${serverUrl}/users/courses`);
+        const data = await response.json().catch(() => []);
+        const list = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
+        const activeOnly = list.filter((course) => {
+          const status = String(course?.status || '').toLowerCase();
+          return !status || status === 'active';
+        });
+        const titles = activeOnly
+          .map((course) => course?.title || course?.name)
+          .filter(Boolean);
+        setCourses(titles.length ? titles : []);
+      } catch (err) {
+        setCoursesError('Unable to load courses. Showing default list.');
+        setCourses(FALLBACK_COURSES);
+      } finally {
+        setIsCoursesLoading(false);
+      }
+    };
+
+    loadCourses();
+  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -115,12 +152,18 @@ const EnquiryModal = ({ isOpen, onClose }) => {
             <label className="block text-sm font-bold mb-1"> Preferred Course</label>
             <select id="course" value={formData.course} onChange={handleChange} className="w-full px-3 py-2 border rounded">
               <option value="">Select a course</option>
-              <option value="Graphic Design">Graphic Design</option>
-              <option value="UI/UX Design">UI/UX Design</option>
-              <option value="Video Editing">Video Editing</option>
-              <option value="Digital Marketing">Digital Marketing</option>
-              <option value="Graphic + Video Editing">Graphic Design & Video Editing</option>
+              {isCoursesLoading && <option disabled>Loading courses...</option>}
+              {!isCoursesLoading && courses.length === 0 && (
+                <option disabled>No courses available</option>
+              )}
+              {!isCoursesLoading &&
+                (courses.length ? courses : FALLBACK_COURSES).map((course) => (
+                  <option key={course} value={course}>
+                    {course}
+                  </option>
+                ))}
             </select>
+            {coursesError && <p className="text-amber-600 text-sm">{coursesError}</p>}
             {showErrors && errors.course && <p className="text-red-500 text-sm">{errors.course}</p>}
           </div>
           <div className="mb-4">

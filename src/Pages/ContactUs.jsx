@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Component/Footer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -8,6 +8,13 @@ const logo9 = `${PUBLIC_URL}/Images/background.jpg`;
 const contactBg = `${PUBLIC_URL}/Images/contact-bg.JPG.jpeg`;
 const ContactUs = () => {
   const NAME_REGEX = /^[A-Za-z ]+$/;
+  const FALLBACK_COURSES = [
+    "Graphic Design",
+    "UI & UX Design",
+    "Digital Marketing",
+    "Video Editing",
+    "Graphic Design and Video Editing",
+  ];
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,6 +26,36 @@ const ContactUs = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [isCoursesLoading, setIsCoursesLoading] = useState(false);
+  const [coursesError, setCoursesError] = useState("");
+
+  useEffect(() => {
+    const loadCourses = async () => {
+      setIsCoursesLoading(true);
+      setCoursesError("");
+      try {
+        const response = await fetch(`${serverUrl}/users/courses`);
+        const data = await response.json().catch(() => []);
+        const list = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
+        const activeOnly = list.filter((course) => {
+          const status = String(course?.status || "").toLowerCase();
+          return !status || status === "active";
+        });
+        const titles = activeOnly
+          .map((course) => course?.title || course?.name)
+          .filter(Boolean);
+        setCourses(titles.length ? titles : []);
+      } catch (err) {
+        setCoursesError("Unable to load courses. Showing default list.");
+        setCourses(FALLBACK_COURSES);
+      } finally {
+        setIsCoursesLoading(false);
+      }
+    };
+
+    loadCourses();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -291,12 +328,20 @@ const ContactUs = () => {
                       className={fieldClass(errors.course)}
                     >
                       <option value="">Select Option</option>
-                      <option>Graphic Design</option>
-                      <option>UI & UX Design</option>
-                      <option>Digital Marketing</option>
-                      <option>Video Editing</option>
-                      <option>Graphic Design and Video Editing</option>
+                      {isCoursesLoading && <option disabled>Loading courses...</option>}
+                      {!isCoursesLoading && courses.length === 0 && (
+                        <option disabled>No courses available</option>
+                      )}
+                      {!isCoursesLoading &&
+                        (courses.length ? courses : FALLBACK_COURSES).map((course) => (
+                          <option key={course} value={course}>
+                            {course}
+                          </option>
+                        ))}
                     </select>
+                    {coursesError && (
+                      <p className="text-amber-600 text-sm mt-1">{coursesError}</p>
+                    )}
                     {errors.course && (
                       <p className="text-red-500 text-sm mt-1">{errors.course}</p>
                     )}
@@ -304,7 +349,7 @@ const ContactUs = () => {
                     <div className="mt-4">
   <label className="font-semibold text-slate-700">Message</label>
   <textarea
-    name="message"   // ðŸ‘ˆ YE ADD KARNA THA
+    name="message"   // 👈 YE ADD KARNA THA
     value={formData.message}
     onChange={handleChange}
     rows="3"
@@ -330,6 +375,7 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
+
 
 
 
