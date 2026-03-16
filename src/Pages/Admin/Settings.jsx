@@ -24,6 +24,7 @@ const Settings = () => {
     token || localStorage.getItem('adminToken') || localStorage.getItem('token') || '';
   // Profile state
   const [profile, setProfile] = useState({ name: '', email: '' });
+  const [profileLoaded, setProfileLoaded] = useState(false);
   const [profileErrors, setProfileErrors] = useState({});
   const [avatarPreview, setAvatarPreview] = useState('');
   const [avatarFile, setAvatarFile] = useState(null);
