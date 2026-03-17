@@ -132,7 +132,8 @@ const Enquires = () => {
                     <td className="px-5 py-4 font-medium text-slate-800">{enq.name || 'N/A'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">{enq.email || 'N/A'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">{formatPhoneForDisplay(enq.phone)}</td>
-                    <td className="px-5 py-4 text-sm text-slate-700">{enq.city || 'N/A'}</td>
+                    <td className="px-5 py-4 text-sm text-slate-700">  {enq.city && enq.city.trim() !== '' ? enq.city : 'N/A'}
+</td>
                     <td className="px-5 py-4 text-sm text-slate-700">{enq.course || 'General'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">
                       {enq.createdAt ? new Date(enq.createdAt).toLocaleDateString() : 'N/A'}
