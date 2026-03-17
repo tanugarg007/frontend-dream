@@ -47,11 +47,11 @@ const EnquiryModal = ({ isOpen, onClose }) => {
     loadCourses();
   }, []);
 
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
-    setErrors((prev) => ({ ...prev, [id]: '' }));
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;   // ✅ id → name
+  setFormData(prev => ({ ...prev, [name]: value }));
+  setErrors((prev) => ({ ...prev, [name]: '' }));
+};
 
   const normalizePhone = (value) => {
     const digitsOnly = String(value || '').replace(/\D/g, '');
@@ -119,12 +119,12 @@ const EnquiryModal = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-3">
             <label className="block text-sm font-bold mb-1"> Full Name</label>
-            <input id="name" value={formData.name} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
+            <input name="name" type="text"  id="name" value={formData.name} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
             {showErrors && errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
           </div>
           <div className="mb-3">
             <label className="block text-sm font-bold mb-1">Email</label>
-            <input id="email" value={formData.email} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
+            <input name="email" type="email" id="email" value={formData.email} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
             {showErrors && errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
           <div className="mb-3">
@@ -153,12 +153,12 @@ const EnquiryModal = ({ isOpen, onClose }) => {
           </div>
           <div className="mb-3">
             <label className="block text-sm font-bold mb-1">City</label>
-            <input id="city" value={formData.city} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
+            <input name="city" id="city" value={formData.city} onChange={handleChange} className="w-full px-3 py-2 border rounded" />
             {showErrors && errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
           </div>
           <div className="mb-3">
             <label className="block text-sm font-bold mb-1"> Preferred Course</label>
-            <select id="course" value={formData.course} onChange={handleChange} className="w-full px-3 py-2 border rounded">
+            <select name="course" id="course" value={formData.course} onChange={handleChange} className="w-full px-3 py-2 border rounded">
               <option value="">Select a course</option>
               {isCoursesLoading && <option disabled>Loading courses...</option>}
               {!isCoursesLoading && courses.length === 0 && (
@@ -176,7 +176,7 @@ const EnquiryModal = ({ isOpen, onClose }) => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-1">Message</label>
-            <textarea id="message" value={formData.message} onChange={handleChange} rows="3" className="w-full px-3 py-2 border rounded" />
+            <textarea name="message" id="message" value={formData.message} onChange={handleChange} rows="3" className="w-full px-3 py-2 border rounded" />
             {showErrors && errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
           </div>
           <div className="flex justify-end gap-3">
