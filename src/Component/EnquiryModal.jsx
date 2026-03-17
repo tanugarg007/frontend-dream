@@ -76,6 +76,7 @@ const handleChange = (e) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+      console.log("Submitting form data:", formData); 
     const newErrors = validateForm();
     if (Object.keys(newErrors).length !== 0) { setErrors(newErrors); setShowErrors(true); return; }
     try {
