@@ -18,7 +18,6 @@ const serverUrl ="https://api.dreamanimex.com"
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const loginBg = `${PUBLIC_URL}/Images/background.jpg`;
-// 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
 const ADMIN_ALLOWED_EMAIL = (process.env.REACT_APP_ADMIN_EMAIL || '').trim().toLowerCase();
 // const API_BASE_URL = "http://localhost:5000";
@@ -27,14 +26,6 @@ const ADMIN_LOGIN_ENDPOINT = '/users/login';
 const ADMIN_FORGOT_PASSWORD_ENDPOINT = '/users/forgot-password';
 
 const joinUrl = (base, endpoint) => `${base.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
-const getLastAdminEmail = () => {
-  if (ADMIN_ALLOWED_EMAIL) return ADMIN_ALLOWED_EMAIL;
-  try {
-    return (localStorage.getItem('adminLastEmail') || '').trim().toLowerCase();
-  } catch (_error) {
-    return '';
-  }
-};
 const apiFetch = async (endpoint, options = {}) => {
   const url = joinUrl(API_BASE_URL, endpoint);
   // console.log(url);
@@ -70,7 +61,7 @@ const PASSWORD_POLICY_HELPER =
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: getLastAdminEmail(),
+    email: ADMIN_ALLOWED_EMAIL || '',
     password: '',
   });
 
@@ -85,7 +76,7 @@ const Login = () => {
   const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
   const [forgotStep, setForgotStep] = useState('request');
   const [forgotData, setForgotData] = useState({
-    email: getLastAdminEmail(),
+    email: ADMIN_ALLOWED_EMAIL || '',
     otp: '',
     newPassword: '',
     confirmPassword: '',
@@ -217,7 +208,7 @@ const Login = () => {
   const resetForgotState = () => {
     setForgotStep('request');
     setForgotData({
-      email: ADMIN_ALLOWED_EMAIL || formData.email.trim() || getLastAdminEmail(),
+      email: ADMIN_ALLOWED_EMAIL || formData.email.trim(),
       otp: '',
       newPassword: '',
       confirmPassword: '',
