@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { serverUrl } from '../url/url';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
 const EnquiryModal = ({ isOpen, onClose }) => {
   const NAME_REGEX = /^[A-Za-z ]+$/;
   const FALLBACK_COURSES = [
@@ -25,7 +25,8 @@ const EnquiryModal = ({ isOpen, onClose }) => {
       setIsCoursesLoading(true);
       setCoursesError('');
       try {
-        const response = await fetch(`${serverUrl}/users/courses`);
+        console.log("POST URL:", `${API_BASE_URL}/users/enquiry`);
+        const response = await fetch(`${API_BASE_URL}/users/courses`);
         const data = await response.json().catch(() => []);
         const list = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
         const activeOnly = list.filter((course) => {
@@ -87,7 +88,7 @@ const handleChange = (e) => {
         course: formData.course.trim(),
         message: formData.message.trim(),
       };
-      const response = await fetch(`${serverUrl}/users/enquiry`
+      const response = await fetch(`${API_BASE_URL}/users/enquiry`
         , {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       });
