@@ -21,6 +21,7 @@ const PUBLIC_URL = process.env.PUBLIC_URL || '';
 const loginBg = `${PUBLIC_URL}/Images/background.jpg`;
 // 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || serverUrl;
+const ADMIN_ALLOWED_EMAIL = (process.env.REACT_APP_ADMIN_EMAIL || '').trim().toLowerCase();
 // const API_BASE_URL = "http://localhost:5000";
 
 const ADMIN_LOGIN_ENDPOINT = '/users/login';
@@ -62,7 +63,7 @@ const PASSWORD_POLICY_HELPER =
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    email: ADMIN_ALLOWED_EMAIL || '',
     password: '',
   });
 
@@ -78,7 +79,7 @@ const Login = () => {
   const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
   const [forgotStep, setForgotStep] = useState('request');
   const [forgotData, setForgotData] = useState({
-    email: '',
+    email: ADMIN_ALLOWED_EMAIL || '',
     otp: '',
     newPassword: '',
     confirmPassword: '',
@@ -112,16 +113,23 @@ const Login = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'email' && ADMIN_ALLOWED_EMAIL) {
+      setErrors((prev) => ({ ...prev, email: '', general: '' }));
+      return;
+    }
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: '', general: '' }));
   };
 
   const validateLogin = () => {
     const newErrors = {};
-    if (!formData.email.trim()) {
+    const normalizedEmail = formData.email.trim().toLowerCase();
+    if (!normalizedEmail) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(normalizedEmail)) {
       newErrors.email = 'Enter a valid email address';
+    } else if (ADMIN_ALLOWED_EMAIL && normalizedEmail !== ADMIN_ALLOWED_EMAIL) {
+      newErrors.email = 'Only the fixed admin email is allowed';
     }
     if (!formData.password) {
       newErrors.password = 'Password is required';
@@ -138,11 +146,12 @@ const Login = () => {
 
     setIsLoading(true);
     try {
+      const normalizedEmail = formData.email.trim().toLowerCase();
       const { response, data } = await apiFetch(ADMIN_LOGIN_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: formData.email.trim(),
+          email: normalizedEmail,
           password: formData.password,
         }),
       });
@@ -188,8 +197,15 @@ const Login = () => {
         return;
       }
 
+      const responseEmail = (data?.user?.email || normalizedEmail || '').toLowerCase();
+      if (ADMIN_ALLOWED_EMAIL && responseEmail !== ADMIN_ALLOWED_EMAIL) {
+        setErrors((prev) => ({ ...prev, general: 'This email is not authorized for admin access.' }));
+        return;
+      }
+
       localStorage.setItem('token', data.token);
-      login(data.token, data.user);
+      const nextUser = data.user || { email: normalizedEmail };
+      login(data.token, nextUser);
       navigate('/admin');
     } catch (_error) {
       setErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
@@ -201,7 +217,7 @@ const Login = () => {
   const resetForgotState = () => {
     setForgotStep('request');
     setForgotData({
-      email: formData.email.trim(),
+      email: ADMIN_ALLOWED_EMAIL || formData.email.trim(),
       otp: '',
       newPassword: '',
       confirmPassword: '',
@@ -232,6 +248,10 @@ const Login = () => {
 
   const handleForgotChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'email' && ADMIN_ALLOWED_EMAIL) {
+      setForgotErrors((prev) => ({ ...prev, email: '', general: '' }));
+      return;
+    }
     setForgotData((prev) => ({ ...prev, [name]: value }));
     setForgotErrors((prev) => ({ ...prev, [name]: '', general: '' }));
     setForgotMessage('');
@@ -246,10 +266,13 @@ const Login = () => {
       general: '',
     };
 
-    if (!forgotData.email.trim()) {
+    const normalizedEmail = forgotData.email.trim().toLowerCase();
+    if (!normalizedEmail) {
       nextErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(forgotData.email.trim())) {
+    } else if (!/\S+@\S+\.\S+/.test(normalizedEmail)) {
       nextErrors.email = 'Enter a valid email address';
+    } else if (ADMIN_ALLOWED_EMAIL && normalizedEmail !== ADMIN_ALLOWED_EMAIL) {
+      nextErrors.email = 'Only the fixed admin email is allowed';
     }
 
     setForgotErrors(nextErrors);
@@ -265,8 +288,12 @@ const Login = () => {
       general: '',
     };
 
-    if (!forgotData.email.trim()) nextErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(forgotData.email.trim())) nextErrors.email = 'Enter a valid email address';
+    const normalizedEmail = forgotData.email.trim().toLowerCase();
+    if (!normalizedEmail) nextErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(normalizedEmail)) nextErrors.email = 'Enter a valid email address';
+    else if (ADMIN_ALLOWED_EMAIL && normalizedEmail !== ADMIN_ALLOWED_EMAIL) {
+      nextErrors.email = 'Only the fixed admin email is allowed';
+    }
 
     if (!forgotData.otp.trim()) nextErrors.otp = 'Verification code is required';
     else if (!/^\d{6}$/.test(forgotData.otp.trim())) nextErrors.otp = 'Enter a valid 6-digit code';
@@ -287,7 +314,7 @@ const Login = () => {
     e.preventDefault();
     if (!validateForgotRequest()) return;
 
-    const normalizedEmail = forgotData.email.trim();
+    const normalizedEmail = forgotData.email.trim().toLowerCase();
     setForgotLoadingAction('request');
     setForgotStep('verify');
     setForgotData((prev) => ({
@@ -345,7 +372,7 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
            action: 'verify',
-          email: forgotData.email.trim(),
+          email: forgotData.email.trim().toLowerCase(),
           otp: forgotData.otp.trim(),
           newPassword: forgotData.newPassword,
         }),
@@ -363,7 +390,7 @@ const Login = () => {
         newPassword: '',
         confirmPassword: '',
       }));
-      setFormData((prev) => ({ ...prev, email: forgotData.email.trim() }));
+      setFormData((prev) => ({ ...prev, email: ADMIN_ALLOWED_EMAIL || forgotData.email.trim() }));
     } catch (_error) {
       setForgotErrors((prev) => ({ ...prev, general: 'Server not reachable' }));
     } finally {
@@ -420,6 +447,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="admin@animex.com"
+                  readOnly={Boolean(ADMIN_ALLOWED_EMAIL)}
                   className={`${inputClasses} pl-10 ${errors.email ? 'border-red-500' : ''}`}
                 />
               </div>
@@ -527,6 +555,7 @@ const Login = () => {
                       value={forgotData.email}
                       onChange={handleForgotChange}
                       placeholder="admin@animex.com"
+                      readOnly={Boolean(ADMIN_ALLOWED_EMAIL)}
                       className={`w-full rounded-xl border bg-white px-10 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-100 ${
                         forgotErrors.email ? 'border-red-500' : 'border-slate-300 focus:border-cyan-500'
                       }`}

@@ -118,7 +118,7 @@ const GraphicandVideoEditing = () => { const [showPopup, setShowPopup] = useStat
         key={index}
         className={`text-gray-700 text-sm lg:text-lg px-3 py-2 leading-relaxed border-l-4 border-${color}-500 bg-gradient-to-r from-${color}-50 to-transparent`}
       >
-        <span className={`font-semibold text-${color}-600`}>âœ¦</span> {text}
+        <span className={`font-semibold text-${color}-600`}>*</span> {text}
       </p>
     ))}
 

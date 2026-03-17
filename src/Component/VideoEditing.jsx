@@ -53,7 +53,7 @@ const VideoEditing = () => { const [showPopup, setShowPopup] = useState(false);
       {/* Content */}
       <div className="w-full px-4 lg:px-0 pl-0 lg:pl-8 pt-3 lg:pt-3 pr-0 lg:pr-6">
         <p className="text-sm lg:text-lg text-gray-600 leading-relaxed px-5 lg:px-0 ">
-          Focused on storytelling, editing techniques, transitions, and audio balancing, this course trains students to produce polished video content for social media, marketing, and professional projects. Students go beyond basic cutting to explore rhythm-based editing, colour psychology, and seamless transition effects that keep viewers hooked. Whether itâ€™s a 15-second Reel or a 5-minute brand film, this course ensures every frame serves the story.
+          Focused on storytelling, editing techniques, transitions, and audio balancing, this course trains students to produce polished video content for social media, marketing, and professional projects. Students go beyond basic cutting to explore rhythm-based editing, colour psychology, and seamless transition effects that keep viewers hooked. Whether a 15-second Reel or a 5-minute brand film, this course ensures every frame serves the story.
         </p>
          <p className="text-sm lg:text-lg font-semibold text-gray-700 mt-1 px-5 lg:px-0">
           Duration: 4 Months
@@ -118,7 +118,7 @@ const VideoEditing = () => { const [showPopup, setShowPopup] = useState(false);
         key={index}
         className={`text-gray-700 text-sm lg:text-lg px-3 py-2 leading-relaxed border-l-4 border-${color}-500 bg-gradient-to-r from-${color}-50 to-transparent`}
       >
-        <span className={`font-semibold text-${color}-600`}>âœ¦</span> {text}
+        <span className={`font-semibold text-${color}-600`}>*</span> {text}
       </p>
     ))}
 
