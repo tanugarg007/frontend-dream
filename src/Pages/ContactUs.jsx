@@ -80,6 +80,15 @@ const ContactUs = () => {
   if (Object.keys(newErrors).length > 0) return;
 
   try {
+    const payload = {
+      ...formData,
+      name: formData.name.trim(),
+      email: formData.email.trim().toLowerCase(),
+      phone: formData.phone.trim(),
+      city: formData.city.trim(),
+      course: formData.course.trim(),
+      message: formData.message.trim(),
+    };
     const response = await fetch(
       `${serverUrl}/users/enquiry`,
       {
@@ -87,7 +96,7 @@ const ContactUs = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       }
     );
 

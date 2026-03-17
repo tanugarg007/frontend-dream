@@ -78,7 +78,15 @@ const EnquiryModal = ({ isOpen, onClose }) => {
     const newErrors = validateForm();
     if (Object.keys(newErrors).length !== 0) { setErrors(newErrors); setShowErrors(true); return; }
     try {
-      const payload = { ...formData, phone: normalizePhone(formData.phone) };
+      const payload = {
+        ...formData,
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: normalizePhone(formData.phone),
+        city: formData.city.trim(),
+        course: formData.course.trim(),
+        message: formData.message.trim(),
+      };
       const response = await fetch(`${serverUrl}/users/enquiry`
         , {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
