@@ -5,8 +5,6 @@ import {
   FiLock,
   FiMail,
   FiShield,
-  FiEye,
-  FiEyeOff,
   FiKey,
   FiCheckCircle,
   FiX,
@@ -28,6 +26,14 @@ const ADMIN_LOGIN_ENDPOINT = '/users/login';
 const ADMIN_FORGOT_PASSWORD_ENDPOINT = '/users/forgot-password';
 
 const joinUrl = (base, endpoint) => `${base.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
+const getLastAdminEmail = () => {
+  if (ADMIN_ALLOWED_EMAIL) return ADMIN_ALLOWED_EMAIL;
+  try {
+    return (localStorage.getItem('adminLastEmail') || '').trim().toLowerCase();
+  } catch (_error) {
+    return '';
+  }
+};
 const apiFetch = async (endpoint, options = {}) => {
   const url = joinUrl(API_BASE_URL, endpoint);
   // console.log(url);
@@ -63,7 +69,7 @@ const PASSWORD_POLICY_HELPER =
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: ADMIN_ALLOWED_EMAIL || '',
+    email: getLastAdminEmail(),
     password: '',
   });
 
@@ -74,12 +80,11 @@ const Login = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
   const [forgotStep, setForgotStep] = useState('request');
   const [forgotData, setForgotData] = useState({
-    email: ADMIN_ALLOWED_EMAIL || '',
+    email: getLastAdminEmail(),
     otp: '',
     newPassword: '',
     confirmPassword: '',
@@ -197,12 +202,6 @@ const Login = () => {
         return;
       }
 
-      const responseEmail = (data?.user?.email || normalizedEmail || '').toLowerCase();
-      if (ADMIN_ALLOWED_EMAIL && responseEmail !== ADMIN_ALLOWED_EMAIL) {
-        setErrors((prev) => ({ ...prev, general: 'This email is not authorized for admin access.' }));
-        return;
-      }
-
       localStorage.setItem('token', data.token);
       const nextUser = data.user || { email: normalizedEmail };
       login(data.token, nextUser);
@@ -217,7 +216,7 @@ const Login = () => {
   const resetForgotState = () => {
     setForgotStep('request');
     setForgotData({
-      email: ADMIN_ALLOWED_EMAIL || formData.email.trim(),
+      email: ADMIN_ALLOWED_EMAIL || formData.email.trim() || getLastAdminEmail(),
       otp: '',
       newPassword: '',
       confirmPassword: '',
@@ -461,20 +460,14 @@ const Login = () => {
               <div className="relative">
                 <FiLock className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="Enter password"
+                  placeholder="Enter Password"
+                  autoComplete="new-password"
                   className={`${inputClasses} pl-10 pr-10 ${errors.password ? 'border-red-500' : ''}`}
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                >
-                  {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
-                </button>
               </div>
               {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
             </div>

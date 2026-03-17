@@ -119,6 +119,7 @@ const Enquires = () => {
                 <th className="px-5 py-3.5 font-semibold">Name</th>
                 <th className="px-5 py-3.5 font-semibold">Email</th>
                 <th className="px-5 py-3.5 font-semibold">Phone</th>
+                <th className="px-5 py-3.5 font-semibold">City</th>
                 <th className="px-5 py-3.5 font-semibold">Course</th>
                 <th className="px-5 py-3.5 font-semibold">Date</th>
                 <th className="px-5 py-3.5 text-right font-semibold">Actions</th>
@@ -131,6 +132,7 @@ const Enquires = () => {
                     <td className="px-5 py-4 font-medium text-slate-800">{enq.name || 'N/A'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">{enq.email || 'N/A'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">{formatPhoneForDisplay(enq.phone)}</td>
+                    <td className="px-5 py-4 text-sm text-slate-700">{enq.city || 'N/A'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">{enq.course || 'General'}</td>
                     <td className="px-5 py-4 text-sm text-slate-700">
                       {enq.createdAt ? new Date(enq.createdAt).toLocaleDateString() : 'N/A'}
@@ -151,7 +153,7 @@ const Enquires = () => {
 
               {!isLoading && enquiries.length === 0 && (
                 <tr>
-                  <td colSpan="6" className="px-5 py-10 text-center text-sm text-slate-500">
+                  <td colSpan="7" className="px-5 py-10 text-center text-sm text-slate-500">
                     No enquiries found.
                   </td>
                 </tr>
@@ -159,7 +161,7 @@ const Enquires = () => {
 
               {isLoading && (
                 <tr>
-                  <td colSpan="6" className="px-5 py-10 text-center text-sm text-slate-500">
+                  <td colSpan="7" className="px-5 py-10 text-center text-sm text-slate-500">
                     Loading enquiries...
                   </td>
                 </tr>

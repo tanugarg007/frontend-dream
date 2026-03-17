@@ -28,6 +28,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('adminToken', nextToken);
     localStorage.setItem('token', nextToken);
     localStorage.setItem('adminUser', JSON.stringify(nextUser || null));
+    if (nextUser?.email) {
+      localStorage.setItem('adminLastEmail', String(nextUser.email).trim().toLowerCase());
+    }
     setToken(nextToken);
     setUser(nextUser || null);
   };
