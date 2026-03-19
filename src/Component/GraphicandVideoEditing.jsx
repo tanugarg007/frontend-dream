@@ -112,7 +112,7 @@ const GraphicandVideoEditing = () => { const [showPopup, setShowPopup] = useStat
       ["indigo", "From concept to final cut, we craft visuals that speak, move, and inspire."],
       ["blue", "Our approach blends creativity with strategy to deliver impactful visual experiences."],
       ["cyan", "Professional graphic design and video editing services tailored to build strong brands."],
-      ["teal", "Your vision, our creativity â€” designing ideas and editing stories that truly matter."]
+      ["teal", "Your vision, our creativity designing ideas and editing stories that truly matter."]
     ].map(([color, text], index) => (
       <p
         key={index}

@@ -35,6 +35,7 @@ const Enquires = () => {
       });
 
       const data = await response.json().catch(() => ({}));
+       console.log("API RESPONSE 👉", data);
       if (!response.ok) {
         throw new Error(data?.error || data?.message || 'Failed to fetch enquiries');
       }
